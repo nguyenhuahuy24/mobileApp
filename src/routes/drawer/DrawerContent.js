@@ -12,61 +12,61 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 class DrawContentContent extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props)
   }
   render() {
     return (
 
-      <View style={{flex:1 }}>
-      {/* header */}
-     
+      <View style={{ flex: 1 }}>
+        {/* header */}
 
 
-      {/* body */}
+
+        {/* body */}
         <View style={styles.body} >
-           <View style={styles.bodyText} >
-              <TouchableOpacity style={styles.touch} onPress={() => this.props.navigation.navigate('Bill')}>
-                  <Icon
-                      name="tasks"
-                      backgroundColor=""
-                      color="grey"
-                     size = {30}
-                     style={{marginLeft: 10}}
-                    />
-                  <Text style={{fontSize:16,marginLeft: 15}}>Bill Screen</Text>
-              </TouchableOpacity>
-          
-        </View>
-           <View style={styles.bodyText} >
+          <View style={styles.bodyText} >
+            <TouchableOpacity style={styles.touch} onPress={() => this.props.navigation.navigate('Bill')}>
+              <Icon
+                name="tasks"
+                backgroundColor=""
+                color="grey"
+                size={30}
+                style={{ marginLeft: 10 }}
+              />
+              <Text style={{ fontSize: 16, marginLeft: 15 }}>Bill Screen</Text>
+            </TouchableOpacity>
+
+          </View>
+          <View style={styles.bodyText} >
 
             <TouchableOpacity style={styles.touch} onPress={() => this.props.navigation.navigate('Contract')}>
-                  <Icon
-                      name="tasks"
-                      backgroundColor=""
-                      color="grey"
-                     size = {30}
-                     style={{marginLeft: 10}}
-                    />
-                  <Text style={{fontSize:17,marginLeft: 15}} >Contract Screen</Text>
-              </TouchableOpacity>
-        </View>
+              <Icon
+                name="tasks"
+                backgroundColor=""
+                color="grey"
+                size={30}
+                style={{ marginLeft: 10 }}
+              />
+              <Text style={{ fontSize: 17, marginLeft: 15 }} >Contract Screen</Text>
+            </TouchableOpacity>
+          </View>
         </View>
         {/* footer */}
         <View style={styles.footer}>
-            
-      
-              <View style={styles.footerText} >
-                <Icon.Button
-                  name="sign-out"
-                  backgroundColor=""
-                  color="grey"
-                  style={{marginTop: 7, marginLeft: 8, marginRight:7}}
-                />
-                <TouchableOpacity>
-                  <Text style={{marginTop: 16}}>Logout</Text>
-                </TouchableOpacity>
-              </View>
+
+
+          <View style={styles.footerText} >
+            <Icon.Button
+              name="sign-out"
+              backgroundColor=""
+              color="grey"
+              style={{ marginTop: 7, marginLeft: 8, marginRight: 7 }}
+            />
+            <TouchableOpacity>
+              <Text style={{ marginTop: 16 }}>Logout</Text>
+            </TouchableOpacity>
+          </View>
         </View>
 
       </View>
@@ -74,40 +74,40 @@ class DrawContentContent extends React.Component {
   }
 };
 const styles = StyleSheet.create({
-  
-  header:{
-    flex:2
+
+  header: {
+    flex: 2
   },
   body: {
     flex: 4,
-    borderTopWidth:1,
-    
+    borderTopWidth: 1,
+
   },
   footer: {
     flex: 2,
-    borderTopWidth:1
+    borderTopWidth: 1
   },
   footerText: {
     marginTop: 5,
     marginHorizontal: 1,
     flexDirection: 'row',
   },
-   bodyText: {
+  bodyText: {
     marginTop: 5,
     marginHorizontal: 1,
     flexDirection: 'row',
   },
   headerText: {
-     marginTop: 5,
+    marginTop: 5,
     textAlign: 'center',
     fontStyle: 'italic',
   },
-  touch:{
+  touch: {
     flexDirection: 'row',
-    backgroundColor:'#FFFF',
-    width:'100%',
+    backgroundColor: '#FFFF',
+    width: '100%',
     textAlign: 'center',
   },
-  
+
 });
-export default DrawContentContent; 
+export default DrawContentContent;

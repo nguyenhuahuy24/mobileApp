@@ -13,145 +13,92 @@ export default class LoginScreen extends React.Component {
     super(props);
     this.state = {
       url: "",
-      username:"",
+      username: "",
       password: "",
-    
     };
   }
-  changeText(value, type) {
-    switch (type) {
-      case 'url':
-        this.setState({
-          url: value,
-        });
-        break;
-      case 'password':
-        this.setState({
-          password: value,
-        });
-        break;
-      case 'username':
-        this.setState({
-          username: value,
-        });
-        break;
-      default:
-        break;
-    }
-  };
-  render(){
+  render() {
     return (
-      <View style={{ backgroundColor: '#FFFFFF', flex: 1 }}>     
-        <View>
-          
-          <View style={styles.inputField}>
-            <TouchableOpacity>
-              <Icon
-                name="user-circle"
-                backgroundColor=""
-                color="grey"
-                size={20}
-                style={{ marginTop: 15, marginLeft: 20 }}
-              />
-            </TouchableOpacity>
-
-            <TextInput
-              style={styles.TextInput}
-              placeholder="User Name Email"
-              value={this.state.username}
-              onChangeText={value => this.changeText(value, 'username')}
-            />
-          </View>
-          <View style={styles.inputField}>
-            <Icon.Button
-              name="lock"
-              backgroundColor=""
-              color="grey"
-              style={{ marginTop: 7, marginLeft: 15 }}
-            />
-            <TextInput
-              style={styles.TextInput}
-              placeholder="Password"
-              value={this.state.password}
-              onChangeText={value => this.changeText(value, 'password')}
-              secureTextEntry={true}
-            />
-          </View>
-
-             <TouchableOpacity
-                    style={styles.BtnLogin}
-                    onPress={this.props.navigation.navigate('DrawerNavigation')}
-                    >
-                    <Text style={{color: 'white', textAlign: 'center', fontSize: 20}}>
-                      Login
-                    </Text>
-                  </TouchableOpacity>
-
-                  <View
-                    style={{marginTop: 15, marginHorizontal: 30, flexDirection: 'row'}}>
-                    <Text justifyContent='center'>Forget password?</Text>
-                  </View>
+      <View style={{ backgroundColor: '#F9F9F9', flex: 1 }}>
+        <View style={styles.header}>
+          <Text style={styles.title}>Nhà trọ hạnh phúc</Text>
+          <Text style={styles.title} >Login</Text>
         </View>
+        <View style={styles.body}>
+          <View style={styles.input_wrap}>
+            <Text style={{ marginLeft: 10, color: "#D3D3D3" }}>Số điện thoại</Text>
+            <TextInput style={styles.input} keyboardType={"phone-pad"} />
+          </View>
+          <View style={styles.input_wrap}>
+            <Text style={{ marginLeft: 10, color: "#D3D3D3" }}>Mật khẩu</Text>
+            <TextInput style={styles.input} secureTextEntry={true} />
+          </View>
+          <TouchableOpacity style={styles.button}>
+            <Text style={{ color: "white", fontSize: 17 }}>LOGIN</Text>
+          </TouchableOpacity>
+
+        </View>
+        <View style={styles.footer}></View>
       </View>
     );
   }
- 
-  
-  
 }
 const styles = StyleSheet.create({
-  imgStyle: {
-    width: '90%',
-    height: '16%',
-    marginTop: '20%',
-    marginLeft: '5%',
-    marginBottom: '5%',
-    resizeMode: 'stretch',
-  },
-
-  inputField: {
-    marginTop: '5%',
-    marginHorizontal: 30,
-    borderColor: '#E5E5E5',
-    borderRadius: 15,
-    borderWidth: 1,
-    flexDirection: 'row',
-  },
-  TextInput: {
-    color: '#000000',
-    borderColor: '#E5E5E5',
-    borderRadius: 15,
-    flex: 1,
-    paddingRight: 50,
-    textAlign: 'center',
-  },
-  BtnLogin: {
-    width: '80%',
-    backgroundColor: '#4876FF',
-    marginTop: 30,
-    marginHorizontal: 30,
-    borderRadius: 15,
-    borderWidth: 1,
-    height: 50,
+  header: {
+    flex: 2,
     justifyContent: 'center',
   },
-  //modal
-  centeredView: {
-    flex: 1,
+  body: {
+    flex: 3, paddingTop: 20
+  },
+  footer: {
+    flex: 0.5,
+  },
+  title: {
+    marginLeft: 20,
+    marginTop: 20,
+    width: "90%",
+    height: 34,
+    color: "#555555",
+    fontFamily: "Metropolis",
+    fontSize: 34,
+    lineHeight: 34
+  },
+  input_wrap: {
+    marginTop: 10,
+    flexDirection: "column",
+    backgroundColor: "white",
+    marginHorizontal: 10,
+    borderColor: '#E5E5E5',
+    borderRadius: 5,
+    elevation: 5,
+    shadowColor: '#BEBEBE',
     justifyContent: 'center'
   },
-  modalView: {
-    margin: 15,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 15,
-    elevation: 5,
-    zIndex: 100
+  input: {
+    marginLeft: 10,
+    paddingTop: -5,
+    fontSize: 18,
+    width: "80%"
   },
-  loginText: {
-    color: 'white',
-    textAlign: 'center',
-    fontSize: 20,
-    fontWeight: 'bold',
+
+  button: {
+    width: "90%",
+    height: 48,
+    backgroundColor: "#DB3022",
+    borderRadius: 25,
+    marginHorizontal: 20,
+    marginTop: 68,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.39,
+    shadowRadius: 8.30,
+
+    elevation: 13,
   }
 });
