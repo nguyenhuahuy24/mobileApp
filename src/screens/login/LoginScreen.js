@@ -17,6 +17,9 @@ export default class LoginScreen extends React.Component {
       password: "",
     };
   }
+  onLogin = () => {
+    this.props.navigation.navigate('DrawerNavigation');
+  };
   render() {
     return (
       <View style={{ backgroundColor: '#F9F9F9', flex: 1 }}>
@@ -33,7 +36,7 @@ export default class LoginScreen extends React.Component {
             <Text style={{ marginLeft: 10, color: "#D3D3D3" }}>Mật khẩu</Text>
             <TextInput style={styles.input} secureTextEntry={true} />
           </View>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={this.onLogin}>
             <Text style={{ color: "white", fontSize: 17 }}>LOGIN</Text>
           </TouchableOpacity>
 

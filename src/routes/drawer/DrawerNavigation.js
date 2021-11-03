@@ -8,7 +8,7 @@ class DrawerNavigation extends React.Component {
   render() {
     const Drawer = createDrawerNavigator();
     return (
-      <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />}>
+      <Drawer.Navigator screenOptions={{headerShown:false}}  drawerContent={(props) => <DrawerContent {...props} />}>
         <Drawer.Screen name="Bill" component={BillScreenStack} />
         <Drawer.Screen name="Contract" component={ContractScreenStack} />
       </Drawer.Navigator>

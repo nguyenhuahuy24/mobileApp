@@ -2,6 +2,7 @@ import 'react-native-gesture-handler';
 import ContractScreen from '../../screens/contract/ContractScreen';
 import * as React from 'react';
 import { View, TouchableOpacity, Image } from 'react-native';
+import ContractDetailScreen from '../../screens/contract/ContractDetailScreen';
 import { createStackNavigator } from '@react-navigation/stack';
 const Stack = createStackNavigator();
 const NavigationDrawerStructure = (props) => {
@@ -34,12 +35,12 @@ export default class ContractScreenStack extends React.Component {
           name="ContractScreen"
           component={ContractScreen}
           options={{
-            title: 'Contract Screen', //Set Header Title
+            title: 'Hợp Đồng', //Set Header Title
             headerLeft: () => (
               <NavigationDrawerStructure navigationProps={this.props.navigation} />
             ),
             headerStyle: {
-              backgroundColor: '#61dafb', //Set Header color
+              backgroundColor: '#DB3022', //Set Header color
             },
             headerTintColor: '#fff', //Set Header text color
             headerTitleStyle: {
@@ -47,6 +48,19 @@ export default class ContractScreenStack extends React.Component {
             },
           }}
         />
+        <Stack.Screen 
+            name="ContractDetail" 
+            component={ContractDetailScreen} 
+            options={{
+                    // title: this.props.projectDetail.data.name,
+            title: "Bill Detail",
+            headerStyle: {
+            backgroundColor: '#DB3022',},
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+            fontWeight: 'bold',
+            },
+            }} />
       </Stack.Navigator>
     );
   }

@@ -1,5 +1,7 @@
 import 'react-native-gesture-handler';
 import BillScreen from '../../screens/bill/BillScreen'
+import BillDetailScreen from '../../screens/bill/BillDetailScreen';
+
 import * as React from 'react';
 import {View, TouchableOpacity, Image} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -29,15 +31,15 @@ export default class BillScreenStack extends React.Component {
         return (
                 <Stack.Navigator>
                 <Stack.Screen
-                    name="Project"
+                    name="BillScreen"
                     component={BillScreen}
                     options={{
-                    title: 'Bill Screen',
+                    title: 'Hóa Đơn',
                     headerLeft: () => (
                         <NavigationDrawerStructure navigationProps={this.props.navigation} />
                     ),
                     headerStyle: {
-                        backgroundColor: '#61dafb',
+                        backgroundColor: '#DB3022',
                     },
                     headerTintColor: '#fff', 
                     headerTitleStyle: {
@@ -45,6 +47,21 @@ export default class BillScreenStack extends React.Component {
                     },
                     }}
                 />
+                <Stack.Screen 
+                    name="BillDetail" 
+                    component={BillDetailScreen} 
+                    options={{
+                    // title: this.props.projectDetail.data.name,
+                     title: "Bill Detail",
+                     headerStyle: {
+                    backgroundColor: '#DB3022',
+                  },
+                  headerTintColor: '#fff',
+                  headerTitleStyle: {
+                    fontWeight: 'bold',
+                  },
+                    
+                    }} />
                 </Stack.Navigator>
             );
     }
