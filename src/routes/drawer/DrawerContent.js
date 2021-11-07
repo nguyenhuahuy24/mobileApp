@@ -78,6 +78,21 @@ class DrawContentContent extends React.Component {
 
         {/* footer */}
         <View style={styles.footer}>
+        <View style={styles.footerText}>
+            <TouchableOpacity
+              style={styles.touch}
+              onPress={() => this.props.navigation.navigate('ChangePassword')}>
+              <Icon
+                name="cog"
+                backgroundColor=""
+                color="#99b3ff"
+                size={25}
+                style={{margin:"3%"}}
+              />
+              <Text style={{fontSize: 20,margin:"3%"}}>Đổi Mật Khẩu</Text>
+            </TouchableOpacity>
+            
+          </View>
           <View style={styles.footerText}>
             <TouchableOpacity
               style={styles.touch}
@@ -87,9 +102,9 @@ class DrawContentContent extends React.Component {
                 backgroundColor=""
                 color="#99b3ff"
                 size={25}
-                style={{marginLeft: 10}}
+                style={{margin:"3%"}}
               />
-              <Text style={{fontSize: 20, marginLeft: 15,marginTop:"1%"}}>Đăng Xuất</Text>
+              <Text style={{fontSize: 20, margin:"3%"}}>Đăng Xuất</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -103,12 +118,12 @@ const styles = StyleSheet.create({
     flex: 1
   },
   body: {
-    flex: 10,
+    flex: 8,
     borderTopWidth: 1,
 
   },
   footer: {
-    flex: 1,
+    flex: 2,
     borderTopWidth: 1
   },
   footerText: {

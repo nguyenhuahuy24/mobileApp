@@ -6,38 +6,94 @@ import {
   TouchableOpacity,
   StyleSheet,
   Text,
+  Image
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 export default class LoginScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      url: "",
-      username: "",
+      phone: "",
       password: "",
+      showX:false,
+      hideX:false,
+      showPassword:true,
+
     };
   }
+  changeText(value, type) {
+      if (type === 'phone') {
+          this.setState({phone:value});
+    } else {
+          if(value===""){
+              this.setState({showX:false,hideX:false,showPassword:true});
+          }
+          else{
+              if(this.state.hideX===true){
+                  this.setState({password: value});
+              }
+              else  
+                  this.setState({password: value,showX:true});
+              }
+      }
+  }
+  handleShow = () => {
+      this.setState({showPassword:false,showX:false,hideX:true})
+  };
+  handleHide = () => {
+      this.setState({showPassword:true,hideX:false,showX:true})
+  };
   onLogin = () => {
     this.props.navigation.navigate('DrawerNavigation');
   };
   render() {
     return (
-      <View style={{ backgroundColor: '#F9F9F9', flex: 1 }}>
+      <View style={{ backgroundColor: '#ffff', flex: 1 }}>
         <View style={styles.header}>
-          <Text style={styles.title}>Nhà trọ hạnh phúc</Text>
-          <Text style={styles.title} >Login</Text>
+          <Image
+            style={styles.imgStyle}
+            source={require('../../image/logo.png')}
+          />
         </View>
         <View style={styles.body}>
           <View style={styles.input_wrap}>
             <Text style={{ marginLeft: 10, color: "#D3D3D3" }}>Số điện thoại</Text>
-            <TextInput style={styles.input} keyboardType={"phone-pad"} />
+            <TextInput 
+                style={styles.input} 
+                keyboardType={"phone-pad"} 
+                onChangeText={value => this.changeText(value, 'phone')}
+                />
           </View>
           <View style={styles.input_wrap}>
             <Text style={{ marginLeft: 10, color: "#D3D3D3" }}>Mật khẩu</Text>
-            <TextInput style={styles.input} secureTextEntry={true} />
+            <View style={styles.inputPassword}>
+              <TextInput 
+                style={styles.input}  
+                secureTextEntry={this.state.showPassword} 
+                onChangeText={value => this.changeText(value, 'password')}
+                />
+                      {this.state.showX ? (<TouchableOpacity onPress={this.handleShow}>
+                  <Icon
+                    name="eye"
+                    backgroundColor=""
+                    color="grey"
+                    size={20}
+                    style={{ marginTop: 9, marginLeft: 20 }}
+                  />
+                </TouchableOpacity>):null}
+                  {this.state.hideX ? (<TouchableOpacity onPress={this.handleHide}>
+                  <Icon
+                    name="eye-slash"
+                    backgroundColor=""
+                    color="grey"
+                    size={20}
+                    style={{ marginTop: 9, marginLeft: 20 }}
+                  />
+                </TouchableOpacity>):null}
+            </View>
           </View>
           <TouchableOpacity style={styles.button} onPress={this.onLogin}>
-            <Text style={{ color: "white", fontSize: 17 }}>LOGIN</Text>
+            <Text style={{ color: "white", fontSize: 17 }}>ĐĂNG NHẬP</Text>
           </TouchableOpacity>
 
         </View>
@@ -50,6 +106,7 @@ const styles = StyleSheet.create({
   header: {
     flex: 2,
     justifyContent: 'center',
+    alignItems:'center'
   },
   body: {
     flex: 3, paddingTop: 20
@@ -103,5 +160,11 @@ const styles = StyleSheet.create({
     shadowRadius: 8.30,
 
     elevation: 13,
+  },
+  inputPassword:{
+    flexDirection: 'row',
+  },
+  imgStyle:{
+
   }
 });
