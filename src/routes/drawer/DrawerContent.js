@@ -10,7 +10,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import IconOcticons from 'react-native-vector-icons/Octicons';
 
-class DrawContentContent extends React.Component {
+class DrawContent extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -74,6 +74,20 @@ class DrawContentContent extends React.Component {
               <Text style={{fontSize: 20, marginLeft: 15,marginTop:"1%"}}>Hợp đồng</Text>
             </TouchableOpacity>
           </View>
+          <View style={styles.bodyText}>
+            <TouchableOpacity
+              style={styles.touch}
+              onPress={()=> this.props.navigation.navigate('Messages')}>
+              <Icon
+                name="facebook-messenger"
+                backgroundColor=""
+                color="#ff4d94"
+                size={30}
+                style={{marginLeft: 10,marginRight:10}}
+              />
+              <Text style={{fontSize: 20, marginLeft: 12,marginTop:"1%"}}>Trò chuyện</Text>
+            </TouchableOpacity>
+          </View>
         </View>
 
         {/* footer */}
@@ -132,7 +146,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   bodyText: {
-    marginTop: 5,
+    marginTop:'7%',
     marginHorizontal: 1,
     flexDirection: 'row',
   },
@@ -149,4 +163,4 @@ const styles = StyleSheet.create({
   },
 
 });
-export default DrawContentContent;
+export default DrawContent;

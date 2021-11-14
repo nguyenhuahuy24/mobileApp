@@ -13,7 +13,7 @@ const item = {
     RentalPeriod: "2 năm",
     Renter: "Nguyễn Huy",
     Room: "2",
-    Status: "1",
+    Status: "3",
     _id: "617e38b7dbf6e92364465740"
   }
 export default class ContractScreen extends React.Component
