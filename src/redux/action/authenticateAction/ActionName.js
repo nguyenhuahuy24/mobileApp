@@ -1,0 +1,9 @@
+export const NAME_ACTIONS = {
+    LOGIN_SCREEN: {
+        LOGIN_SCREEN: 'LOGIN_SCREEN',
+        LOGIN: 'LOGIN',
+        LOGIN_FAILED: 'LOGIN_FAILED',
+        LOGOUT: 'LOGOUT',
+        LOGOUT_FAILED: 'LOGOUT_FAILED'
+    }
+}

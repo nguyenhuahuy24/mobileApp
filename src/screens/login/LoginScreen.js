@@ -6,45 +6,62 @@ import {
   TouchableOpacity,
   StyleSheet,
   Text,
-  Image
+  Image,
+  Alert
 } from 'react-native';
+import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
-export default class LoginScreen extends React.Component {
+import { Login } from '../../redux/action/authenticateAction/AuthenticateAction';
+import { dataStatus } from '../../utility/config'
+import { withGlobalContext } from '../../GlobalContextProvider';
+class LoginScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       phone: "",
       password: "",
-      showX:false,
-      hideX:false,
-      showPassword:true,
+      showX: false,
+      hideX: false,
+      showPassword: true,
 
     };
   }
-  changeText(value, type) {
-      if (type === 'phone') {
-          this.setState({phone:value});
-    } else {
-          if(value===""){
-              this.setState({showX:false,hideX:false,showPassword:true});
-          }
-          else{
-              if(this.state.hideX===true){
-                  this.setState({password: value});
-              }
-              else  
-                  this.setState({password: value,showX:true});
-              }
+  componentDidUpdate(prevProps) {
+    if (this.props.user !== prevProps.user) {
+      if (this.props.user.status === dataStatus.SUCCESS) {
+        const { setSignin } = this.props.global;
+        setSignin();
       }
+      else {
+        Alert.alert("Error", this.props.user.message)
+      }
+    }
+  }
+  changeText(value, type) {
+    if (type === 'phone') {
+      this.setState({ phone: value });
+    } else {
+      if (value === "") {
+        this.setState({ showX: false, hideX: false, showPassword: true });
+      }
+      else {
+        if (this.state.hideX === true) {
+          this.setState({ password: value });
+        }
+        else
+          this.setState({ password: value, showX: true });
+      }
+    }
   }
   handleShow = () => {
-      this.setState({showPassword:false,showX:false,hideX:true})
+    this.setState({ showPassword: false, showX: false, hideX: true })
   };
   handleHide = () => {
-      this.setState({showPassword:true,hideX:false,showX:true})
+    this.setState({ showPassword: true, hideX: false, showX: true })
   };
   onLogin = () => {
-    this.props.navigation.navigate('DrawerNavigation');
+    this.props.Login(this.state.phone, this.state.password)
+    // this.props.navigation.navigate('DrawerNavigation');
   };
   render() {
     return (
@@ -58,38 +75,38 @@ export default class LoginScreen extends React.Component {
         <View style={styles.body}>
           <View style={styles.input_wrap}>
             <Text style={{ marginLeft: 10, color: "#D3D3D3" }}>Số điện thoại</Text>
-            <TextInput 
-                style={styles.input} 
-                keyboardType={"phone-pad"} 
-                onChangeText={value => this.changeText(value, 'phone')}
-                />
+            <TextInput
+              style={styles.input}
+              keyboardType={"phone-pad"}
+              onChangeText={value => this.changeText(value, 'phone')}
+            />
           </View>
           <View style={styles.input_wrap}>
             <Text style={{ marginLeft: 10, color: "#D3D3D3" }}>Mật khẩu</Text>
             <View style={styles.inputPassword}>
-              <TextInput 
-                style={styles.input}  
-                secureTextEntry={this.state.showPassword} 
+              <TextInput
+                style={styles.input}
+                secureTextEntry={this.state.showPassword}
                 onChangeText={value => this.changeText(value, 'password')}
+              />
+              {this.state.showX ? (<TouchableOpacity onPress={this.handleShow}>
+                <Icon
+                  name="eye"
+                  backgroundColor=""
+                  color="grey"
+                  size={20}
+                  style={{ marginTop: 9, marginLeft: 20 }}
                 />
-                      {this.state.showX ? (<TouchableOpacity onPress={this.handleShow}>
-                  <Icon
-                    name="eye"
-                    backgroundColor=""
-                    color="grey"
-                    size={20}
-                    style={{ marginTop: 9, marginLeft: 20 }}
-                  />
-                </TouchableOpacity>):null}
-                  {this.state.hideX ? (<TouchableOpacity onPress={this.handleHide}>
-                  <Icon
-                    name="eye-slash"
-                    backgroundColor=""
-                    color="grey"
-                    size={20}
-                    style={{ marginTop: 9, marginLeft: 20 }}
-                  />
-                </TouchableOpacity>):null}
+              </TouchableOpacity>) : null}
+              {this.state.hideX ? (<TouchableOpacity onPress={this.handleHide}>
+                <Icon
+                  name="eye-slash"
+                  backgroundColor=""
+                  color="grey"
+                  size={20}
+                  style={{ marginTop: 9, marginLeft: 20 }}
+                />
+              </TouchableOpacity>) : null}
             </View>
           </View>
           <TouchableOpacity style={styles.button} onPress={this.onLogin}>
@@ -106,7 +123,7 @@ const styles = StyleSheet.create({
   header: {
     flex: 2,
     justifyContent: 'center',
-    alignItems:'center'
+    alignItems: 'center'
   },
   body: {
     flex: 3, paddingTop: 20
@@ -161,10 +178,17 @@ const styles = StyleSheet.create({
 
     elevation: 13,
   },
-  inputPassword:{
+  inputPassword: {
     flexDirection: 'row',
   },
-  imgStyle:{
+  imgStyle: {
 
   }
 });
+
+function mapStateToProps(state) {
+  return {
+    user: state.AuthenticateReducer.user
+  };
+}
+export default withGlobalContext(connect(mapStateToProps, { Login })(LoginScreen));
