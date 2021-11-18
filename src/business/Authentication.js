@@ -10,6 +10,10 @@ export default class Authentication {
         const response = await axios.post(`${URL}/customer/login`, params)
         const resData = { ...response.data }
         if (!("error" in response.data)) {
+            const existPhone = await AsyncStorage.getItem('phone')
+            if (existPhone !== phone) {
+                await AsyncStorage.setItem('phone', phone)
+            }
             try {
                 await AsyncStorage.setItem('accessToken', response.data.accessToken)
             } catch (e) {

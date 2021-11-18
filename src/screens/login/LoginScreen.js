@@ -14,6 +14,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { Login } from '../../redux/action/authenticateAction/AuthenticateAction';
 import { dataStatus } from '../../utility/config'
 import { withGlobalContext } from '../../GlobalContextProvider';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 class LoginScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -23,8 +24,15 @@ class LoginScreen extends React.Component {
       showX: false,
       hideX: false,
       showPassword: true,
-
+      showPhone: false
     };
+  }
+  componentDidMount() {
+    this.getexitsPhone().then(phone => {
+      if (phone !== null) {
+        this.setState({ showPhone: true, phone: phone })
+      }
+    })
   }
   componentDidUpdate(prevProps) {
     if (this.props.user !== prevProps.user) {
@@ -36,6 +44,17 @@ class LoginScreen extends React.Component {
         Alert.alert("Error", this.props.user.message)
       }
     }
+  }
+  getexitsPhone = async () => {
+    try {
+      return await AsyncStorage.getItem('phone')
+
+    } catch (e) {
+      console.log(e)
+    }
+  }
+  changeAnotherPhone = () => {
+    this.setState({ showPhone: false, phone: "" })
   }
   changeText(value, type) {
     if (type === 'phone') {
@@ -73,14 +92,21 @@ class LoginScreen extends React.Component {
           />
         </View>
         <View style={styles.body}>
-          <View style={styles.input_wrap}>
-            <Text style={{ marginLeft: 10, color: "#D3D3D3" }}>Số điện thoại</Text>
-            <TextInput
-              style={styles.input}
-              keyboardType={"phone-pad"}
-              onChangeText={value => this.changeText(value, 'phone')}
-            />
-          </View>
+          {
+            this.state.showPhone ?
+              <View style={{ alignItems: 'center', marginBottom: "5%" }} >
+                <Text style={{ fontSize: 25 }}>Xin chào, {this.state.phone}</Text>
+              </View>
+              :
+              <View style={styles.input_wrap}>
+                <Text style={{ marginLeft: 10, color: "#D3D3D3" }}>Số điện thoại</Text>
+                <TextInput
+                  style={styles.input}
+                  keyboardType={"phone-pad"}
+                  onChangeText={value => this.changeText(value, 'phone')}
+                />
+              </View>
+          }
           <View style={styles.input_wrap}>
             <Text style={{ marginLeft: 10, color: "#D3D3D3" }}>Mật khẩu</Text>
             <View style={styles.inputPassword}>
@@ -109,10 +135,14 @@ class LoginScreen extends React.Component {
               </TouchableOpacity>) : null}
             </View>
           </View>
+          <View style={{ flexDirection: 'row-reverse' }}>
+            <TouchableOpacity style={{ marginRight: "5%", marginTop: "1.5%" }}>
+              <Text style={{ color: "#DB3022" }} onPress={this.changeAnotherPhone}> Đổi số điện thoại</Text>
+            </TouchableOpacity>
+          </View>
           <TouchableOpacity style={styles.button} onPress={this.onLogin}>
             <Text style={{ color: "white", fontSize: 17 }}>ĐĂNG NHẬP</Text>
           </TouchableOpacity>
-
         </View>
         <View style={styles.footer}></View>
       </View>
@@ -147,9 +177,9 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     marginHorizontal: 10,
     borderColor: '#E5E5E5',
-    borderRadius: 5,
-    elevation: 5,
-    shadowColor: '#BEBEBE',
+    borderRadius: 10,
+    elevation: 4,
+    shadowColor: '#444444',
     justifyContent: 'center'
   },
   input: {
@@ -165,7 +195,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#DB3022",
     borderRadius: 25,
     marginHorizontal: 20,
-    marginTop: 68,
+    marginTop: "15%",
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: "#000",
