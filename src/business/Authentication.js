@@ -7,7 +7,7 @@ export default class Authentication {
     login = async (data, success, failed) => {
         const { phone, password } = data
         const params = { Phone: phone, Password: password }
-        const response = await axios.post(`${URL}/customer/login`, params)
+        const response = await axios.post(`${URL}/login`, params)
         const resData = { ...response.data }
         if (!("error" in response.data)) {
             const existPhone = await AsyncStorage.getItem('phone')
