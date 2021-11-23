@@ -79,7 +79,11 @@ class LoginScreen extends React.Component {
     this.setState({ showPassword: true, hideX: false, showX: true })
   };
   onLogin = () => {
-    this.props.Login(this.state.phone, this.state.password)
+    if(this.state.phone ==="" || this.state.password ==="")
+    {
+      Alert.alert("Thông báo", "Thông tin đăng nhập thiếu")
+    }
+    else this.props.Login(this.state.phone, this.state.password)
     // this.props.navigation.navigate('DrawerNavigation');
   };
   render() {

@@ -2,26 +2,70 @@ import React, { Component } from "react";
 import {  View,Text,StyleSheet, TouchableOpacity} from 'react-native';
 import {formatNumber } from 'react-native-currency-input';
 
-const item = {
-    AddressHouse: "123/12a đường Dương Đình Hội, Phường phước Long, Quận 9, Tp Hồ Chí Minh",
-    ArrivalDate: "2021-10-27T17:00:00.000Z",
-    DateCreate: "2021-10-31T06:33:05.243Z",
-    Deposit: "1000000",
-    ExpirationDate: "2023-10-27T17:00:00.000Z",
-    House: "test house",
-    Rent: "200000",
-    RentalPeriod: "2 năm",
-    Renter: "Nguyễn Huy",
-    Room: "2",
-    Status: "3",
-    _id: "617e38b7dbf6e92364465740"
-  }
-export default class ContractScreen extends React.Component
+import { connect } from 'react-redux';
+import { dataStatus } from '../../utility/config'
+import { withGlobalContext } from '../../GlobalContextProvider';
+import { getContract } from '../../redux/action/contract/ContractAction';
+
+
+class ContractScreen extends React.Component
 {
-  
-  ToDetail=()=>
+  constructor(props) {
+    super(props);
+    this.state = {
+      contract: "",
+      showX: false,
+      global_search: "",
+    }
+  }
+  componentDidMount() {
+    this.props.getContract();
+  }
+  componentDidUpdate(prevProps) {
+    if (this.props.contract !== prevProps.contract) {
+      if (this.props.contract.status === dataStatus.SUCCESS) {
+       let Contract = this.props.contract.data[0]
+        let data=[]
+          data.push({
+            _id: Contract._id,
+            AddressHouse: Contract.AddressHouse,
+            Deposit: Contract.Deposit,
+            RentalPeriod: Contract.RentalPeriod,
+            Status:Contract.Status,
+            // test
+            DateCreate: Contract.DateCreate,
+            ArrivalDate: Contract.ArrivalDate,
+            ExpirationDate: Contract.ExpirationDate,
+            HouseName: Contract.House.Name,
+            RoomName: Contract.RoomName,
+            //lessor
+            Lessor_Name: Contract.Lessor.Name,
+            Lessor_Phone: Contract.Lessor.Phone,
+            Lessor_PermanentAddress: Contract.Lessor.PermanentAddress,
+            Lessor_DateCmnd: Contract.Lessor.DateCmnd,
+            Lessor_PlaceCmnd:Contract.Lessor.PlaceCmnd,
+            Lessor_Cmnd: Contract.Lessor.Cmnd,
+            Lessor_Age: Contract.Lessor.Age,
+            //Renter
+            Renter_Name: Contract.Renter.Name,
+            Renter_Phone: Contract.Renter.Phone,
+            Renter_PermanentAddress: Contract.Renter.PermanentAddress,
+            Renter_DateCmnd: Contract.Renter.DateCmnd,
+            Renter_PlaceCmnd:Contract.Renter.PlaceCmnd,
+            Renter_Cmnd: Contract.Renter.Cmnd,
+            Renter_Age: Contract.Renter.Age,
+          })
+       
+          console.log("data: ",data[0])
+          this.setState({contract:data[0]})
+      }
+    }
+   
+  }
+  ToDetail = ()=>
   {
-    this.props.navigation.navigate('ContractDetail',{item})
+    
+    this.props.navigation.navigate('ContractDetail',this.state.contract)
   }
   currentNumber =(value)=>{
       return formatNumber(value, {
@@ -30,10 +74,10 @@ export default class ContractScreen extends React.Component
     })
  }
   statusBodyTemplate=(rowData)=> {
-    if (rowData === "3") {
+    if (rowData === 3) {
        return <Text style={styles.product_status_1}>{"Chờ bên thuê nhà xác nhận"}</Text>;
     }
-    if (rowData === "1") {return  <Text style={styles.product_status_0}>{"Đã xác nhận"}</Text>; }
+    if (rowData === 1) {return  <Text style={styles.product_status_0}>{"Đã xác nhận"}</Text>; }
   }
   render(){
    
@@ -47,28 +91,28 @@ export default class ContractScreen extends React.Component
             <Text style={{fontSize:20, fontWeight:'bold',margin:'2%'}}>Thông tin hợp động</Text>
             <View style={styles.text_contract}>
               <Text style={{fontSize:17}}>Bên thuê:</Text>
-              <Text style={{fontSize:17}}>{item.Renter}</Text>
+              <Text style={{fontSize:17}}>{this.state.contract.Renter_Name}</Text>
             </View>
             <View style={styles.text_contract}>
               <Text style={{fontSize:17}}>Tiền cọc:</Text>
-              <Text style={{fontSize:17}}>{this.currentNumber(item.Deposit)}</Text>
+              <Text style={{fontSize:17}}>{this.currentNumber(this.state.contract.Deposit)}</Text>
             </View>
             <View style={styles.text_contract}>
               <Text style={{fontSize:17}}>Thời gian hợp đồng:</Text>
-              <Text style={{fontSize:17}}>{item.RentalPeriod}</Text>
+              <Text style={{fontSize:17}}>{this.state.contract.RentalPeriod}</Text>
             </View>
             <View style={styles.text_contract}>
               <Text style={{fontSize:17,flex:1}}>Địa chỉ nhà thuê:</Text>
-              <Text style={{fontSize:17,flex:1}}>{item.AddressHouse}</Text>
+              <Text style={{fontSize:17,flex:1}}>{this.state.contract.AddressHouse}</Text>
             </View>
             <View style={styles.text_status}>
               <Text style={{fontSize:17,flex:1}}>Trạng thái hợp đồng:</Text>
-              <Text style={{fontSize:17,flex:1}}>{this.statusBodyTemplate(item.Status)}</Text>
+              <Text style={{fontSize:17,flex:1}}>{this.statusBodyTemplate(this.state.contract.Status)}</Text>
             </View>
         </View>
        
-          <TouchableOpacity style={styles.button} onPress={this.ToDetail}>
-            <Text style={{ color: "white", fontSize: 17 }}>XEM CHI TIẾT {item.Status=='3' &&
+          <TouchableOpacity style={styles.button} onPress={()=>this.ToDetail()}>
+            <Text style={{ color: "white", fontSize: 17 }}>XEM CHI TIẾT {this.state.contract.Status==3 &&
             <Text>& XÁC NHẬN</Text>
             }</Text>
           </TouchableOpacity>
@@ -149,3 +193,9 @@ const styles = StyleSheet.create({
     color: '#256029',
 } 
 })
+function mapStateToProps(state) {
+  return {
+    contract: state.ContractReducer.contract,
+  };
+}
+export default withGlobalContext(connect(mapStateToProps, { getContract, })(ContractScreen));

@@ -1,0 +1,10 @@
+export const NAME_ACTIONS = {
+    BILL_SCREEN: {
+        BILL_SCREEN: 'BILL_SCREEN',
+        BILL: 'BILL',
+        BILL_FAILED: 'BILL_FAILED',
+
+        BILL_DETAIL: 'BILL_DETAIL',
+        BILL_DETAIL_FAILED: 'BILL_DETAIL_FAILED',
+    }
+}

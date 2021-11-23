@@ -7,7 +7,7 @@ import {
   Alert,
 } from 'react-native';
 import { connect } from 'react-redux';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import IconOcticons from 'react-native-vector-icons/Octicons';
 import { Logout } from '../../redux/action/authenticateAction/AuthenticateAction'
 import { withGlobalContext } from '../../GlobalContextProvider';
@@ -58,7 +58,7 @@ class DrawContent extends React.Component {
               style={styles.touch}
               onPress={this.goToBillScreen}>
               <Icon
-                name="money-bill"
+                name="money"
                 backgroundColor=""
                 color="#ff4d94"
                 size={30}
@@ -72,7 +72,7 @@ class DrawContent extends React.Component {
               style={styles.touch}
               onPress={this.goToContractScreen}>
               <Icon
-                name="file-alt"
+                name="file-text-o"
                 backgroundColor=""
                 color="#ff4d94"
                 size={30}

@@ -1,16 +1,37 @@
 import React, { Component } from "react";
 import {  View,Text,StyleSheet, SafeAreaView,ScrollView,TouchableOpacity,Switch} from 'react-native';
 import {formatNumber } from 'react-native-currency-input';
-export default class ContractDetailScreen extends React.Component
+import { connect } from 'react-redux';
+import { dataStatus } from '../../utility/config'
+import { withGlobalContext } from '../../GlobalContextProvider';
+import { getContract,confirmContract } from '../../redux/action/contract/ContractAction';
+import moment from 'moment';
+
+class ContractDetailScreen extends React.Component
 {
-     constructor(props) {
+  constructor(props) {
     super(props);
     this.state = {
       toggle: false,
-      
+      contract:""
       
     };
     
+  }
+  // componentDidMount() {
+  //   this.props.getContract();
+  // }
+  componentDidUpdate(prevProps) {
+    
+     if(this.props.contract !== prevProps.contract)
+    {
+      if(this.props.contract.status === dataStatus.SUCCESS)
+      {
+        console.log("vao r")
+        this.props.navigation.navigate('ContractScreen')
+        
+      }
+    }
   }
   toggleSwitch=(value)=>{
     this.setState({toggle:value})
@@ -30,14 +51,13 @@ export default class ContractDetailScreen extends React.Component
       suffix: ' VND',
     })
  }
-  statusBodyTemplate=(rowData)=> {
-    if (rowData === "3") {
-       return <Text style={styles.product_status_1}>{"Chờ bên thuê nhà xác nhận"}</Text>;
-    }
-    if (rowData === "1") {return  <Text style={styles.product_status_0}>{"Đã xác nhận"}</Text>; }
+  ConfirmContract =(id)=>{
+    let a ={contractId:id}
+    this.props.confirmContract(a);
+    this.props.getContract();
   }
   render(){
-    const {item} = this.props.route.params
+    const item = this.props.route.params;
     return (
       
       <SafeAreaView style={{flex: 1,backgroundColor:'#cccc'}} >
@@ -51,27 +71,29 @@ export default class ContractDetailScreen extends React.Component
                <View style={styles.body_contract}>
                   <Text style={{fontSize:18,fontWeight:'bold'}}>Chúng tôi gồm:</Text>
                   <Text style={{fontSize:18}}>1. Đại diện bên cho thuê phòng trọ (Bên A):</Text>
-                  <Text style={{fontSize:18}}>- Ông/bà:</Text>
-                  <Text style={{fontSize:18}}>- Sinh ngày:</Text>
-                  <Text style={{fontSize:18}}>- Nơi đăng ký HK:</Text>
-                  <Text style={{fontSize:18}}>- CMND số:</Text>
-                  <Text style={{fontSize:18}}>- Cấp ngày:</Text>
-                  <Text style={{fontSize:18}}>- Nơi cấp:</Text>
-                  <Text style={{fontSize:18}}>- Số điện thoại:</Text>
+                  <Text style={{fontSize:18}}>- Ông/bà: {<Text style={styles.label_name}>{item.Lessor_Name}</Text>}</Text>
+                  <Text style={{fontSize:18}}>- Sinh ngày: {<Text style={styles.label_name}>{moment(item.Lessor_Age).format('DD-MM-YYYY')}</Text>}</Text>
+                  <Text style={{fontSize:18}}>- Nơi đăng ký HK: {<Text style={styles.label_name}>{item.Lessor_PlaceCmnd}</Text>}</Text>
+                  <Text style={{fontSize:18}}>- CMND số: {<Text style={styles.label_name}>{item.Lessor_Cmnd}</Text>}</Text>
+                  <Text style={{fontSize:18}}>- Cấp ngày: {<Text style={styles.label_name}>{moment(item.Lessor_DateCmnd).format('DD-MM-YYYY')}</Text>}</Text>
+                  <Text style={{fontSize:18}}>- Nơi cấp: {<Text style={styles.label_name}>{item.Lessor_PlaceCmnd}</Text>}</Text>
+                  <Text style={{fontSize:18}}>- Số điện thoại: {<Text style={styles.label_name}>{item.Lessor_Phone}</Text>}</Text>
 
                   <Text style={{fontSize:18}}>2. Bên thuê phòng trọ (Bên B):</Text>
-                  <Text style={{fontSize:18}}>- Ông/bà: {item.Renter}</Text>
-                  <Text style={{fontSize:18}}>- Sinh ngày:</Text>
-                  <Text style={{fontSize:18}}>- Nơi đăng ký HK:</Text>
-                  <Text style={{fontSize:18}}>- CMND số:</Text>
-                  <Text style={{fontSize:18}}>- Cấp ngày:</Text>
-                  <Text style={{fontSize:18}}>- Nơi cấp:</Text>
-                  <Text style={{fontSize:18}}>- Số điện thoại:</Text>
+                  <Text style={{fontSize:18}}>- Ông/bà: {<Text style={styles.label_name}>{item.Renter_Name}</Text>}</Text>
+                  <Text style={{fontSize:18}}>- Sinh ngày: {<Text style={styles.label_name} > {moment(item.Renter_Age).format('DD-MM-YYYY')}</Text>}</Text>
+                  <Text style={{fontSize:18}}>- Nơi đăng ký HK: {<Text style={styles.label_name}>{item.Renter_PermanentAddress}</Text>}</Text>
+                  <Text style={{fontSize:18}}>- CMND số: {<Text style={styles.label_name}>{item.Renter_Cmnd}</Text>}</Text>
+                  <Text style={{fontSize:18}}>- Cấp ngày: {<Text style={styles.label_name}>{moment(item.Renter_DateCmnd).format('DD-MM-YYYY')}</Text>}</Text>
+                  <Text style={{fontSize:18}}>- Nơi cấp: {<Text style={styles.label_name}>{item.Renter_PlaceCmnd}</Text>}</Text>
+                  <Text style={{fontSize:18}}>- Số điện thoại: {<Text style={styles.label_name}>{item.Renter_Phone}</Text>}</Text>
                   <Text style={{fontSize:18,fontWeight:'bold'}}>Sau khi bàn bạc trên tinh thần dân chủ, hai bên cùng có lợi, cùng thống nhất như sau:</Text>
-                  <Text style={{fontSize:18}}>Bên A đồng ý cho bên B thuê 01 phòng ở tại địa chỉ: {item.AddressHouse}</Text>
+                  <Text style={{fontSize:18}}>Bên A đồng ý cho bên B thuê 01 phòng ở tại địa chỉ: {<Text style={styles.label_name}>{item.AddressHouse}</Text>}</Text>
                   <Text style={{fontSize:18}}>Giá thuê phòng: …………………. đ/tháng (chưa tính tiền điện, nước hằng tháng)</Text>
-                  <Text style={{fontSize:18}}>Tiền đặt cọc:</Text>
-                  <Text style={{fontSize:18}}>Hợp đồng có giá trị kể từ ngày</Text>
+                  <Text style={{fontSize:18}}>Tiền đặt cọc: {<Text style={styles.label_name}>{this.currentNumber(item.Deposit)}</Text>}</Text>
+                  <Text style={{fontSize:18}}>Thời gian hợp đồng: {<Text style={styles.label_name}>{item.RentalPeriod}</Text>}</Text>
+                  <Text style={{fontSize:18}}>Hợp đồng có giá trị kể từ ngày: {<Text style={styles.label_name}>{moment(item.ArrivalDate).format('DD-MM-YYYY')}</Text>}</Text>
+                  <Text style={{fontSize:18}}>Hợp đồng kết thúc ngày: {<Text style={styles.label_name}>{moment(item.ExpirationDate).format('DD-MM-YYYY')}</Text>}</Text>
                   <Text style={{fontSize:20,fontWeight:'bold'}}>TRÁCH NHIỆM CỦA CÁC BÊN</Text>
                   <Text style={{fontSize:18,fontWeight:'bold'}}>* Trách nhiệm của bên A:</Text>
                   <Text style={{fontSize:18}}>- Tạo mọi điều kiện thuận lợi để bên B thực hiện theo hợp đồng.</Text>
@@ -92,7 +114,7 @@ export default class ContractDetailScreen extends React.Component
                </View>
                  
           </View>
-            {item.Status ==='3'&&
+            {item.Status ===3 &&
             <View style={{marginBottom:'3%'}}>
                     
                     <View style={{alignItems:'flex-end',flexDirection:'row'}}>
@@ -106,7 +128,7 @@ export default class ContractDetailScreen extends React.Component
                     </View>
 
                     {this.state.toggle ==true &&
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity style={styles.button} onPress={()=>this.ConfirmContract(item._id)}>
                       <Text style={{ color: "white", fontSize: 17 }}>ĐỒNG Ý KÝ HỢP ĐỒNG</Text>
                   </TouchableOpacity>}
                   {this.state.toggle ==false &&
@@ -168,4 +190,16 @@ const styles = StyleSheet.create({
     elevation: 13,
     margin:'5%',
   },
+  label_name:{
+    fontWeight:'bold',
+    fontSize:18
+  }
 })
+function mapStateToProps(state) {
+  return {
+    contract: state.ContractReducer.contract,
+    confirmContract: state.ContractReducer.confirmContract,
+    
+  };
+}
+export default withGlobalContext(connect(mapStateToProps, { getContract,confirmContract })(ContractDetailScreen));

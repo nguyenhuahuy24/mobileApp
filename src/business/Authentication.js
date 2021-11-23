@@ -8,6 +8,8 @@ export default class Authentication {
         const { phone, password } = data
         const params = { Phone: phone, Password: password }
         const response = await axios.post(`${URL}/login`, params)
+                console.log("data: ",response)
+
         const resData = { ...response.data }
         if (!("error" in response.data)) {
             const existPhone = await AsyncStorage.getItem('phone')
@@ -47,5 +49,33 @@ export default class Authentication {
                 data: {}
             })
         })
+    }
+    getCustomerById = async (data, success, failed) => {
+        
+        const response = await axios.post(`${URL}/customer/`+ data)
+        const resData = { ...response.data }
+        if (!("error" in response.data)) {
+            const existPhone = await AsyncStorage.getItem('phone')
+            if (existPhone !== phone) {
+                await AsyncStorage.setItem('phone', phone)
+            }
+            try {
+                await AsyncStorage.setItem('accessToken', response.data.accessToken)
+            } catch (e) {
+                console.log(e)
+            }
+            success({
+                status: dataStatus.SUCCESS,
+                message: 'Get data success',
+                data: resData
+            })
+        }
+        else (
+            failed({
+                status: dataStatus.FAILED,
+                message: response.data["error"],
+                data: resData
+            })
+        )
     }
 }

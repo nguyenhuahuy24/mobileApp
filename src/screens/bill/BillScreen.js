@@ -4,46 +4,44 @@ import { View, Text, TouchableOpacity, FlatList, StyleSheet, TextInput, SafeArea
 import moment from 'moment';
 import {formatNumber } from 'react-native-currency-input';
 
-const data =[{
-      _id: 'abc123',
-      RoomNumber: "1",
-      Status: "0",
-      TotalBill: "666666",
-      OtherCosts: "Rác: 5000  Wifi: 50000 Trợ cấp: 200000000",
-      WaterFee: "38500",
-      ElectricFee: "50000",
-      AmountOfElectric: "10",
-      AmountOfWater:"11",
-      RoomPrice:"1000000",
-      DateCreate: "2021-10-31T08:13:21.551+00:00",
-      StartDate: "2021-09-30T17:00:00.000+00:00",
-      EndDate: "2021-10-31T17:00:00.000+00:00"
-  },
-    {
-      _id: 'abc1asdasd123',
-      RoomNumber: "1",
-      Status: "1",
-      TotalBill: "5000000",
-      OtherCosts: "Rác: 5000  Wifi: 50000",
-      WaterFee: "45656",
-      ElectricFee: "50000",
-      AmountOfElectric: "10",
-      AmountOfWater:"11",
-      RoomPrice:"1000000",
-      DateCreate: "2021-09-30T08:13:21.551+00:00",
-      StartDate: "2021-08-31T17:00:00.000+00:00",
-      EndDate: "2021-09-30T17:00:00.000+00:00"
-}
-]
-export default class BillScreen extends React.Component
+import { connect } from 'react-redux';
+import { dataStatus } from '../../utility/config'
+import { withGlobalContext } from '../../GlobalContextProvider';
+import { getListBillCustomer, getInfoBill } from '../../redux/action/bill/BillAction';
+
+
+ class BillScreen extends React.Component
 {
   
   constructor(props) {
     super(props);
     this.state = {
-      bill_list: data,
+      bill_list: [],
       showX: false,
       global_search: "",
+    }
+  }
+  componentDidMount() {
+    this.props.getListBillCustomer();
+  }
+  componentDidUpdate(prevProps) {
+    if (this.props.bill !== prevProps.bill) {
+      if (this.props.bill.status === dataStatus.SUCCESS) {
+        let bills = Object.values(this.props.bill.data)
+        let list=[]
+        bills.forEach(bill => {
+          list.push(bill)
+        })
+        this.setState({bill_list:list})
+      }
+      
+    }
+    if(this.props.billDetail !== prevProps.billDetail)
+    {
+      if(this.props.billDetail.status === dataStatus.SUCCESS)
+      {
+        this.props.navigation.navigate('BillDetail')
+      }
     }
   }
   currentNumber =(value)=>{
@@ -73,22 +71,21 @@ export default class BillScreen extends React.Component
   
   ToDetail=({item})=>
   {
-    //this.props.getDetailProject(item.id)
-    this.props.navigation.navigate('BillDetail',{item})
+    this.props.getInfoBill(item._id)
   }
   
   statusBodyTemplate=(rowData)=> {
-    if (rowData === "1") {
+    if (rowData === 1) {
        return <Text style={styles.product_status_1}>{"Đã thanh toán"}</Text>;
     }
-    if (rowData === "0") {return  <Text style={styles.product_status_0}>{"Chưa thanh toán"}</Text>; }
+    if (rowData === 0) {return  <Text style={styles.product_status_0}>{"Chưa thanh toán"}</Text>; }
   }
   renderItem = ({ item }) => (
     <TouchableOpacity
       onPress={() => this.ToDetail({item})}>
       <View style={styles.body}>
         <View style={{ margin:"2%"}}>
-          <Text style={styles.name_bill}>Hóa đơn tháng {moment(item.DateCreate).format('MM-YYYY')}</Text>
+          <Text style={styles.name_bill}>Hóa đơn tháng {moment(item.EndDate).format('MM-YYYY')}</Text>
           <Text style={styles.label_bill}>Phòng: {item.RoomNumber}</Text>
           <Text style={styles.label_bill}>Tổng tiền: {this.currentNumber(item.TotalBill)}</Text>
           <Text style={{ fontSize: 17 }}>Tình trạng: {this.statusBodyTemplate(item.Status)}</Text>
@@ -155,7 +152,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   name_bill: {
-    fontSize: 19,  color: "#737373", fontWeight:'bold'
+    fontSize: 19,  color: "#ff1a1a", fontWeight:'bold'
   },
   label_bill: {
     fontSize: 17, marginBottom: '2%'
@@ -190,3 +187,10 @@ const styles = StyleSheet.create({
     color: '#256029',
 } 
 });
+function mapStateToProps(state) {
+  return {
+    bill: state.BillReducer.bill,
+    billDetail: state.BillReducer.billDetail
+  };
+}
+export default withGlobalContext(connect(mapStateToProps, { getListBillCustomer,getInfoBill })(BillScreen));

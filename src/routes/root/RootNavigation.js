@@ -7,6 +7,7 @@ import { Text, View, StyleSheet } from 'react-native'
 
 import HomeScreen from '../../screens/home/HomeScreen';
 import SearchScreen from '../../screens/home/SearchScreen';
+import SearchScreenStack from '../dashboard/SearchScreenStack';
 import LoginScreen from '../../screens/login/LoginScreen'
 import DrawerNavigation from '../drawer/DrawerNavigation'
 import { withGlobalContext } from '../../GlobalContextProvider';
@@ -29,7 +30,7 @@ class RootNavigation extends React.Component {
                                     bottom: '2%',
                                     left: '2%',
                                     right: '2%',
-                                    elevation: 1,
+                                    elevation: 3,
                                     backgroundColor: '#ffff',
                                     borderRadius: 15,
                                     borderColor: '#000000',
@@ -39,9 +40,9 @@ class RootNavigation extends React.Component {
                                 tabBarShowLabel: false,
                                 tabBarActiveTintColor: 'tomato',
                                 tabBarInactiveTintColor: 'gray',
-                                headerShown: false
+                                
                             }}>
-                            <Tab.Screen name="HomeScreen" component={HomeScreen} options={{
+                            <Tab.Screen name="HomeScreen"  component={HomeScreen} options={{
                                 tabBarIcon: ({ focused }) => (
                                     <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                                         <Icon
@@ -54,8 +55,9 @@ class RootNavigation extends React.Component {
                                         </Text>
                                     </View>
                                 ),
+                                headerShown:false
                             }} />
-                            <Tab.Screen name="SearchScreen" component={SearchScreen} options={{
+                            <Tab.Screen name="SearchScreen"  component={SearchScreenStack} options={{
                                 tabBarIcon: ({ focused }) => (
                                     <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                                         <Icon
@@ -68,6 +70,8 @@ class RootNavigation extends React.Component {
                                         </Text>
                                     </View>
                                 ),
+                                headerShown:false
+                               
                             }} />
                             <Tab.Screen name="Login" component={LoginScreen} options={{
 
@@ -83,6 +87,7 @@ class RootNavigation extends React.Component {
                                         </Text>
                                     </View>
                                 ),
+                                headerShown:false
 
                             }} />
                         </Tab.Navigator>)}
