@@ -50,20 +50,11 @@ export default class Authentication {
             })
         })
     }
-    getCustomerById = async (data, success, failed) => {
-        
-        const response = await axios.post(`${URL}/customer/`+ data)
+    changePassword = async (data, success, failed) => {
+        const response = await axios.patch(`${URL}/changePassword`,data,{headers:{Authorization:'Bearer ' + await AsyncStorage.getItem('accessToken')}})
+        console.log("response: ",response)
         const resData = { ...response.data }
         if (!("error" in response.data)) {
-            const existPhone = await AsyncStorage.getItem('phone')
-            if (existPhone !== phone) {
-                await AsyncStorage.setItem('phone', phone)
-            }
-            try {
-                await AsyncStorage.setItem('accessToken', response.data.accessToken)
-            } catch (e) {
-                console.log(e)
-            }
             success({
                 status: dataStatus.SUCCESS,
                 message: 'Get data success',

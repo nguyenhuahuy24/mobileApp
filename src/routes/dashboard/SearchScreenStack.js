@@ -38,18 +38,31 @@ export default class SearchScreenStack extends React.Component {
                       title: 'Tìm Kiếm Nhà Trọ',
                       headerStyle: {
                               backgroundColor: '#e32f45',
-                              height:40
+                              height:45
                       },
                       headerTintColor: '#fff', 
                       headerTitleStyle: {
                       fontWeight: 'bold',
-                      fontSize: 24 
+                      fontSize: 22
                       },
                     }}
                 />
                 <Stack.Screen 
                     name="SearchDetail" 
                     component={SearchDetailScreen} 
+                     options={{
+                      
+                     // title: 'Tìm Kiếm Nhà Trọ',
+                      headerStyle: {
+                              backgroundColor: '#e32f45',
+                              height:45
+                      },
+                      headerTintColor: '#fff', 
+                      headerTitleStyle: {
+                      fontWeight: 'bold',
+                      fontSize: 22
+                      },
+                    }}
                      />
                 </Stack.Navigator>
             );

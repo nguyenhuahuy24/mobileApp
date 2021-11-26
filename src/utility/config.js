@@ -4,3 +4,4 @@ export const dataStatus = {
     SUCCESS: 'SUCCESS',
     FAILED: 'FAILED'
 }
+

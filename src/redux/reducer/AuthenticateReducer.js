@@ -10,7 +10,11 @@ const loginState = {
     logoutStatus: {
         status: dataStatus.NONE,
         message: ''
-    }
+    },
+    changePasswordStatus: {
+        status: dataStatus.NONE,
+        message: ''
+    },
 };
 
 const authenticateReducer = (state = loginState, action) => {
@@ -24,6 +28,7 @@ const authenticateReducer = (state = loginState, action) => {
                     data: action.data.data
                 },
             }
+            console.log("user Reducer:",state)
             break;
         case NAME_EPICS.EPIC_LOGIN_SCREEN.EPIC_LOGIN_FAILED:
             state = {
@@ -50,6 +55,26 @@ const authenticateReducer = (state = loginState, action) => {
                 logoutStatus: {
                     status: action.data.status,
                     message: action.data.message
+                }
+            }
+            break;
+        case NAME_EPICS.EPIC_LOGIN_SCREEN.EPIC_CHANGE_PASSWORD:
+            state = {
+                ...state,
+                changePasswordStatus: {
+                    status: action.data.status,
+                    message: action.data.message,
+                    data: action.data.data
+                }
+            }
+            break;
+        case NAME_EPICS.EPIC_LOGIN_SCREEN.EPIC_CHANGE_PASSWORD_FAILED:
+            state = {
+                ...state,
+                changePasswordStatus: {
+                    status: action.data.status,
+                    message: action.data.message,
+                    data: {}
                 }
             }
             break;

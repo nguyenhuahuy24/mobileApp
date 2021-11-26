@@ -111,7 +111,7 @@ export default class SearchScreen extends React.Component {
     </View>
   );
   renderPhuongItem = ({ item }) => (
-    <View style={{ flexDirection: 'row', borderTopWidth: 1, }}>
+    <View style={{ flexDirection: 'row', borderTopWidth: 1 }}>
       <TouchableOpacity style={{ flex: 1, margin: "3%", width: "100%" }} onPress={() => {
         this.setState({ modalOfType: false })
       }} >
@@ -121,7 +121,7 @@ export default class SearchScreen extends React.Component {
   );
   render() {
     return (
-      <View style={{ flex: 1, backgroundColor: '#F5F5F5' }}>
+      <View style={{ flex: 1, backgroundColor: '#e5e5e5' }}>
         {/* modal Thanh pho */}
         <Modal
           animationType="slide"

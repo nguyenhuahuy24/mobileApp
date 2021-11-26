@@ -36,6 +36,17 @@ const resolver = (action) => {
                     reject(new Error(NAME_ACTIONS.LOGIN_SCREEN.LOGOUT_FAILED));
                 })
                 break;
+            case NAME_ACTIONS.LOGIN_SCREEN.CHANGE_PASSWORD:
+                authenticationBusiness.changePassword(action.data,success => {
+                    resolve({
+                        actionType: NAME_ACTIONS.LOGIN_SCREEN.CHANGE_PASSWORD,
+                        data: success
+                    });
+                }, failed => {
+                    messageError = failed;
+                    reject(new Error(NAME_ACTIONS.LOGIN_SCREEN.CHANGE_PASSWORD_FAILED));
+                })
+                break;
             default:
                 console.error('Error when resolver Authentication Epic.');
                 break;
@@ -55,6 +66,11 @@ const dispatch = (data) => {
                 type: NAME_EPICS.EPIC_LOGIN_SCREEN.EPIC_LOGOUT,
                 data: data.data
             };
+        case NAME_ACTIONS.LOGIN_SCREEN.CHANGE_PASSWORD:
+            return {
+                type: NAME_EPICS.EPIC_LOGIN_SCREEN.EPIC_CHANGE_PASSWORD,
+                data: data.data
+            }
         default:
             console.error('Error when dispatch Authentication Epic.');
             return new Error('Error when dispatch Authentication Epic.');
@@ -71,6 +87,11 @@ const dispatchError = (error, action) => {
         case NAME_ACTIONS.LOGIN_SCREEN.LOGOUT_FAILED:
             return {
                 type: NAME_EPICS.EPIC_LOGIN_SCREEN.EPIC_LOGOUT_FAILED,
+                data: messageError
+            }
+        case NAME_ACTIONS.LOGIN_SCREEN.CHANGE_PASSWORD_FAILED:
+            return {
+                type: NAME_EPICS.EPIC_LOGIN_SCREEN.EPIC_CHANGE_PASSWORD_FAILED,
                 data: messageError
             }
         default:
