@@ -24,7 +24,6 @@ export default class ContractBusiness {
     }
     confirmContract = async (data,success, failed) => {
         const response = await axios.patch(`${URL}/contract/confirm`, data,{headers:{Authorization:'Bearer ' + await AsyncStorage.getItem('accessToken')}})
-        console.log("data sss:",response)
         const resData = { ...response.data }
         if (!("error" in response.data)) {
             success({

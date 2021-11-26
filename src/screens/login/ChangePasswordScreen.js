@@ -6,8 +6,14 @@ import {
   StyleSheet,
   TouchableOpacity,
   Text,
+  Alert,
 } from 'react-native';
-export default class ChangePasswordScreen extends React.Component {
+import { connect } from 'react-redux';
+import { dataStatus } from '../../utility/config'
+import { withGlobalContext } from '../../GlobalContextProvider';
+import { changePassword} from '../../redux/action/authenticateAction/AuthenticateAction';
+
+class ChangePasswordScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,6 +30,25 @@ export default class ChangePasswordScreen extends React.Component {
       showXPass:false,
       showXRe_Pass:false,
     };
+  }
+  componentDidUpdate(prevProps) {
+    if (this.props.changePasswordStatus !== prevProps.changePasswordStatus) {
+      if (this.props.changePasswordStatus.status === dataStatus.SUCCESS) {
+              Alert.alert("Đổi Mật Khẩu", "Thành Công")
+              this.setState({
+                password:'',
+                re_password:'',
+                showXPass:false,
+                showXRe_Pass:false,
+                hideXPass:false,
+                hideXRe_Pass:false,
+                showPassword:true,
+                showRe_Password:true,})
+      }
+      else {
+        Alert.alert("Error", this.props.changePasswordStatus.message)
+      }
+    }
   }
   changeText(value, type) {
       if (type === 'password') {
@@ -74,7 +99,11 @@ export default class ChangePasswordScreen extends React.Component {
       alert('Mật Khẩu Mới Không Được Trùng Với Mật Khẩu Cũ');
       return;
     }
-    alert('Đổi mật khẩu thành công');
+    else {
+      let data ={oldPassword:this.state.password,newPassword:this.state.re_password}
+      this.props.changePassword(data)
+     
+    }
   };
 
   render() {
@@ -87,7 +116,8 @@ export default class ChangePasswordScreen extends React.Component {
             <Text style={{ marginLeft: 10, color: "#4d4d4d",fontSize:15 }}>Mật Khẩu Cũ:</Text>
             <View style={styles.inputPassword}>
               <TextInput 
-                style={styles.input}  
+                style={styles.input}
+                value={this.state.password}
                 secureTextEntry={this.state.showPassword} 
                 onChangeText={value => this.changeText(value, 'password')}
                 />
@@ -116,7 +146,8 @@ export default class ChangePasswordScreen extends React.Component {
             
             <View style={styles.inputPassword}>
               <TextInput 
-                style={styles.input}  
+                style={styles.input}
+                value={this.state.re_password}
                 secureTextEntry={this.state.showRe_Password} 
                 onChangeText={value => this.changeText(value, 're_password')}
                 />
@@ -140,7 +171,7 @@ export default class ChangePasswordScreen extends React.Component {
           </TouchableOpacity>):null}
             </View>
           </View>
-          <TouchableOpacity style={styles.button} onPress={this.resetPassword}>
+          <TouchableOpacity style={styles.button} onPress={()=>this.resetPassword()}>
             <Text style={{ color: "white", fontSize: 17 }}>Đổi Mật Khẩu</Text>
           </TouchableOpacity>
           </View>
@@ -206,3 +237,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   }
 });
+function mapStateToProps(state) {
+  return {
+    changePasswordStatus: state.AuthenticateReducer.changePasswordStatus,
+  };
+}
+export default withGlobalContext(connect(mapStateToProps, { changePassword })(ChangePasswordScreen));

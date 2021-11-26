@@ -17,12 +17,19 @@ import { getListBillCustomer, getInfoBill } from '../../redux/action/bill/BillAc
     super(props);
     this.state = {
       bill_list: [],
+      save_list:[],
       showX: false,
       global_search: "",
+      isLoading:false,
     }
   }
   componentDidMount() {
-    this.props.getListBillCustomer();
+    this.getData();
+  }
+  getData = ()=>{
+    this.setState({isLoading:true})
+    this.props.getListBillCustomer()
+    this.setState({isLoading:false})
   }
   componentDidUpdate(prevProps) {
     if (this.props.bill !== prevProps.bill) {
@@ -32,7 +39,7 @@ import { getListBillCustomer, getInfoBill } from '../../redux/action/bill/BillAc
         bills.forEach(bill => {
           list.push(bill)
         })
-        this.setState({bill_list:list})
+        this.setState({bill_list:list,save_list:list})
       }
       
     }
@@ -53,16 +60,16 @@ import { getListBillCustomer, getInfoBill } from '../../redux/action/bill/BillAc
   handleSearch = value => {
     if(value ===""|| !value)
     {
-      this.setState({global_search:value,showX:false,bill_list:data});
+      this.setState({global_search:value,showX:false,bill_list:this.state.save_list});
     }
     else{
 
       this.setState({global_search: value,showX:true});
         //hàm serach
         let arrayTemp = [];
-        for (let i = 0; i < data.length; i++) {
-          if (moment(data[i].DateCreate).format('MM-YYYY').toLowerCase().includes(value.toLowerCase())) {
-            arrayTemp.push(data[i]);
+        for (let i = 0; i < this.state.bill_list.length; i++) {
+          if (moment(this.state.bill_list[i].EndDate).format('MM-YYYY').toLowerCase().includes(value.toLowerCase())) {
+            arrayTemp.push(this.state.bill_list[i]);
           }
         }
         this.setState({bill_list: arrayTemp})
@@ -134,6 +141,8 @@ import { getListBillCustomer, getInfoBill } from '../../redux/action/bill/BillAc
              <FlatList
                   data={this.state.bill_list}
                   renderItem={this.renderItem}
+                  refreshing={this.state.isLoading}
+                  onRefresh={this.getData}
                   keyExtractor={(item, index) => index.toString()}
                 />
           </SafeAreaView>

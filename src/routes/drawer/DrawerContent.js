@@ -8,14 +8,18 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import IconOcticons from 'react-native-vector-icons/Octicons';
+import Icon2 from 'react-native-vector-icons/Fontisto';
 import { Logout } from '../../redux/action/authenticateAction/AuthenticateAction'
 import { withGlobalContext } from '../../GlobalContextProvider';
-import { dataStatus } from "../../utility/config"
+import { dataStatus,UserInfo } from "../../utility/config"
 class DrawContent extends React.Component {
   constructor(props) {
     super(props);
+    this.state={
+      userProfile:this.props.user.data.customerInfo,
+    }
   }
+  
   componentDidUpdate(prevProps) {
     if (this.props.logoutStatus !== prevProps.logoutStatus) {
       if (this.props.logoutStatus.status === dataStatus.SUCCESS) {
@@ -39,7 +43,7 @@ class DrawContent extends React.Component {
     return (
       <View style={{ flex: 1 }}>
         {/* header */}
-        <View>
+        <View style={styles.header}>
           <Text style={styles.headerText}>Welcome to Nhà Trọ Huy</Text>
           <Text
             style={{
@@ -47,8 +51,8 @@ class DrawContent extends React.Component {
               textAlign: 'center',
               fontStyle: 'italic',
               marginBottom: 15,
-            }}>Xin chào !!! Customer
-            {/* {userProfile.username}{' '} */}
+              fontSize:20,
+            }}>Xin chào !!! {this.state.userProfile.Name}
           </Text>
         </View>
         {/* body */}
@@ -58,11 +62,11 @@ class DrawContent extends React.Component {
               style={styles.touch}
               onPress={this.goToBillScreen}>
               <Icon
-                name="money"
+                name="usd"
                 backgroundColor=""
-                color="#ff4d94"
+                color="#99b3ff"
                 size={30}
-                style={{ marginLeft: 10 }}
+                style={{ marginLeft: "5%",marginRight: 20 }}
               />
               <Text style={{ fontSize: 20, marginLeft: 15, marginTop: "1%" }}>Hóa đơn</Text>
             </TouchableOpacity>
@@ -74,9 +78,9 @@ class DrawContent extends React.Component {
               <Icon
                 name="file-text-o"
                 backgroundColor=""
-                color="#ff4d94"
+                color="#99b3ff"
                 size={30}
-                style={{ marginLeft: 10, marginRight: 15 }}
+                style={{ marginLeft: "4%",marginRight: 15}}
               />
               <Text style={{ fontSize: 20, marginLeft: 15, marginTop: "1%" }}>Hợp đồng</Text>
             </TouchableOpacity>
@@ -85,14 +89,14 @@ class DrawContent extends React.Component {
             <TouchableOpacity
               style={styles.touch}
               onPress={() => this.props.navigation.navigate('Messages')}>
-              <Icon
-                name="facebook-messenger"
+              <Icon2
+                name="messenger"
                 backgroundColor=""
-                color="#ff4d94"
+                color="#99b3ff"
                 size={30}
-                style={{ marginLeft: 10, marginRight: 10 }}
+                style={{ marginLeft: "4%",marginRight: 10}}
               />
-              <Text style={{ fontSize: 20, marginLeft: 12, marginTop: "1%" }}>Trò chuyện</Text>
+              <Text style={{ fontSize: 20, marginLeft: 15, marginTop: "1%" }}>Trò chuyện</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -107,10 +111,10 @@ class DrawContent extends React.Component {
                 name="cog"
                 backgroundColor=""
                 color="#99b3ff"
-                size={25}
-                style={{ margin: "3%" }}
+                size={30}
+                style={{ margin: "5%" }}
               />
-              <Text style={{ fontSize: 20, margin: "3%" }}>Đổi Mật Khẩu</Text>
+              <Text style={{ fontSize: 20, margin: "5%" }}>Đổi Mật Khẩu</Text>
             </TouchableOpacity>
 
           </View>
@@ -119,13 +123,13 @@ class DrawContent extends React.Component {
               style={styles.touch}
               onPress={this.onhandleLogout}>
               <Icon
-                name="sign-out-alt"
+                name="power-off"
                 backgroundColor=""
                 color="#99b3ff"
-                size={25}
-                style={{ margin: "3%" }}
+                size={30}
+                style={{ margin: "5%" }}
               />
-              <Text style={{ fontSize: 20, margin: "3%" }}>Đăng Xuất</Text>
+              <Text style={{ fontSize: 20, margin: "5%" }}>Đăng Xuất</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -139,7 +143,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   body: {
-    flex: 8,
+    flex: 7,
     borderTopWidth: 1,
 
   },
@@ -158,7 +162,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   headerText: {
-    marginTop: 5,
+    marginTop: "5%",
     textAlign: 'center',
     fontStyle: 'italic',
   },
@@ -172,6 +176,7 @@ const styles = StyleSheet.create({
 });
 function mapStateToProps(state) {
   return {
+    user: state.AuthenticateReducer.user,
     logoutStatus: state.AuthenticateReducer.logoutStatus
   };
 }

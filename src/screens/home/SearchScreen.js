@@ -11,8 +11,10 @@ import {
   Text,
   Modal,
   SafeAreaView,
-  FlatList
+  FlatList,
+  Dimensions
 } from 'react-native';
+const {height,width} = Dimensions.get('window');
 const data =[{
       _id: 'abc1asdasd123',
       House_Name: "Max",
@@ -26,6 +28,91 @@ const data =[{
       Phone: "09778908123",
       Address: "65/24, đường tang nhon phú, phường Phước Long B, Tp Thủ Đức, Tp Hồ Chí Minh",
       Status: "1",     
+    }]
+const data_1 =[{
+      _id: 'abc1asdasd123',
+      Name: "Hồ Chí Minh",
+      
+    },
+    {
+      _id: 'abc1asdasd124',
+      Name: "Hà Nội", 
+    },
+    {
+      _id: 'abc1asdasd125',
+      Name: "Quảng Ngãi", 
+    },
+    {
+      _id: 'abc1asdasd126',
+      Name: "Bình Định", 
+    },
+    {
+      _id: 'abc1asdasd121',
+      Name: "Cà Mau", 
+    },
+    {
+      _id: 'abc1asdasd1261',
+      Name: "Nha Trang", 
+    },
+    {
+      _id: 'abc1asdasd1263',
+      Name: "HUế", 
+    },
+    {
+      _id: 'abc1asdasd1263',
+      Name: "HUế", 
+    },
+    {
+      _id: 'abc1asdasd1263',
+      Name: "HUế", 
+    },
+    {
+      _id: 'abc1asdasd1263',
+      Name: "HUế", 
+    },
+    {
+      _id: 'abc1asdasd1263',
+      Name: "HUế", 
+    },
+    {
+      _id: 'abc1asdasd1263',
+      Name: "HUế", 
+    },
+    {
+      _id: 'abc1asdasd1263',
+      Name: "HUế", 
+    },
+    {
+      _id: 'abc1asdasd1263',
+      Name: "HUế", 
+    },
+    {
+      _id: 'abc1asdasd1263',
+      Name: "HUế", 
+    },
+    {
+      _id: 'abc1asdasd1263',
+      Name: "HUế", 
+    },
+    {
+      _id: 'abc1asdasd1263',
+      Name: "HUế", 
+    },
+    {
+      _id: 'abc1asdasd1263',
+      Name: "HUế", 
+    },
+    {
+      _id: 'abc1asdasd1263',
+      Name: "HUế", 
+    },
+    {
+      _id: 'abc1asdasd1263',
+      Name: "HUế", 
+    },
+    {
+      _id: 'abc1asdasd1263',
+      Name: "HUế", 
     }
     
 ]
@@ -35,11 +122,13 @@ export default class SearchScreen extends React.Component {
       this.state = {
       list_home:data,
       showX: false,
-      global_search: "",
+      TP_search: "",
+      Quan_search: "",
+      Phuong_search: "",
       modalOfTP: false,
       modalOfQuan:false,
       modalOfPhuong:false,
-      listTP:[],
+      listTP:data_1,
       listQuan:[],
       listPhuong:[],
       tp:"",
@@ -51,22 +140,21 @@ export default class SearchScreen extends React.Component {
     }
   }
 
-  handleSearch = value => {
+  handleSearch = (value,name) => {
     if(value ===""|| !value)
     {
-      this.setState({global_search:value,showX:false,bill_list:data});
+      this.setState({showX:false});
     }
     else{
-
-      this.setState({global_search: value,showX:true});
-        //hàm serach
-        // let arrayTemp = [];
-        // for (let i = 0; i < data.length; i++) {
-        //   if (moment(data[i].DateCreate).format('MM-YYYY').toLowerCase().includes(value.toLowerCase())) {
-        //     arrayTemp.push(data[i]);
-        //   }
-        // }
-        // this.setState({bill_list: arrayTemp})
+      if(name==="TP"){
+        this.setState({TP_search: value,showX:true});
+      }
+      if(name==="Quan"){
+        this.setState({Quan_search: value,showX:true});
+      }
+      if(name==="Phuong"){
+        this.setState({Phuong_search: value,showX:true});
+      }       
     }
   };
   ToDetail=({item})=>
@@ -95,14 +183,25 @@ export default class SearchScreen extends React.Component {
     </TouchableOpacity>
   );
   renderTPItem = ({ item }) => (
-    <View style={{borderColor: '#e5e5e5',borderRadius: 5, flexDirection: 'row', elevation:1,margin:2 ,backgroundColor:"#ffff"}}>
-      <TouchableOpacity style={{flex:1, margin: "2%",width:"100%"}} onPress={() => {
-        this.setState({  modalOfManager: false })
+    
+      <TouchableOpacity style={{flex:1, margin: "2%",width:"100%",borderBottomWidth:1,}} onPress={() => {
+        this.setState({  tp: item.Name,modalOfTP:false })
       }} >
-        <Text style={{ fontSize: 17 }}>Thành phố</Text>
+        <Text style={{ fontSize: 17 }}>{item.Name}</Text>
       </TouchableOpacity>
-    </View>
+   
   );
+  setModalVisible = (name,value) => {
+    if(name==="TP"){
+      this.setState({modalOfTP:value})
+    }
+    if(name==="Quan"){
+      this.setState({modalOfQuan:value})
+    }
+    else this.setState({modalOfQuan:value})
+
+
+  };
   renderQuanItem = ({ item }) => (
     <View style={{ flexDirection: 'row', borderTopWidth: 1 }}>
       <TouchableOpacity style={{flex:1, margin: "3%",width:"100%" }} onPress={() => {
@@ -123,46 +222,44 @@ export default class SearchScreen extends React.Component {
   );
   render() {
     return (
-      <View style={{flex: 1,backgroundColor:'#e5e5e5'}}>
+      <View style={{flex: 1,backgroundColor:'#f2f2f2'}}>
       {/* modal Thanh pho */}
-      <Modal
-          animationType="slide"
-          visible={this.state.modalOfTP}
-          onRequestClose={() => {
-            this.setState({ modalOfTP: false });
-          }}>
-          {/* header modal */}
-          <View style={{backgroundColor:"#e32f45"}}>
-            <Text
-            style={{
-              fontSize: 22,
-              margin: "2%",
-              textAlign: 'center',
-              fontWeight: 'bold',
-              color:'#ffffff'
-            }}>
-            Chọn Tỉnh/Thành Phố
+      
+        <Modal animationType="slide" transparent={true} visible={this.state.modalOfTP}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              {/* header modal */}
+              <Text
+                style={{
+                  fontSize: 20,
+                  marginTop: 5,
+                  paddingBottom: '3%',
+                  color:"#555555",
+                  textAlign: 'center',
+                  fontWeight: 'bold',
+                  
+                }}>
+                Chọn Tỉnh/Thành
               </Text>
-          </View>
-          <View style={{backgroundColor:"#e5e5e5"}}>
               <View style={styles.inputField}>
-            <View style={{justifyContent:"center",marginLeft: "2%"}}>
+            <View style={{justifyContent:"center",marginLeft: "2%",}}>
                 <Icon
                 name="search"
                 backgroundColor=""
                 color="grey"
                 size={22}
               />
-            </View>         
-            <TextInput
+            </View>
+            <View style={{flexDirection:'row',justifyContent:'space-between',flex:1}}>
+                <TextInput
               name="search"
-              style={styles.TextSearch}
-              placeholder="Tìm Tỉnh/Thành Phố..."
-              value={this.state.global_search}
-              onChangeText={value => this.handleSearch(value)}
+              style={styles.TextInput}
+              placeholder="Tìm tỉnh/thành..."
+              value={this.state.TP_search}
+              onChangeText={value => this.handleSearch(value,"TP")}
             />
             <View>
-                {this.state.showX ? (<TouchableOpacity onPress={()=> this.setState({global_search:'',showX:false })}>
+                {this.state.showX ? (<TouchableOpacity onPress={()=> this.setState({TP_search:"",showX:false })}>
               <Icon
                 name="times"
                 backgroundColor=""
@@ -172,83 +269,82 @@ export default class SearchScreen extends React.Component {
                 />
             </TouchableOpacity>):null}
           </View>
+            </View>         
+            
         </View>
-
-
-          </View>
-          {/* body */}
-          <View style={{flex: 9,backgroundColor:"#e5e5e5"}}>
-              <SafeAreaView >
+              {/* body */}
+              <View style={{flex:1}}>
                 <FlatList
                   data={this.state.listTP}
                   renderItem={this.renderTPItem}
                   keyExtractor={(item, index) => `${index}`}
                 />
-          </SafeAreaView>
-          </View>
-          
-          {/* footer modal */}
-          <View style={{ borderTopWidth: 1, alignItems: 'center', flex: 1 }}>
-            <TouchableOpacity
-              style={{
-                backgroundColor: '#4876FF',
-                marginTop: '2%',
-                width: '70%',
-                borderRadius:10
-              }}
-              onPress={() => this.setState({ modalOfTP: false })}>
-              <Text
-                style={{
-                  fontSize: 20,
-                  paddingTop: '3%',
-                  marginBottom: '3%',
-                  textAlign: 'center',
-                  color: 'white',
-                }}>
-                Cancel
+              </View>
+              {/* footer modal */}
+              <View style={{ borderTopWidth: 1, alignItems: 'center',borderColor:"#E5E5E5", }}>
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: '#4876FF',
+                    borderRadius: 10,
+                    marginTop: '5%',
+                    width: '70%',
+                  }}
+                  onPress={() => this.setState({modalOfTP:false})}>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      paddingTop: '3%',
+                      marginBottom: '3%',
+                      textAlign: 'center',
+                      color: 'white',
+                    }}>
+                    Cancel
                   </Text>
-            </TouchableOpacity>
+                </TouchableOpacity>
+              </View>
+            </View>
           </View>
+          <View style={{position: "absolute", bottom:0,top:0,left:0,right:0,zIndex:1, backgroundColor:'rgba(0,0,0,0.5)'}} 
+             // onTouchStart={() => this.setModalVisible("TP",!this.state.modalOfTP)} 
+
+              />
         </Modal>
               {/* modal quận */}
-          <Modal
-          animationType="slide"
-          visible={this.state.modalOfQuan}
-          onRequestClose={() => {
-            this.setState({ modalOfQuan: false });
-          }}>
-          {/* header modal */}
-          <View style={{backgroundColor:"#e32f45"}}>
-            <Text
-            style={{
-              fontSize: 22,
-              margin: "2%",
-              textAlign: 'center',
-              fontWeight: 'bold',
-              color:'#ffff'
-            }}>
-            Quận/Huyện
+           <Modal animationType="slide" transparent={true} visible={this.state.modalOfQuan}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              {/* header modal */}
+              <Text
+                style={{
+                  fontSize: 20,
+                  marginTop: 5,
+                  paddingBottom: '3%',
+                  color:"#555555",
+                  textAlign: 'center',
+                  fontWeight: 'bold',
+                  
+                }}>
+                Chọn Quận/Huyện
               </Text>
-          </View>
-          <View style={{backgroundColor:"#e5e5e5"}}>
               <View style={styles.inputField}>
-            <View style={{justifyContent:"center",marginLeft: "2%"}}>
+            <View style={{justifyContent:"center",marginLeft: "2%",}}>
                 <Icon
                 name="search"
                 backgroundColor=""
                 color="grey"
                 size={22}
               />
-            </View>         
-            <TextInput
+            </View>
+            <View style={{flexDirection:'row',justifyContent:'space-between',flex:1}}>
+                <TextInput
               name="search"
-              style={styles.TextSearch}
-              placeholder="Tìm Quận/Huyện..."
-              value={this.state.global_search}
-              onChangeText={value => this.handleSearch(value)}
+              style={styles.TextInput}
+              placeholder="Tìm quận/huyện..."
+              value={this.state.Quan_search}
+              onChangeText={value => this.handleSearch(value,"Quan")}
             />
             <View>
-                {this.state.showX ? (<TouchableOpacity onPress={()=> this.setState({global_search:'',showX:false })}>
+                {this.state.showX ? (<TouchableOpacity onPress={()=> this.setState({Quan_search:'',showX:false })}>
               <Icon
                 name="times"
                 backgroundColor=""
@@ -258,82 +354,82 @@ export default class SearchScreen extends React.Component {
                 />
             </TouchableOpacity>):null}
           </View>
+            </View>         
+            
         </View>
-
-
-          </View>
-          {/* body */}
-          <View style={{flex: 9,backgroundColor:"#e5e5e5"}}>
-              <SafeAreaView >
+              {/* body */}
+              <View style={{flex:1}}>
                 <FlatList
-                  data={this.state.listQuan}
-                  renderItem={this.renderQuanItem}
+                  data={this.state.listTP}
+                  renderItem={this.renderTPItem}
                   keyExtractor={(item, index) => `${index}`}
                 />
-          </SafeAreaView>
-          </View>
-          
-          {/* footer modal */}
-          <View style={{ borderTopWidth: 1, alignItems: 'center', flex: 1 }}>
-            <TouchableOpacity
-              style={{
-                backgroundColor: '#4876FF',
-                marginTop: '2%',
-                width: '70%',
-              }}
-              onPress={() => this.setState({ modalOfQuan: false })}>
-              <Text
-                style={{
-                  fontSize: 20,
-                  paddingTop: '3%',
-                  marginBottom: '3%',
-                  textAlign: 'center',
-                  color: 'white',
-                }}>
-                Cancel
+              </View>
+              {/* footer modal */}
+              <View style={{ borderTopWidth: 1, alignItems: 'center',borderColor:"#E5E5E5", }}>
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: '#4876FF',
+                    borderRadius: 10,
+                    marginTop: '5%',
+                    width: '70%',
+                  }}
+                  onPress={() => this.setState({modalOfQuan:false})}>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      paddingTop: '3%',
+                      marginBottom: '3%',
+                      textAlign: 'center',
+                      color: 'white',
+                    }}>
+                    Cancel
                   </Text>
-            </TouchableOpacity>
+                </TouchableOpacity>
+              </View>
+            </View>
           </View>
+          <View style={{position: "absolute", bottom:0,top:0,left:0,right:0,zIndex:1, backgroundColor:'rgba(0,0,0,0.5)'}} 
+              //onTouchStart={() => this.setModalVisible("Quan",!this.state.modalOfQuan)} 
+
+          />
         </Modal>
       {/* modal phường */}
-       <Modal
-          animationType="slide"
-          visible={this.state.modalOfPhuong}
-          onRequestClose={() => {
-            this.setState({ modalOfPhuong: false });
-          }}>
-          {/* header modal */}
-          <View style={{backgroundColor:"#e32f45"}}>
-            <Text
-            style={{
-              fontSize: 22,
-              margin: "2%",
-              textAlign: 'center',
-              fontWeight: 'bold',
-              color:'#fff'
-            }}>
-            Phường/Xã
+              <Modal animationType="slide" transparent={true} visible={this.state.modalOfPhuong}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              {/* header modal */}
+              <Text
+                style={{
+                  fontSize: 20,
+                  marginTop: 5,
+                  paddingBottom: '3%',
+                  color:"#555555",
+                  textAlign: 'center',
+                  fontWeight: 'bold',
+                  
+                }}>
+                Chọn Phường/Xã
               </Text>
-          </View>
-          <View style={{backgroundColor:"#e5e5e5"}}>
               <View style={styles.inputField}>
-            <View style={{justifyContent:"center",marginLeft: "2%"}}>
+            <View style={{justifyContent:"center",marginLeft: "2%",}}>
                 <Icon
                 name="search"
                 backgroundColor=""
                 color="grey"
                 size={22}
               />
-            </View>         
-            <TextInput
+            </View>
+            <View style={{flexDirection:'row',justifyContent:'space-between',flex:1}}>
+                <TextInput
               name="search"
-              style={styles.TextSearch}
+              style={styles.TextInput}
               placeholder="Tìm phường/xã..."
-              value={this.state.global_search}
-              onChangeText={value => this.handleSearch(value)}
+              value={this.state.Phuong_search}
+              onChangeText={value => this.handleSearch(value,"Phuong")}
             />
             <View>
-                {this.state.showX ? (<TouchableOpacity onPress={()=> this.setState({global_search:'',showX:false })}>
+                {this.state.showX ? (<TouchableOpacity onPress={()=> this.setState({Phuong_search:'',showX:false })}>
               <Icon
                 name="times"
                 backgroundColor=""
@@ -343,125 +439,132 @@ export default class SearchScreen extends React.Component {
                 />
             </TouchableOpacity>):null}
           </View>
+            </View>         
+            
         </View>
-
-
-          </View>
-          {/* body */}
-          <View style={{flex: 9,backgroundColor:"#e5e5e5"}}>
-              <SafeAreaView >
+              {/* body */}
+              <View style={{flex:1}}>
                 <FlatList
-                  data={this.state.listPhuong}
-                  renderItem={this.renderPhuongItem}
+                  data={this.state.listTP}
+                  renderItem={this.renderTPItem}
                   keyExtractor={(item, index) => `${index}`}
                 />
-          </SafeAreaView>
-          </View>
-          
-          {/* footer modal */}
-          <View style={{ borderTopWidth: 1, alignItems: 'center', flex: 1 }}>
-            <TouchableOpacity
-              style={{
-                backgroundColor: '#4876FF',
-                marginTop: '2%',
-                width: '70%',
-              }}
-              onPress={() => this.setState({ modalOfPhuong: false })}>
-              <Text
-                style={{
-                  fontSize: 20,
-                  paddingTop: '3%',
-                  marginBottom: '3%',
-                  textAlign: 'center',
-                  color: 'white',
-                }}>
-                Cancel
+              </View>
+              {/* footer modal */}
+              <View style={{ borderTopWidth: 1, alignItems: 'center',borderColor:"#E5E5E5", }}>
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: '#4876FF',
+                    borderRadius: 10,
+                    marginTop: '5%',
+                    width: '70%',
+                  }}
+                  onPress={() => this.setState({modalOfPhuong:false})}>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      paddingTop: '3%',
+                      marginBottom: '3%',
+                      textAlign: 'center',
+                      color: 'white',
+                    }}>
+                    Cancel
                   </Text>
-            </TouchableOpacity>
+                </TouchableOpacity>
+              </View>
+            </View>
           </View>
-        </Modal>        
+          <View style={{position: "absolute", bottom:0,top:0,left:0,right:0,zIndex:1, backgroundColor:'rgba(0,0,0,0.5)'}} 
+                //onTouchStart={() => this.setModalVisible("Phuong",!this.state.modalOfPhuong)}
+           />
+        </Modal>
               <Text
-                style={{fontSize:18,fontWeight:'bold',margin:'1%'}}
+                style={{fontSize:18,fontWeight:'bold',margin:'2%'}}
               >Lựa chọn khu vực cần tìm kiếm:</Text>
               
             
             {/* THanh phố */}
-            <View style={{flexDirection:'row',alignItems:'center'}}>
+            <View style={{marginLeft:"3%",flexDirection:'row',alignItems:'center'}}>
               <CheckBox 
                     value = {this.state.checkboxTP}
-                    tintColors={{true : "blue"}} 
+                    tintColors={{true : '#e32f45'}} 
                     onChange={()=>this.setState({checkboxTP :true})}
                     
                 />
-                <Text style={{marginRight:'2%'}}>Khu vực Tỉnh/Thành:</Text>
+                <Text style={{marginRight:'2%',color:'black',fontSize:15}}>Khu vực Tỉnh/Thành:</Text>
+                <TouchableOpacity style={{marginRight:"2%",width:"100%"}} onPress={() => { this.setState({ modalOfTP: true }) }} >
+
                 <View style={styles.inputField_drop}>
                     <Text
-                    style={styles.TextInput}
-                    value={this.state.tp}
-                />
-                <TouchableOpacity style={{marginRight:"2%"}} onPress={() => { this.setState({ modalOfTP: true }) }} >
+                    style={styles.Text_name}
+                    
+                    >{this.state.tp}</Text>
                   <Icon
                     name="angle-down"
                     backgroundColor=""
                     color="#e32f45"
                     size={30}
-                    style={{ marginTop: 5 }}
+                    style={{ marginTop: 5,marginRight:5 }}
                   />
-                </TouchableOpacity>
+               
                 </View>
+            </TouchableOpacity>
                 
                
             </View>
             {/* quận huyện */}
-              <View style={{flexDirection:'row',alignItems:'center'}}>
+              <View style={{marginLeft:"3%",flexDirection:'row',alignItems:'center'}}>
               <CheckBox 
                     value = {this.state.checkboxQuan}
-                    tintColors={{true : "blue"}} 
+                    tintColors={{true : '#e32f45'}} 
                     onChange={()=>this.setState({checkboxQuan :true})}
                 />
-                <Text>Khu vực Quận/Huyện: </Text>
+                <Text style={{marginRight:'1%',color:'black',fontSize:15}}>Khu vực Quận/Huyện:</Text>
+                <TouchableOpacity style={{marginRight:"2%",width:"100%"}} onPress={() => { this.setState({ modalOfQuan: true }) }} >
+
                 <View style={styles.inputField_drop}>
                     <Text
-                    style={styles.TextInput}
-                    value={this.state.quan}
-                />
-                <TouchableOpacity style={{marginRight:"2%"}} onPress={() => { this.setState({ modalOfQuan: true }) }} >
+                    style={styles.Text_name}
+                    
+                    >{this.state.quan}</Text>
                   <Icon
                     name="angle-down"
                     backgroundColor=""
                     color="#e32f45"
                     size={30}
-                    style={{ marginTop: 5 }}
+                    style={{ marginTop: 5,marginRight:5 }}
                   />
-                </TouchableOpacity>
+               
                 </View>
+            </TouchableOpacity>
                 
                
             </View>
             {/* Phuong xa */}
-              <View style={{flexDirection:'row',alignItems:'center'}}>
+              <View style={{marginLeft:"3%",flexDirection:'row',alignItems:'center'}}>
               <CheckBox 
                     value = {this.state.checkboxPhuong}
-                    tintColors={{true : "blue"}} 
+                    tintColors={{true : '#e32f45'}} 
                     onChange={()=>this.setState({checkboxPhuong :true})}
                 />
-                <Text style={{marginRight:'2%'}}>Khu vực Phường/Xã:</Text>
+                <Text style={{marginRight:'2%',color:'black',fontSize:15}}>Khu vực Phường/Xã: </Text>
+            <TouchableOpacity style={{marginRight:"2%",width:"100%"}} onPress={() => { this.setState({ modalOfPhuong: true }) }} >
+
                 <View style={styles.inputField_drop}>
                     <Text
-                    style={styles.TextInput}
-                    value={this.state.phuong}
-                />
-                <TouchableOpacity style={{marginRight:"2%"}} onPress={() => { this.setState({ modalOfPhuong: true }) }} >
+                    style={styles.Text_name}
+                    
+                    >{this.state.phuong}</Text>
                   <Icon
                     name="angle-down"
                     backgroundColor=""
                     color="#e32f45"
                     size={30}
-                    style={{ marginTop: 5 }}
+                    style={{ marginTop: 5,marginRight:5 }}
                   />
-                </TouchableOpacity>
+               
                 </View>
-                
+            </TouchableOpacity>
                
             </View>
             <View style={styles.list}>
@@ -483,19 +586,19 @@ const styles = StyleSheet.create({
     flex:1,
     backgroundColor:'#ffff',
     margin:'2%',
-    marginBottom:'19%',
-    borderRadius:10,
-    borderWidth:1
+    marginBottom:'23%',
+    borderRadius:5,
+    borderWidth:0.5
   },
  
   inputField: {
     margin:"1%",
-    borderColor: '#e5e5e5',
     borderRadius: 5,
-    elevation: 1,
     height: 40,
     flexDirection: 'row',
-    backgroundColor:"#ffff"
+    borderWidth:0.5,
+    borderColor:"#c5c5c5"
+    
   },
   inputField_drop: {
     margin:"1%",
@@ -511,7 +614,17 @@ const styles = StyleSheet.create({
     color: '#000000',
     borderColor: 'black',
     flex: 1,
-    paddingRight: 15,
+    marginLeft:"2%",
+    width:"100%",
+    
+  },
+  Text_name: {
+    color: '#000000',
+    borderColor: 'black',
+    flex: 1,
+    marginTop:'5%',
+    marginLeft:"5%",
+    width:"100%",
     
   }, 
   dropdown: {
@@ -535,12 +648,12 @@ const styles = StyleSheet.create({
     color: '#256029',
   },
   body_item: {
-    elevation: 1,
+    elevation: 5,
     margin:'2%',
     backgroundColor: '#ffff',
     borderColor:'#c5c5c5',
-    borderRadius: 15,
-    borderWidth:1
+    borderRadius: 10,
+    borderWidth:0.5
   },
   name_item: {
     fontSize: 19,  color: "#ff1a1a", fontWeight:'bold'
@@ -548,4 +661,22 @@ const styles = StyleSheet.create({
   label_item: {
     fontSize: 17, marginBottom: '2%'
   },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    
+  },
+  modalView: {
+    marginLeft: "5%",
+    marginRight: "5%",
+    marginTop: "30%",
+    marginBottom:"30%",
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 15,
+    elevation: 5,
+    zIndex: 100,
+    flex:1,
+  },
 });
+// 

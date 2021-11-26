@@ -12,7 +12,7 @@ import {
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Login } from '../../redux/action/authenticateAction/AuthenticateAction';
-import { dataStatus } from '../../utility/config'
+import { dataStatus,UserInfo } from '../../utility/config'
 import { withGlobalContext } from '../../GlobalContextProvider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 class LoginScreen extends React.Component {

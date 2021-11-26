@@ -19,6 +19,9 @@ class ContractScreen extends React.Component
     }
   }
   componentDidMount() {
+    this.getData();
+  }
+  getData=()=>{
     this.props.getContract();
   }
   componentDidUpdate(prevProps) {
@@ -83,11 +86,12 @@ class ContractScreen extends React.Component
    
     return (
       <View style={{ flex: 1}}>
-      <View style={styles.header}>
+     
+        <View style={styles.header}>
           <Text style={{fontSize:27, fontWeight:'bold'}}>Tóm lượt hợp động</Text>
       </View>
       <View style={styles.body}>
-        <View style={styles.modal}>
+        <TouchableOpacity onPress={()=>this.getData()} style={styles.modal}>
             <Text style={{fontSize:20, fontWeight:'bold',margin:'2%'}}>Thông tin hợp động</Text>
             <View style={styles.text_contract}>
               <Text style={{fontSize:17}}>Bên thuê:</Text>
@@ -109,7 +113,7 @@ class ContractScreen extends React.Component
               <Text style={{fontSize:17,flex:1}}>Trạng thái hợp đồng:</Text>
               <Text style={{fontSize:17,flex:1}}>{this.statusBodyTemplate(this.state.contract.Status)}</Text>
             </View>
-        </View>
+        </TouchableOpacity>
        
           <TouchableOpacity style={styles.button} onPress={()=>this.ToDetail()}>
             <Text style={{ color: "white", fontSize: 17 }}>XEM CHI TIẾT {this.state.contract.Status==3 &&
@@ -118,6 +122,7 @@ class ContractScreen extends React.Component
           </TouchableOpacity>
       
       </View>
+      
     </View>
     );
   }
@@ -186,10 +191,12 @@ const styles = StyleSheet.create({
     elevation: 13,
     marginBottom:'6%'
   },
-  product_status_1: {
+  product_status_0: {
+    backgroundColor: '#FFCDD2',
     color: '#C63737',
   },
-  product_status_0: {
+  product_status_1: {
+    backgroundColor: '#C8E6C9',
     color: '#256029',
 } 
 })
