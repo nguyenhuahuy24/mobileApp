@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Icon from 'react-native-vector-icons/FontAwesome';
-import CheckBox from '@react-native-community/checkbox';
 
 //import MapView from 'react-native-maps';
 import {
@@ -14,6 +13,9 @@ import {
   FlatList,
   Dimensions
 } from 'react-native';
+import { getProvince, getDistrict } from '../../business/ApiThirdParty'
+import axios from "axios";
+
 const { height, width } = Dimensions.get('window');
 const data = [{
   _id: 'abc1asdasd123',
@@ -53,67 +55,53 @@ const data_1 = [{
 {
   _id: 'abc1asdasd1261',
   Name: "Nha Trang",
-},
-{
-  _id: 'abc1asdasd1263',
-  Name: "HUế",
-},
-{
-  _id: 'abc1asdasd1263',
-  Name: "HUế",
-},
-{
-  _id: 'abc1asdasd1263',
-  Name: "HUế",
-},
-{
-  _id: 'abc1asdasd1263',
-  Name: "HUế",
-},
-{
-  _id: 'abc1asdasd1263',
-  Name: "HUế",
-},
-{
-  _id: 'abc1asdasd1263',
-  Name: "HUế",
-},
-{
-  _id: 'abc1asdasd1263',
-  Name: "HUế",
-},
-{
-  _id: 'abc1asdasd1263',
-  Name: "HUế",
-},
-{
-  _id: 'abc1asdasd1263',
-  Name: "HUế",
-},
-{
-  _id: 'abc1asdasd1263',
-  Name: "HUế",
-},
-{
-  _id: 'abc1asdasd1263',
-  Name: "HUế",
-},
-{
-  _id: 'abc1asdasd1263',
-  Name: "HUế",
-},
-{
-  _id: 'abc1asdasd1263',
-  Name: "HUế",
-},
-{
-  _id: 'abc1asdasd1263',
-  Name: "HUế",
-},
-{
-  _id: 'abc1asdasd1263',
-  Name: "HUế",
 }
+]
+const data_2 = [
+  {
+    _id: 'abc1asdasd1263',
+    Name: "HUế",
+  },
+  {
+    _id: 'abc1asdasd1263',
+    Name: "HUế",
+  },
+  {
+    _id: 'abc1asdasd1263',
+    Name: "HUế",
+  },
+  {
+    _id: 'abc1asdasd1263',
+    Name: "HUế",
+  },
+  {
+    _id: 'abc1asdasd1263',
+    Name: "HUế",
+  },
+  {
+    _id: 'abc1asdasd1263',
+    Name: "HUế",
+  },
+  {
+    _id: 'abc1asdasd1263',
+    Name: "HUế",
+  },
+  {
+    _id: 'abc1asdasd1263',
+    Name: "HUế",
+  },
+  {
+    _id: 'abc1asdasd1263',
+    Name: "HUế",
+  },
+  {
+    _id: 'abc1asdasd1263',
+    Name: "HUế",
+  },
+  {
+    _id: 'abc1asdasd1263',
+    Name: "HUế",
+  }
 
 ]
 export default class SearchScreen extends React.Component {
@@ -122,24 +110,20 @@ export default class SearchScreen extends React.Component {
     this.state = {
       list_home: data,
       showX: false,
-      TP_search: "",
-      Quan_search: "",
-      Phuong_search: "",
-      modalOfTP: false,
-      modalOfQuan: false,
-      modalOfPhuong: false,
-      listTP: data_1,
-      listQuan: [],
-      listPhuong: [],
-      tp: "",
-      quan: "",
-      phuong: "",
-      checkboxTP: false,
-      checkboxQuan: false,
-      checkboxPhuong: false,
+      Province: "",
+      District: "",
+      showListProvince: true,
+      showListDistrict: false,
+      modalLocation: false,
+      listProvince: [],
+      listDistrict: [],
+      searchString: ""
     }
   }
-
+  componentDidMount() {
+    axios.get(`https://provinces.open-api.vn/api/p/`)
+      .then(res => this.setState({ listProvince: res.data }))
+  }
   handleSearch = (value, name) => {
     if (value === "" || !value) {
       this.setState({ showX: false });
@@ -158,7 +142,6 @@ export default class SearchScreen extends React.Component {
   };
   ToDetail = ({ item }) => {
     this.props.navigation.navigate('SearchDetail')
-    //this.props.getInfoBill(item._id)
   }
   statusBodyTemplate = (rowData) => {
     if (rowData === "1") {
@@ -175,55 +158,41 @@ export default class SearchScreen extends React.Component {
           <Text style={styles.label_item}> - Số điện thoại: {item.Phone}</Text>
           <Text style={styles.label_item}> - Địa chỉ: {item.Address}</Text>
           <Text style={{ fontSize: 17 }}> - Tình trạng: {this.statusBodyTemplate(item.Status)}</Text>
-
         </View>
       </View>
     </TouchableOpacity>
   );
-  renderTPItem = ({ item }) => (
-
-    <TouchableOpacity style={{ flex: 1, margin: "2%", width: "100%", borderBottomWidth: 1, }} onPress={() => {
-      this.setState({ tp: item.Name, modalOfTP: false })
-    }} >
-      <Text style={{ fontSize: 17 }}>{item.Name}</Text>
+  renderModalLocation = ({ item }) => (
+    <TouchableOpacity style={{ flex: 1, margin: "2%", width: "100%", alignItems: "center" }} onPress={() => this.a(item)}>
+      <Text style={{ fontSize: 17 }}>{item.name}</Text>
     </TouchableOpacity>
-
   );
-  setModalVisible = (name, value) => {
-    if (name === "TP") {
-      this.setState({ modalOfTP: value })
+  a = (item) => {
+    if (this.state.showListProvince === true) {
+      axios.get(`https://provinces.open-api.vn/api/p/${item.code}?depth=2`)
+        .then(res => { this.setState({ Province: item.name, listDistrict: res.data.districts }) })
     }
-    if (name === "Quan") {
-      this.setState({ modalOfQuan: value })
-    }
-    else this.setState({ modalOfQuan: value })
-
-
+    else (this.setState({ District: item.name }))
+  }
+  onSearch = () => {
+    const { Province, District } = this.state
+    this.setModalVisible()
+    this.setState({ searchString: `${Province}, ${District}` })
+  }
+  setModalVisible = () => {
+    this.setState({ modalLocation: false })
   };
-  renderQuanItem = ({ item }) => (
-    <View style={{ flexDirection: 'row', borderTopWidth: 1 }}>
-      <TouchableOpacity style={{ flex: 1, margin: "3%", width: "100%" }} onPress={() => {
-        this.setState({ modalOfType: false })
-      }} >
-        <Text style={{ fontSize: 17 }}>Quận</Text>
-      </TouchableOpacity>
-    </View>
-  );
-  renderPhuongItem = ({ item }) => (
-    <View style={{ flexDirection: 'row', borderTopWidth: 1 }}>
-      <TouchableOpacity style={{ flex: 1, margin: "3%", width: "100%" }} onPress={() => {
-        this.setState({ modalOfType: false })
-      }} >
-        <Text style={{ fontSize: 17 }}>Phường</Text>
-      </TouchableOpacity>
-    </View>
-  );
+  choseProvince = () => {
+    this.setState({ showListProvince: true, showListDistrict: false })
+  }
+  choseDistrict = () => {
+    this.setState({ showListProvince: false, showListDistrict: true })
+  }
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: '#f2f2f2' }}>
         {/* modal Thanh pho */}
-
-        <Modal animationType="slide" transparent={true} visible={this.state.modalOfTP}>
+        <Modal animationType="slide" transparent={true} visible={this.state.modalLocation}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
               {/* header modal */}
@@ -237,57 +206,42 @@ export default class SearchScreen extends React.Component {
                   fontWeight: 'bold',
 
                 }}>
-                Chọn Tỉnh/Thành
+                Chọn khu vực
               </Text>
-              <View style={styles.inputField}>
-                <View style={{ justifyContent: "center", marginLeft: "2%", }}>
-                  <Icon
-                    name="search"
-                    backgroundColor=""
-                    color="grey"
-                    size={22}
-                  />
-                </View>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', flex: 1 }}>
-                  <TextInput
-                    name="search"
-                    style={styles.TextInput}
-                    placeholder="Tìm tỉnh/thành..."
-                    value={this.state.TP_search}
-                    onChangeText={value => this.handleSearch(value, "TP")}
-                  />
-                  <View>
-                    {this.state.showX ? (<TouchableOpacity onPress={() => this.setState({ TP_search: "", showX: false })}>
-                      <Icon
-                        name="times"
-                        backgroundColor=""
-                        color="grey"
-                        size={20}
-                        style={{ marginTop: 9, marginRight: 7 }}
-                      />
-                    </TouchableOpacity>) : null}
-                  </View>
-                </View>
 
+              <View style={{ flexDirection: "row", height: 40, marginTop: 5, alignItems: "center", marginVertical: 2 }}>
+                <Text style={{ fontSize: 15, width: "30%" }}>Tỉnh/Thành </Text>
+                <TouchableOpacity style={{ marginLeft: 3, width: "70%", height: "100%" }} onPress={() => this.choseProvince()}>
+                  <TextInput style={{ borderWidth: 0.5, borderRadius: 8, textAlign: "center", color: "black" }} editable={false} value={this.state.Province}></TextInput>
+                </TouchableOpacity>
+              </View>
+
+              <View style={{ flexDirection: "row", height: 40, marginTop: 5, alignItems: "center", marginVertical: 2 }}>
+                <Text style={{ fontSize: 15, width: "30%" }}>Quận/Huyện </Text>
+                <TouchableOpacity style={{ marginLeft: 3, width: "70%", height: "100%" }} onPress={() => this.choseDistrict()}  >
+                  <TextInput style={{ borderWidth: 0.5, borderRadius: 8, textAlign: "center", color: "black" }} editable={false} value={this.state.District}></TextInput>
+                </TouchableOpacity>
               </View>
               {/* body */}
-              <View style={{ flex: 1 }}>
+              <View style={{ flex: 1, marginTop: 15, alignItems: "center" }}>
                 <FlatList
-                  data={this.state.listTP}
-                  renderItem={this.renderTPItem}
+                  data={this.state.showListProvince ? this.state.listProvince : this.state.showListDistrict ? this.state.listDistrict : this.state.listProvince}
+                  renderItem={this.renderModalLocation}
                   keyExtractor={(item, index) => `${index}`}
+                  style={{ width: "100%", height: "100%" }}
+                  showsVerticalScrollIndicator={false}
                 />
               </View>
               {/* footer modal */}
               <View style={{ borderTopWidth: 1, alignItems: 'center', borderColor: "#E5E5E5", }}>
                 <TouchableOpacity
                   style={{
-                    backgroundColor: '#4876FF',
+                    backgroundColor: '#e32f45',
                     borderRadius: 10,
                     marginTop: '5%',
                     width: '70%',
                   }}
-                  onPress={() => this.setState({ modalOfTP: false })}>
+                  onPress={() => this.onSearch()}>
                   <Text
                     style={{
                       fontSize: 20,
@@ -296,274 +250,38 @@ export default class SearchScreen extends React.Component {
                       textAlign: 'center',
                       color: 'white',
                     }}>
-                    Cancel
+                    Tìm kiếm
                   </Text>
                 </TouchableOpacity>
               </View>
             </View>
           </View>
           <View style={{ position: "absolute", bottom: 0, top: 0, left: 0, right: 0, zIndex: 1, backgroundColor: 'rgba(0,0,0,0.5)' }}
-          // onTouchStart={() => this.setModalVisible("TP",!this.state.modalOfTP)} 
-
+            onTouchStart={() => this.setModalVisible()}
           />
         </Modal>
-        {/* modal quận */}
-        <Modal animationType="slide" transparent={true} visible={this.state.modalOfQuan}>
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              {/* header modal */}
-              <Text
-                style={{
-                  fontSize: 20,
-                  marginTop: 5,
-                  paddingBottom: '3%',
-                  color: "#555555",
-                  textAlign: 'center',
-                  fontWeight: 'bold',
 
-                }}>
-                Chọn Quận/Huyện
-              </Text>
-              <View style={styles.inputField}>
-                <View style={{ justifyContent: "center", marginLeft: "2%", }}>
-                  <Icon
-                    name="search"
-                    backgroundColor=""
-                    color="grey"
-                    size={22}
-                  />
-                </View>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', flex: 1 }}>
-                  <TextInput
-                    name="search"
-                    style={styles.TextInput}
-                    placeholder="Tìm quận/huyện..."
-                    value={this.state.Quan_search}
-                    onChangeText={value => this.handleSearch(value, "Quan")}
-                  />
-                  <View>
-                    {this.state.showX ? (<TouchableOpacity onPress={() => this.setState({ Quan_search: '', showX: false })}>
-                      <Icon
-                        name="times"
-                        backgroundColor=""
-                        color="grey"
-                        size={20}
-                        style={{ marginTop: 9, marginRight: 7 }}
-                      />
-                    </TouchableOpacity>) : null}
-                  </View>
-                </View>
-
-              </View>
-              {/* body */}
-              <View style={{ flex: 1 }}>
-                <FlatList
-                  data={this.state.listTP}
-                  renderItem={this.renderTPItem}
-                  keyExtractor={(item, index) => `${index}`}
-                />
-              </View>
-              {/* footer modal */}
-              <View style={{ borderTopWidth: 1, alignItems: 'center', borderColor: "#E5E5E5", }}>
-                <TouchableOpacity
-                  style={{
-                    backgroundColor: '#4876FF',
-                    borderRadius: 10,
-                    marginTop: '5%',
-                    width: '70%',
-                  }}
-                  onPress={() => this.setState({ modalOfQuan: false })}>
-                  <Text
-                    style={{
-                      fontSize: 20,
-                      paddingTop: '3%',
-                      marginBottom: '3%',
-                      textAlign: 'center',
-                      color: 'white',
-                    }}>
-                    Cancel
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-          <View style={{ position: "absolute", bottom: 0, top: 0, left: 0, right: 0, zIndex: 1, backgroundColor: 'rgba(0,0,0,0.5)' }}
-          //onTouchStart={() => this.setModalVisible("Quan",!this.state.modalOfQuan)} 
-
-          />
-        </Modal>
-        {/* modal phường */}
-        <Modal animationType="slide" transparent={true} visible={this.state.modalOfPhuong}>
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              {/* header modal */}
-              <Text
-                style={{
-                  fontSize: 20,
-                  marginTop: 5,
-                  paddingBottom: '3%',
-                  color: "#555555",
-                  textAlign: 'center',
-                  fontWeight: 'bold',
-
-                }}>
-                Chọn Phường/Xã
-              </Text>
-              <View style={styles.inputField}>
-                <View style={{ justifyContent: "center", marginLeft: "2%", }}>
-                  <Icon
-                    name="search"
-                    backgroundColor=""
-                    color="grey"
-                    size={22}
-                  />
-                </View>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', flex: 1 }}>
-                  <TextInput
-                    name="search"
-                    style={styles.TextInput}
-                    placeholder="Tìm phường/xã..."
-                    value={this.state.Phuong_search}
-                    onChangeText={value => this.handleSearch(value, "Phuong")}
-                  />
-                  <View>
-                    {this.state.showX ? (<TouchableOpacity onPress={() => this.setState({ Phuong_search: '', showX: false })}>
-                      <Icon
-                        name="times"
-                        backgroundColor=""
-                        color="grey"
-                        size={20}
-                        style={{ marginTop: 9, marginRight: 7 }}
-                      />
-                    </TouchableOpacity>) : null}
-                  </View>
-                </View>
-
-              </View>
-              {/* body */}
-              <View style={{ flex: 1 }}>
-                <FlatList
-                  data={this.state.listTP}
-                  renderItem={this.renderTPItem}
-                  keyExtractor={(item, index) => `${index}`}
-                />
-              </View>
-              {/* footer modal */}
-              <View style={{ borderTopWidth: 1, alignItems: 'center', borderColor: "#E5E5E5", }}>
-                <TouchableOpacity
-                  style={{
-                    backgroundColor: '#4876FF',
-                    borderRadius: 10,
-                    marginTop: '5%',
-                    width: '70%',
-                  }}
-                  onPress={() => this.setState({ modalOfPhuong: false })}>
-                  <Text
-                    style={{
-                      fontSize: 20,
-                      paddingTop: '3%',
-                      marginBottom: '3%',
-                      textAlign: 'center',
-                      color: 'white',
-                    }}>
-                    Cancel
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-          <View style={{ position: "absolute", bottom: 0, top: 0, left: 0, right: 0, zIndex: 1, backgroundColor: 'rgba(0,0,0,0.5)' }}
-          //onTouchStart={() => this.setModalVisible("Phuong",!this.state.modalOfPhuong)}
-          />
-        </Modal>
         <Text
           style={{ fontSize: 18, fontWeight: 'bold', margin: '2%' }}
         >Lựa chọn khu vực cần tìm kiếm:</Text>
-
-
-        {/* THanh phố */}
+        {/* Location*/}
         <View style={{ marginLeft: "3%", flexDirection: 'row', alignItems: 'center' }}>
-          <CheckBox
-            value={this.state.checkboxTP}
-            tintColors={{ true: '#e32f45' }}
-            onChange={() => this.setState({ checkboxTP: true })}
-
-          />
-          <Text style={{ marginRight: '2%', color: 'black', fontSize: 15 }}>Khu vực Tỉnh/Thành:</Text>
-          <TouchableOpacity style={{ marginRight: "2%", width: "100%" }} onPress={() => { this.setState({ modalOfTP: true }) }} >
-
-            <View style={styles.inputField_drop}>
-              <Text
-                style={styles.Text_name}
-
-              >{this.state.tp}</Text>
+          <View style={styles.inputField_drop}>
+            <TextInput
+              style={styles.Text_name}
+              placeholder={"Tìm quận, thành phố..."}
+              editable={false}
+            >{this.state.searchString}</TextInput>
+            <TouchableOpacity style={{ alignItems: "center", marginRight: 10 }} onPress={() => { this.setState({ modalLocation: true }) }} >
               <Icon
                 name="angle-down"
                 backgroundColor=""
                 color="#e32f45"
                 size={30}
-                style={{ marginTop: 5, marginRight: 5 }}
               />
-
-            </View>
-          </TouchableOpacity>
-
-
-        </View>
-        {/* quận huyện */}
-        <View style={{ marginLeft: "3%", flexDirection: 'row', alignItems: 'center' }}>
-          <CheckBox
-            value={this.state.checkboxQuan}
-            tintColors={{ true: '#e32f45' }}
-            onChange={() => this.setState({ checkboxQuan: true })}
-          />
-          <Text style={{ marginRight: '1%', color: 'black', fontSize: 15 }}>Khu vực Quận/Huyện:</Text>
-          <TouchableOpacity style={{ marginRight: "2%", width: "100%" }} onPress={() => { this.setState({ modalOfQuan: true }) }} >
-
-            <View style={styles.inputField_drop}>
-              <Text
-                style={styles.Text_name}
-
-              >{this.state.quan}</Text>
-              <Icon
-                name="angle-down"
-                backgroundColor=""
-                color="#e32f45"
-                size={30}
-                style={{ marginTop: 5, marginRight: 5 }}
-              />
-
-            </View>
-          </TouchableOpacity>
-
-
-        </View>
-        {/* Phuong xa */}
-        <View style={{ marginLeft: "3%", flexDirection: 'row', alignItems: 'center' }}>
-          <CheckBox
-            value={this.state.checkboxPhuong}
-            tintColors={{ true: '#e32f45' }}
-            onChange={() => this.setState({ checkboxPhuong: true })}
-          />
-          <Text style={{ marginRight: '2%', color: 'black', fontSize: 15 }}>Khu vực Phường/Xã: </Text>
-          <TouchableOpacity style={{ marginRight: "2%", width: "100%" }} onPress={() => { this.setState({ modalOfPhuong: true }) }} >
-
-            <View style={styles.inputField_drop}>
-              <Text
-                style={styles.Text_name}
-
-              >{this.state.phuong}</Text>
-              <Icon
-                name="angle-down"
-                backgroundColor=""
-                color="#e32f45"
-                size={30}
-                style={{ marginTop: 5, marginRight: 5 }}
-              />
-
-            </View>
-          </TouchableOpacity>
-
+            </TouchableOpacity>
+          </View>
+          {/* List House */}
         </View>
         <View style={styles.list}>
           <SafeAreaView>
@@ -574,7 +292,7 @@ export default class SearchScreen extends React.Component {
             />
           </SafeAreaView>
         </View>
-      </View>
+      </View >
     );
   }
 }
@@ -599,30 +317,29 @@ const styles = StyleSheet.create({
 
   },
   inputField_drop: {
-    margin: "1%",
     borderColor: '#e5e5e5',
     borderRadius: 5,
-    elevation: 1,
+    borderWidth: 1,
+    elevation: 0.1,
     height: 40,
     flexDirection: 'row',
     backgroundColor: '#ffffff',
-    width: "50%"
+    width: "98%",
+    alignItems: "center"
   },
   TextInput: {
     color: '#000000',
     borderColor: 'black',
     flex: 1,
     marginLeft: "2%",
-    width: "100%",
-
+    width: "100%"
   },
   Text_name: {
     color: '#000000',
     borderColor: 'black',
     flex: 1,
-    marginTop: '5%',
-    marginLeft: "5%",
     width: "100%",
+    height: "100%",
 
   },
   dropdown: {

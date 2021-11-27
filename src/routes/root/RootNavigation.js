@@ -40,9 +40,9 @@ class RootNavigation extends React.Component {
                                 tabBarShowLabel: false,
                                 tabBarActiveTintColor: 'tomato',
                                 tabBarInactiveTintColor: 'gray',
-                                
+
                             }}>
-                            <Tab.Screen name="HomeScreen"  component={HomeScreen} options={{
+                            <Tab.Screen name="HomeScreen" component={HomeScreen} options={{
                                 tabBarIcon: ({ focused }) => (
                                     <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                                         <Icon
@@ -55,23 +55,23 @@ class RootNavigation extends React.Component {
                                         </Text>
                                     </View>
                                 ),
-                                headerShown:false
+                                headerShown: false
                             }} />
-                            <Tab.Screen name="SearchScreen"  component={SearchScreenStack} options={{
+                            <Tab.Screen name="SearchScreen" component={SearchScreenStack} options={{
                                 tabBarIcon: ({ focused }) => (
                                     <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                                         <Icon
                                             name="search"
                                             size={25}
-                                            style={{ color: focused ? '#e32f45' : '#748c94' }}
+                                            style={{ color: focused ? '#DB3022' : '#748c94' }}
                                         />
-                                        <Text style={{ color: focused ? '#e32f45' : '#748c94' }}>
+                                        <Text style={{ color: focused ? '#DB3022' : '#748c94' }}>
                                             Tìm Kiếm
                                         </Text>
                                     </View>
                                 ),
-                                headerShown:false
-                               
+                                headerShown: false
+
                             }} />
                             <Tab.Screen name="Login" component={LoginScreen} options={{
 
@@ -87,7 +87,7 @@ class RootNavigation extends React.Component {
                                         </Text>
                                     </View>
                                 ),
-                                headerShown:false
+                                headerShown: false
 
                             }} />
                         </Tab.Navigator>)}
