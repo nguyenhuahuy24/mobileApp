@@ -13,105 +13,21 @@ import {
   FlatList,
   Dimensions
 } from 'react-native';
-import { getProvince, getDistrict } from '../../business/ApiThirdParty'
+import { connect } from 'react-redux';
+import { getHouse } from '../../redux/action/house/HouseAction'
 import axios from "axios";
 
 const { height, width } = Dimensions.get('window');
-const data = [{
-  _id: 'abc1asdasd123',
-  House_Name: "Max",
-  Phone: "09778908123",
-  Address: "65/20, đường tang nhon phú, phường Phước Long B, Tp Thủ Đức, Tp Hồ Chí Minh",
-  Status: "0",
-},
-{
-  _id: 'abc1asdasd123',
-  House_Name: "Min",
-  Phone: "09778908123",
-  Address: "65/24, đường tang nhon phú, phường Phước Long B, Tp Thủ Đức, Tp Hồ Chí Minh",
-  Status: "1",
-}]
-const data_1 = [{
-  _id: 'abc1asdasd123',
-  Name: "Hồ Chí Minh",
 
-},
-{
-  _id: 'abc1asdasd124',
-  Name: "Hà Nội",
-},
-{
-  _id: 'abc1asdasd125',
-  Name: "Quảng Ngãi",
-},
-{
-  _id: 'abc1asdasd126',
-  Name: "Bình Định",
-},
-{
-  _id: 'abc1asdasd121',
-  Name: "Cà Mau",
-},
-{
-  _id: 'abc1asdasd1261',
-  Name: "Nha Trang",
-}
-]
-const data_2 = [
-  {
-    _id: 'abc1asdasd1263',
-    Name: "HUế",
-  },
-  {
-    _id: 'abc1asdasd1263',
-    Name: "HUế",
-  },
-  {
-    _id: 'abc1asdasd1263',
-    Name: "HUế",
-  },
-  {
-    _id: 'abc1asdasd1263',
-    Name: "HUế",
-  },
-  {
-    _id: 'abc1asdasd1263',
-    Name: "HUế",
-  },
-  {
-    _id: 'abc1asdasd1263',
-    Name: "HUế",
-  },
-  {
-    _id: 'abc1asdasd1263',
-    Name: "HUế",
-  },
-  {
-    _id: 'abc1asdasd1263',
-    Name: "HUế",
-  },
-  {
-    _id: 'abc1asdasd1263',
-    Name: "HUế",
-  },
-  {
-    _id: 'abc1asdasd1263',
-    Name: "HUế",
-  },
-  {
-    _id: 'abc1asdasd1263',
-    Name: "HUế",
-  }
-
-]
-export default class SearchScreen extends React.Component {
+class SearchScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      list_home: data,
       showX: false,
       Province: "",
       District: "",
+      page: 1,
+      limit: 5,
       showListProvince: true,
       showListDistrict: false,
       modalLocation: false,
@@ -154,20 +70,19 @@ export default class SearchScreen extends React.Component {
       onPress={() => this.ToDetail({ item })}>
       <View style={styles.body_item}>
         <View style={{ margin: "2%" }}>
-          <Text style={styles.name_item}>Tên nhà trọ: {item.House_Name}</Text>
-          <Text style={styles.label_item}> - Số điện thoại: {item.Phone}</Text>
-          <Text style={styles.label_item}> - Địa chỉ: {item.Address}</Text>
-          <Text style={{ fontSize: 17 }}> - Tình trạng: {this.statusBodyTemplate(item.Status)}</Text>
+          <Text style={styles.name_item}>Tên nhà trọ: {item.Name}</Text>
+          <Text style={styles.label_item}> - Số điện thoại: {item.UserId.Phone}</Text>
+
         </View>
       </View>
     </TouchableOpacity>
   );
   renderModalLocation = ({ item }) => (
-    <TouchableOpacity style={{ flex: 1, margin: "2%", width: "100%", alignItems: "center" }} onPress={() => this.a(item)}>
+    <TouchableOpacity style={{ flex: 1, margin: "2%", width: "100%", alignItems: "center" }} onPress={() => this.clickItem(item)}>
       <Text style={{ fontSize: 17 }}>{item.name}</Text>
     </TouchableOpacity>
   );
-  a = (item) => {
+  clickItem = (item) => {
     if (this.state.showListProvince === true) {
       axios.get(`https://provinces.open-api.vn/api/p/${item.code}?depth=2`)
         .then(res => { this.setState({ Province: item.name, listDistrict: res.data.districts }) })
@@ -175,9 +90,10 @@ export default class SearchScreen extends React.Component {
     else (this.setState({ District: item.name }))
   }
   onSearch = () => {
-    const { Province, District } = this.state
+    const { Province, District, page, limit } = this.state
     this.setModalVisible()
     this.setState({ searchString: `${Province}, ${District}` })
+    this.props.getHouse(Province, District, page, limit)
   }
   setModalVisible = () => {
     this.setState({ modalLocation: false })
@@ -286,7 +202,7 @@ export default class SearchScreen extends React.Component {
         <View style={styles.list}>
           <SafeAreaView>
             <FlatList
-              data={this.state.list_home}
+              data={this.props.listHouse.data}
               renderItem={this.renderItem}
               keyExtractor={(item, index) => index.toString()}
             />
@@ -394,4 +310,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
-//
+
+function mapStateToProps(state) {
+  return {
+    listHouse: state.HouseReducer.listHouse
+  };
+}
+export default connect(mapStateToProps, { getHouse })(SearchScreen);

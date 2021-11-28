@@ -8,7 +8,7 @@ export default class Authentication {
         const { phone, password } = data
         const params = { Phone: phone, Password: password }
         const response = await axios.post(`${URL}/login`, params)
-                console.log("data: ",response)
+        //console.log("data: ",response)
 
         const resData = { ...response.data }
         if (!("error" in response.data)) {
@@ -51,8 +51,8 @@ export default class Authentication {
         })
     }
     changePassword = async (data, success, failed) => {
-        const response = await axios.patch(`${URL}/changePassword`,data,{headers:{Authorization:'Bearer ' + await AsyncStorage.getItem('accessToken')}})
-        console.log("response: ",response)
+        const response = await axios.patch(`${URL}/changePassword`, data, { headers: { Authorization: 'Bearer ' + await AsyncStorage.getItem('accessToken') } })
+        console.log("response: ", response)
         const resData = { ...response.data }
         if (!("error" in response.data)) {
             success({

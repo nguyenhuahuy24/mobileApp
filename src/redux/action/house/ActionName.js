@@ -1,0 +1,7 @@
+export const NAME_ACTIONS = {
+    HOUSE_SCREEN: {
+        HOUSE_SCREEN: 'HOUSE_SCREEN',
+        GET_HOUSE: 'GET_HOUSE',
+        GET_HOUSE_FAILED: 'GET_HOUSE_FAILED',
+    }
+}
