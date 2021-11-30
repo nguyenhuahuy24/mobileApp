@@ -18,7 +18,190 @@ import { getHouse } from '../../redux/action/house/HouseAction'
 import axios from "axios";
 
 const { height, width } = Dimensions.get('window');
-
+const data = [
+  {
+    Rooms: [
+      "617aa0c7c1580d46584f92af",
+      "617aa0f7c1580d46584f92b2",
+      "617aa129c1580d46584f92b4",
+      "617aa145c1580d46584f92b6",
+      "617aa161c1580d46584f92b8",
+      "617aa18bc1580d46584f92ba"
+    ],
+    _id: "617a9bbdc1580d46584f92aa",
+    Name: 'Max',
+    Address: '65/24 đường Tăng Nhơn Phú',
+    UserId: {
+      _id: "5ff33bd0abc73325a8163c6d",
+      Email: '17110246@student.hcmute.edu.vn',
+      Name: 'Nguyễn Hứa huy',
+      Phone: '0778908123'
+    },
+    District: 'Thành Phố Thủ Đức',
+    Province: 'Thành Phố Hồ Chí Minh',
+    Rating: 0,
+    Ward: 'Phường Phước Long B'
+  },
+  {
+    Rooms: [
+      '617aa1bec1580d46584f92bc',
+      "617aa206c1580d46584f92bf",
+      "617aa257c1580d46584f92c1",
+      "617aa27cc1580d46584f92c3"
+    ],
+    _id: "617a9e17c1580d46584f92ab",
+    Name: 'Min',
+    Address: '1, Đường Võ Văn Ngân',
+    UserId: {
+      _id: "5ff33bd0abc73325a8163c6d",
+      Email: '17110246@student.hcmute.edu.vn',
+      Name: 'Nguyễn Hứa huy',
+      Phone: '0778908123'
+    },
+    District: 'Thành Phố Thủ Đức',
+    Province: 'Thành Phố Hồ Chí Minh',
+    Ward: 'Phường Linh Chiểu',
+    Rating: 3
+  },
+  {
+    Rooms: [
+      "617aa0c7c1580d46584f92af",
+      "617aa0f7c1580d46584f92b2",
+      "617aa129c1580d46584f92b4",
+      "617aa145c1580d46584f92b6",
+      "617aa161c1580d46584f92b8",
+      "617aa18bc1580d46584f92ba"
+    ],
+    _id: "617a9bbdc1580d46584f92aa",
+    Name: 'Max',
+    Address: '65/24 đường Tăng Nhơn Phú',
+    UserId: {
+      _id: "5ff33bd0abc73325a8163c6d",
+      Email: '17110246@student.hcmute.edu.vn',
+      Name: 'Nguyễn Hứa huy',
+      Phone: '0778908123'
+    },
+    District: 'Thành Phố Thủ Đức',
+    Province: 'Thành Phố Hồ Chí Minh',
+    Rating: 0,
+    Ward: 'Phường Phước Long B'
+  },
+  {
+    Rooms: [
+      "617aa0c7c1580d46584f92af",
+      "617aa0f7c1580d46584f92b2",
+      "617aa129c1580d46584f92b4",
+      "617aa145c1580d46584f92b6",
+      "617aa161c1580d46584f92b8",
+      "617aa18bc1580d46584f92ba"
+    ],
+    _id: "617a9bbdc1580d46584f92aa",
+    Name: 'Max',
+    Address: '65/24 đường Tăng Nhơn Phú',
+    UserId: {
+      _id: "5ff33bd0abc73325a8163c6d",
+      Email: '17110246@student.hcmute.edu.vn',
+      Name: 'Nguyễn Hứa huy',
+      Phone: '0778908123'
+    },
+    District: 'Thành Phố Thủ Đức',
+    Province: 'Thành Phố Hồ Chí Minh',
+    Rating: 0,
+    Ward: 'Phường Phước Long B'
+  },
+  {
+    Rooms: [
+      "617aa0c7c1580d46584f92af",
+      "617aa0f7c1580d46584f92b2",
+      "617aa129c1580d46584f92b4",
+      "617aa145c1580d46584f92b6",
+      "617aa161c1580d46584f92b8",
+      "617aa18bc1580d46584f92ba"
+    ],
+    _id: "617a9bbdc1580d46584f92aa",
+    Name: 'Max',
+    Address: '65/24 đường Tăng Nhơn Phú',
+    UserId: {
+      _id: "5ff33bd0abc73325a8163c6d",
+      Email: '17110246@student.hcmute.edu.vn',
+      Name: 'Nguyễn Hứa huy',
+      Phone: '0778908123'
+    },
+    District: 'Thành Phố Thủ Đức',
+    Province: 'Thành Phố Hồ Chí Minh',
+    Rating: 0,
+    Ward: 'Phường Phước Long B'
+  },
+  {
+    Rooms: [
+      "617aa0c7c1580d46584f92af",
+      "617aa0f7c1580d46584f92b2",
+      "617aa129c1580d46584f92b4",
+      "617aa145c1580d46584f92b6",
+      "617aa161c1580d46584f92b8",
+      "617aa18bc1580d46584f92ba"
+    ],
+    _id: "617a9bbdc1580d46584f92aa",
+    Name: 'Max',
+    Address: '65/24 đường Tăng Nhơn Phú',
+    UserId: {
+      _id: "5ff33bd0abc73325a8163c6d",
+      Email: '17110246@student.hcmute.edu.vn',
+      Name: 'Nguyễn Hứa huy',
+      Phone: '0778908123'
+    },
+    District: 'Thành Phố Thủ Đức',
+    Province: 'Thành Phố Hồ Chí Minh',
+    Rating: 0,
+    Ward: 'Phường Phước Long B'
+  },
+  {
+    Rooms: [
+      "617aa0c7c1580d46584f92af",
+      "617aa0f7c1580d46584f92b2",
+      "617aa129c1580d46584f92b4",
+      "617aa145c1580d46584f92b6",
+      "617aa161c1580d46584f92b8",
+      "617aa18bc1580d46584f92ba"
+    ],
+    _id: "617a9bbdc1580d46584f92aa",
+    Name: 'Max',
+    Address: '65/24 đường Tăng Nhơn Phú',
+    UserId: {
+      _id: "5ff33bd0abc73325a8163c6d",
+      Email: '17110246@student.hcmute.edu.vn',
+      Name: 'Nguyễn Hứa huy',
+      Phone: '0778908123'
+    },
+    District: 'Thành Phố Thủ Đức',
+    Province: 'Thành Phố Hồ Chí Minh',
+    Rating: 0,
+    Ward: 'Phường Phước Long B'
+  },
+  {
+    Rooms: [
+      "617aa0c7c1580d46584f92af",
+      "617aa0f7c1580d46584f92b2",
+      "617aa129c1580d46584f92b4",
+      "617aa145c1580d46584f92b6",
+      "617aa161c1580d46584f92b8",
+      "617aa18bc1580d46584f92ba"
+    ],
+    _id: "617a9bbdc1580d46584f92aa",
+    Name: 'Max',
+    Address: '65/24 đường Tăng Nhơn Phú',
+    UserId: {
+      _id: "5ff33bd0abc73325a8163c6d",
+      Email: '17110246@student.hcmute.edu.vn',
+      Name: 'Nguyễn Hứa huy',
+      Phone: '0778908123'
+    },
+    District: 'Thành Phố Thủ Đức',
+    Province: 'Thành Phố Hồ Chí Minh',
+    Rating: 0,
+    Ward: 'Phường Phước Long B'
+  }
+]
 class SearchScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -70,8 +253,22 @@ class SearchScreen extends React.Component {
       onPress={() => this.ToDetail({ item })}>
       <View style={styles.body_item}>
         <View style={{ margin: "2%" }}>
-          <Text style={styles.name_item}>Tên nhà trọ: {item.Name}</Text>
-          <Text style={styles.label_item}> - Số điện thoại: {item.UserId.Phone}</Text>
+          <View style={{ flexDirection: "row" }}>
+            <Icon color="#457b9d" name="map-marker" size={25} style={{ marginRight: 5 }} />
+            <Text style={styles.name_item} >{`${item.Address}, ${item.Ward}, ${item.District}, ${item.Province}`}</Text>
+          </View>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Icon color="#457b9d" name="home" size={20} style={styles.icon} />
+            <Text style={{ fontSize: 16 }}> Tên nhà trọ: {item.Name}</Text>
+          </View>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Icon color="#457b9d" name="phone" size={20} style={styles.icon} />
+            <Text style={styles.label_item}>  {item.UserId.Phone + " - " + item.UserId.Name}</Text>
+          </View>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Icon color="#457b9d" name="bed" size={20} style={styles.icon} />
+            <Text style={styles.label_item}>{"Tổng số phòng: " + item.Rooms.length}</Text>
+          </View>
 
         </View>
       </View>
@@ -104,6 +301,29 @@ class SearchScreen extends React.Component {
   choseDistrict = () => {
     this.setState({ showListProvince: false, showListDistrict: true })
   }
+  emptyComponent = () => {
+    return (
+      <View style={{ height: '100%', alignItems: "center", justifyContent: "center" }}>
+        <Text style={{ textAlign: 'center', color: '#e5e5e5e5', fontSize: 22, fontWeight: 'bold', marginTop: 20 }}> Danh sách trống </Text>
+      </View>
+    )
+  }
+  // onLoadMore = () => {
+  //   if (this.shouldLoadMore) {
+  //     this.shouldLoadMore = true;
+  //     this.props.getListTask(
+  //       this.state.offset,
+  //       this.state.limit,
+  //       this.props.item.id,
+  //       this.props.item.listTask.data,
+  //     );
+  //     this.shouldLoadMore = false;
+  //     // this.setState({isRefreshingFooter : false })
+  //   }
+  //   else {
+  //     this.setState({ isRefreshingFooter: false })
+  //   }
+  // };
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: '#f2f2f2' }}>
@@ -146,6 +366,7 @@ class SearchScreen extends React.Component {
                   keyExtractor={(item, index) => `${index}`}
                   style={{ width: "100%", height: "100%" }}
                   showsVerticalScrollIndicator={false}
+                  ListEmptyComponent={<View style={{ alignItems: "center" }}><Text style={{ marginTop: 20, color: '#e5e5e5e5', fontSize: 20 }}>Chưa chọn tỉnh/ thành phố</Text></View>}
                 />
               </View>
               {/* footer modal */}
@@ -176,7 +397,6 @@ class SearchScreen extends React.Component {
             onTouchStart={() => this.setModalVisible()}
           />
         </Modal>
-
         <Text
           style={{ fontSize: 18, fontWeight: 'bold', margin: '2%' }}
         >Lựa chọn khu vực cần tìm kiếm:</Text>
@@ -200,13 +420,17 @@ class SearchScreen extends React.Component {
           {/* List House */}
         </View>
         <View style={styles.list}>
-          <SafeAreaView>
-            <FlatList
-              data={this.props.listHouse.data}
-              renderItem={this.renderItem}
-              keyExtractor={(item, index) => index.toString()}
-            />
-          </SafeAreaView>
+          <FlatList
+            //data={this.props.listHouse.data}
+            style={styles.listHouse}
+            data={this.props.listHouse.data}
+            renderItem={this.renderItem}
+            keyExtractor={(item, index) => index.toString()}
+            // onEndReached={this.loadMoreData}
+            // onEndReachedThreshold={0.1}
+            //ItemSeparatorComponent={() => <View style={styles.separator} />}
+            ListEmptyComponent={this.emptyComponent}
+          />
         </View>
       </View >
     );
@@ -215,14 +439,13 @@ class SearchScreen extends React.Component {
 
 const styles = StyleSheet.create({
   list: {
-    flex: 1,
     backgroundColor: '#ffff',
-    margin: '2%',
-    marginBottom: '23%',
-    borderRadius: 5,
-    borderWidth: 0.5
+    marginTop: 10,
+    height: "78%"
   },
+  listHouse: {
 
+  },
   inputField: {
     margin: "1%",
     borderRadius: 5,
@@ -279,18 +502,23 @@ const styles = StyleSheet.create({
     color: '#256029',
   },
   body_item: {
-    elevation: 5,
     margin: '2%',
     backgroundColor: '#ffff',
     borderColor: '#c5c5c5',
     borderRadius: 10,
-    borderWidth: 0.5
+    borderWidth: 1,
+
   },
   name_item: {
-    fontSize: 19, color: "#ff1a1a", fontWeight: 'bold'
+    fontSize: 16,
+    color: "#457b9d",
+    fontWeight: 'bold',
+    flexWrap: "wrap",
+    //backgroundColor: "blue",
+    width: '90%'
   },
   label_item: {
-    fontSize: 17, marginBottom: '2%'
+    fontSize: 16
   },
   centeredView: {
     flex: 1,
@@ -309,6 +537,10 @@ const styles = StyleSheet.create({
     zIndex: 100,
     flex: 1,
   },
+  icon: {
+    marginLeft: 30,
+    marginRight: 5
+  }
 });
 
 function mapStateToProps(state) {
