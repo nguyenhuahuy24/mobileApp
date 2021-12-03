@@ -23,6 +23,24 @@ export default class HouseBusiness {
             })
         )
     }
+    getListRoom = async (data, success, failed) => {
+        const { houseId } = data
+        const listRoom = await axios.get(`${URL}/house/${houseId}`)
+        if (!("error" in listRoom.data)) {
+            success({
+                status: dataStatus.SUCCESS,
+                message: 'Get data success',
+                data: listRoom.data
+            })
+        }
+        else (
+            failed({
+                status: dataStatus.FAILED,
+                message: response.data["error"],
+                data: listRoom.data
+            })
+        )
+    }
 
 
 }

@@ -13,8 +13,14 @@ import DrawerNavigation from '../drawer/DrawerNavigation'
 import { withGlobalContext } from '../../GlobalContextProvider';
 import { connect } from 'react-redux';
 import { checkLogout } from '../../utility/common'
+import NetInfo from '@react-native-community/netinfo';
 class RootNavigation extends React.Component {
-
+    constructor(props) {
+        super(props);
+        this.state = {
+            isConnectInternet: false
+        }
+    }
     render() {
         const isSignin = this.props.global.isSignin
         const Stack = createStackNavigator();

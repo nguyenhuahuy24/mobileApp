@@ -11,197 +11,16 @@ import {
   Modal,
   SafeAreaView,
   FlatList,
-  Dimensions
+  Dimensions,
+  ActivityIndicator
 } from 'react-native';
 import { connect } from 'react-redux';
 import { getHouse } from '../../redux/action/house/HouseAction'
 import axios from "axios";
+import _ from 'underscore';
 
 const { height, width } = Dimensions.get('window');
-const data = [
-  {
-    Rooms: [
-      "617aa0c7c1580d46584f92af",
-      "617aa0f7c1580d46584f92b2",
-      "617aa129c1580d46584f92b4",
-      "617aa145c1580d46584f92b6",
-      "617aa161c1580d46584f92b8",
-      "617aa18bc1580d46584f92ba"
-    ],
-    _id: "617a9bbdc1580d46584f92aa",
-    Name: 'Max',
-    Address: '65/24 đường Tăng Nhơn Phú',
-    UserId: {
-      _id: "5ff33bd0abc73325a8163c6d",
-      Email: '17110246@student.hcmute.edu.vn',
-      Name: 'Nguyễn Hứa huy',
-      Phone: '0778908123'
-    },
-    District: 'Thành Phố Thủ Đức',
-    Province: 'Thành Phố Hồ Chí Minh',
-    Rating: 0,
-    Ward: 'Phường Phước Long B'
-  },
-  {
-    Rooms: [
-      '617aa1bec1580d46584f92bc',
-      "617aa206c1580d46584f92bf",
-      "617aa257c1580d46584f92c1",
-      "617aa27cc1580d46584f92c3"
-    ],
-    _id: "617a9e17c1580d46584f92ab",
-    Name: 'Min',
-    Address: '1, Đường Võ Văn Ngân',
-    UserId: {
-      _id: "5ff33bd0abc73325a8163c6d",
-      Email: '17110246@student.hcmute.edu.vn',
-      Name: 'Nguyễn Hứa huy',
-      Phone: '0778908123'
-    },
-    District: 'Thành Phố Thủ Đức',
-    Province: 'Thành Phố Hồ Chí Minh',
-    Ward: 'Phường Linh Chiểu',
-    Rating: 3
-  },
-  {
-    Rooms: [
-      "617aa0c7c1580d46584f92af",
-      "617aa0f7c1580d46584f92b2",
-      "617aa129c1580d46584f92b4",
-      "617aa145c1580d46584f92b6",
-      "617aa161c1580d46584f92b8",
-      "617aa18bc1580d46584f92ba"
-    ],
-    _id: "617a9bbdc1580d46584f92aa",
-    Name: 'Max',
-    Address: '65/24 đường Tăng Nhơn Phú',
-    UserId: {
-      _id: "5ff33bd0abc73325a8163c6d",
-      Email: '17110246@student.hcmute.edu.vn',
-      Name: 'Nguyễn Hứa huy',
-      Phone: '0778908123'
-    },
-    District: 'Thành Phố Thủ Đức',
-    Province: 'Thành Phố Hồ Chí Minh',
-    Rating: 0,
-    Ward: 'Phường Phước Long B'
-  },
-  {
-    Rooms: [
-      "617aa0c7c1580d46584f92af",
-      "617aa0f7c1580d46584f92b2",
-      "617aa129c1580d46584f92b4",
-      "617aa145c1580d46584f92b6",
-      "617aa161c1580d46584f92b8",
-      "617aa18bc1580d46584f92ba"
-    ],
-    _id: "617a9bbdc1580d46584f92aa",
-    Name: 'Max',
-    Address: '65/24 đường Tăng Nhơn Phú',
-    UserId: {
-      _id: "5ff33bd0abc73325a8163c6d",
-      Email: '17110246@student.hcmute.edu.vn',
-      Name: 'Nguyễn Hứa huy',
-      Phone: '0778908123'
-    },
-    District: 'Thành Phố Thủ Đức',
-    Province: 'Thành Phố Hồ Chí Minh',
-    Rating: 0,
-    Ward: 'Phường Phước Long B'
-  },
-  {
-    Rooms: [
-      "617aa0c7c1580d46584f92af",
-      "617aa0f7c1580d46584f92b2",
-      "617aa129c1580d46584f92b4",
-      "617aa145c1580d46584f92b6",
-      "617aa161c1580d46584f92b8",
-      "617aa18bc1580d46584f92ba"
-    ],
-    _id: "617a9bbdc1580d46584f92aa",
-    Name: 'Max',
-    Address: '65/24 đường Tăng Nhơn Phú',
-    UserId: {
-      _id: "5ff33bd0abc73325a8163c6d",
-      Email: '17110246@student.hcmute.edu.vn',
-      Name: 'Nguyễn Hứa huy',
-      Phone: '0778908123'
-    },
-    District: 'Thành Phố Thủ Đức',
-    Province: 'Thành Phố Hồ Chí Minh',
-    Rating: 0,
-    Ward: 'Phường Phước Long B'
-  },
-  {
-    Rooms: [
-      "617aa0c7c1580d46584f92af",
-      "617aa0f7c1580d46584f92b2",
-      "617aa129c1580d46584f92b4",
-      "617aa145c1580d46584f92b6",
-      "617aa161c1580d46584f92b8",
-      "617aa18bc1580d46584f92ba"
-    ],
-    _id: "617a9bbdc1580d46584f92aa",
-    Name: 'Max',
-    Address: '65/24 đường Tăng Nhơn Phú',
-    UserId: {
-      _id: "5ff33bd0abc73325a8163c6d",
-      Email: '17110246@student.hcmute.edu.vn',
-      Name: 'Nguyễn Hứa huy',
-      Phone: '0778908123'
-    },
-    District: 'Thành Phố Thủ Đức',
-    Province: 'Thành Phố Hồ Chí Minh',
-    Rating: 0,
-    Ward: 'Phường Phước Long B'
-  },
-  {
-    Rooms: [
-      "617aa0c7c1580d46584f92af",
-      "617aa0f7c1580d46584f92b2",
-      "617aa129c1580d46584f92b4",
-      "617aa145c1580d46584f92b6",
-      "617aa161c1580d46584f92b8",
-      "617aa18bc1580d46584f92ba"
-    ],
-    _id: "617a9bbdc1580d46584f92aa",
-    Name: 'Max',
-    Address: '65/24 đường Tăng Nhơn Phú',
-    UserId: {
-      _id: "5ff33bd0abc73325a8163c6d",
-      Email: '17110246@student.hcmute.edu.vn',
-      Name: 'Nguyễn Hứa huy',
-      Phone: '0778908123'
-    },
-    District: 'Thành Phố Thủ Đức',
-    Province: 'Thành Phố Hồ Chí Minh',
-    Rating: 0,
-    Ward: 'Phường Phước Long B'
-  },
-  {
-    Rooms: [
-      "617aa0c7c1580d46584f92af",
-      "617aa0f7c1580d46584f92b2",
-      "617aa129c1580d46584f92b4",
-      "617aa145c1580d46584f92b6",
-      "617aa161c1580d46584f92b8",
-      "617aa18bc1580d46584f92ba"
-    ],
-    _id: "617a9bbdc1580d46584f92aa",
-    Name: 'Max',
-    Address: '65/24 đường Tăng Nhơn Phú',
-    UserId: {
-      _id: "5ff33bd0abc73325a8163c6d",
-      Email: '17110246@student.hcmute.edu.vn',
-      Name: 'Nguyễn Hứa huy',
-      Phone: '0778908123'
-    },
-    District: 'Thành Phố Thủ Đức',
-    Province: 'Thành Phố Hồ Chí Minh',
-    Rating: 0,
-    Ward: 'Phường Phước Long B'
-  }
-]
+
 class SearchScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -210,37 +29,36 @@ class SearchScreen extends React.Component {
       Province: "",
       District: "",
       page: 1,
-      limit: 5,
+      limit: 6,
       showListProvince: true,
       showListDistrict: false,
       modalLocation: false,
       listProvince: [],
       listDistrict: [],
-      searchString: ""
+      searchString: "",
+      isRefreshingFooter: false
     }
+    this.shouldLoadMore = false
   }
   componentDidMount() {
     axios.get(`https://provinces.open-api.vn/api/p/`)
       .then(res => this.setState({ listProvince: res.data }))
   }
-  handleSearch = (value, name) => {
-    if (value === "" || !value) {
-      this.setState({ showX: false });
-    }
-    else {
-      if (name === "TP") {
-        this.setState({ TP_search: value, showX: true });
+  componentDidUpdate(prevProps) {
+    const { data } = this.props.listHouse
+    if (!_.isEqual(data, prevProps.listHouse.data)) {
+      if (data.length < this.state.page * this.state.limit) {
+        this.shouldLoadMore = false
       }
-      if (name === "Quan") {
-        this.setState({ Quan_search: value, showX: true });
-      }
-      if (name === "Phuong") {
-        this.setState({ Phuong_search: value, showX: true });
+      else {
+        this.shouldLoadMore = true
+        this.setState({ page: this.state.page + 1 })
       }
     }
-  };
-  ToDetail = ({ item }) => {
-    this.props.navigation.navigate('SearchDetail')
+  }
+
+  gotoDetail = (item) => {
+    this.props.navigation.navigate('SearchDetail', { houseInfo: item })
   }
   statusBodyTemplate = (rowData) => {
     if (rowData === "1") {
@@ -249,9 +67,10 @@ class SearchScreen extends React.Component {
     if (rowData === "0") { return <Text style={styles.product_status_0}>{"Hết Phòng"}</Text>; }
   }
   renderItem = ({ item }) => (
-    <TouchableOpacity
-      onPress={() => this.ToDetail({ item })}>
-      <View style={styles.body_item}>
+    <View style={styles.body_item}>
+      <TouchableOpacity
+        activeOpacity={0.6}
+        onPress={() => this.gotoDetail(item)}>
         <View style={{ margin: "2%" }}>
           <View style={{ flexDirection: "row" }}>
             <Icon color="#457b9d" name="map-marker" size={25} style={{ marginRight: 5 }} />
@@ -269,10 +88,9 @@ class SearchScreen extends React.Component {
             <Icon color="#457b9d" name="bed" size={20} style={styles.icon} />
             <Text style={styles.label_item}>{"Tổng số phòng: " + item.Rooms.length}</Text>
           </View>
-
         </View>
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </View>
   );
   renderModalLocation = ({ item }) => (
     <TouchableOpacity style={{ flex: 1, margin: "2%", width: "100%", alignItems: "center" }} onPress={() => this.clickItem(item)}>
@@ -290,7 +108,7 @@ class SearchScreen extends React.Component {
     const { Province, District, page, limit } = this.state
     this.setModalVisible()
     this.setState({ searchString: `${Province}, ${District}` })
-    this.props.getHouse(Province, District, page, limit)
+    this.props.getHouse(Province, District, page, limit, this.props.listHouse.data)
   }
   setModalVisible = () => {
     this.setState({ modalLocation: false })
@@ -308,27 +126,21 @@ class SearchScreen extends React.Component {
       </View>
     )
   }
-  // onLoadMore = () => {
-  //   if (this.shouldLoadMore) {
-  //     this.shouldLoadMore = true;
-  //     this.props.getListTask(
-  //       this.state.offset,
-  //       this.state.limit,
-  //       this.props.item.id,
-  //       this.props.item.listTask.data,
-  //     );
-  //     this.shouldLoadMore = false;
-  //     // this.setState({isRefreshingFooter : false })
-  //   }
-  //   else {
-  //     this.setState({ isRefreshingFooter: false })
-  //   }
-  // };
+  onLoadMore = () => {
+    if (this.shouldLoadMore) {
+      this.setState({ isRefreshingFooter: true })
+      const { Province, District, page, limit } = this.state
+      this.props.getHouse(Province, District, page, limit, this.props.listHouse.data)
+      this.shouldLoadMore = false;
+    }
+    else {
+      this.setState({ isRefreshingFooter: false })
+    }
+  };
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: '#f2f2f2' }}>
-        {/* modal Thanh pho */}
-        <Modal animationType="slide" transparent={true} visible={this.state.modalLocation}>
+        <Modal animationType="fade" transparent={true} visible={this.state.modalLocation}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
               {/* header modal */}
@@ -366,6 +178,7 @@ class SearchScreen extends React.Component {
                   keyExtractor={(item, index) => `${index}`}
                   style={{ width: "100%", height: "100%" }}
                   showsVerticalScrollIndicator={false}
+                  //refreshing={false}
                   ListEmptyComponent={<View style={{ alignItems: "center" }}><Text style={{ marginTop: 20, color: '#e5e5e5e5', fontSize: 20 }}>Chưa chọn tỉnh/ thành phố</Text></View>}
                 />
               </View>
@@ -397,39 +210,41 @@ class SearchScreen extends React.Component {
             onTouchStart={() => this.setModalVisible()}
           />
         </Modal>
-        <Text
-          style={{ fontSize: 18, fontWeight: 'bold', margin: '2%' }}
-        >Lựa chọn khu vực cần tìm kiếm:</Text>
-        {/* Location*/}
-        <View style={{ marginLeft: "3%", flexDirection: 'row', alignItems: 'center' }}>
-          <View style={styles.inputField_drop}>
-            <TextInput
-              style={styles.Text_name}
-              placeholder={"Tìm quận, thành phố..."}
-              editable={false}
-            >{this.state.searchString}</TextInput>
-            <TouchableOpacity style={{ alignItems: "center", marginRight: 10 }} onPress={() => { this.setState({ modalLocation: true }) }} >
-              <Icon
-                name="angle-down"
-                backgroundColor=""
-                color="#e32f45"
-                size={30}
-              />
-            </TouchableOpacity>
+        <View style={{ backgroundColor: "#fca311" }}>
+          <Text
+            style={{ fontSize: 18, fontWeight: 'bold', margin: '2%' }}
+          >Lựa chọn khu vực cần tìm kiếm:</Text>
+          {/* Location*/}
+          <View style={{ marginLeft: "3%", flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
+            <View style={styles.inputField_drop}>
+              <TextInput
+                style={styles.Text_name}
+                placeholder={"Tìm quận, thành phố..."}
+                editable={false}
+              >{this.state.searchString}</TextInput>
+              <TouchableOpacity style={{ alignItems: "center", marginRight: 10 }} onPress={() => { this.setState({ modalLocation: true }) }} >
+                <Icon
+                  name="angle-down"
+                  backgroundColor=""
+                  color="#e32f45"
+                  size={30}
+                />
+              </TouchableOpacity>
+            </View>
+            {/* List House */}
           </View>
-          {/* List House */}
         </View>
         <View style={styles.list}>
           <FlatList
-            //data={this.props.listHouse.data}
-            style={styles.listHouse}
             data={this.props.listHouse.data}
             renderItem={this.renderItem}
-            keyExtractor={(item, index) => index.toString()}
-            // onEndReached={this.loadMoreData}
-            // onEndReachedThreshold={0.1}
-            //ItemSeparatorComponent={() => <View style={styles.separator} />}
+            keyExtractor={(item, index) => index}
+            onEndReached={this.onLoadMore}
+            onEndReachedThreshold={0.1}
             ListEmptyComponent={this.emptyComponent}
+            ListFooterComponent={
+              <ActivityIndicator size="large" animating={this.state.isRefreshingFooter} color="black" style={{ alignSelf: 'center' }} />
+            }
           />
         </View>
       </View >
@@ -439,12 +254,8 @@ class SearchScreen extends React.Component {
 
 const styles = StyleSheet.create({
   list: {
-    backgroundColor: '#ffff',
-    marginTop: 10,
-    height: "78%"
-  },
-  listHouse: {
-
+    marginTop: 1,
+    height: "77.5%"
   },
   inputField: {
     margin: "1%",
@@ -506,8 +317,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffff',
     borderColor: '#c5c5c5',
     borderRadius: 10,
-    borderWidth: 1,
-
+    borderWidth: 0,
+    elevation: 3
   },
   name_item: {
     fontSize: 16,

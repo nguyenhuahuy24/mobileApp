@@ -25,6 +25,17 @@ const resolver = (action) => {
                     reject(new Error(NAME_ACTIONS.HOUSE_SCREEN.GET_HOUSE_FAILED));
                 })
                 break;
+            case NAME_ACTIONS.HOUSE_SCREEN.GET_LIST_ROOM:
+                houseBusiness.getListRoom(action.data, success => {
+                    resolve({
+                        actionType: NAME_ACTIONS.HOUSE_SCREEN.GET_LIST_ROOM,
+                        data: success
+                    });
+                }, failed => {
+                    messageError = failed;
+                    reject(new Error(NAME_ACTIONS.HOUSE_SCREEN.GET_LIST_ROOM_FAILED));
+                })
+                break;
             default:
                 console.error('Error when resolver House Epic.');
                 break;
@@ -39,6 +50,11 @@ const dispatch = (data) => {
                 type: NAME_EPICS.EPIC_HOUSE_SCREEN.EPIC_GET_HOUSE,
                 data: data.data
             }
+        case NAME_ACTIONS.HOUSE_SCREEN.GET_LIST_ROOM:
+            return {
+                type: NAME_EPICS.EPIC_HOUSE_SCREEN.EPIC_GET_LIST_ROOM,
+                data: data.data
+            }
         default:
             console.error('Error when dispatch House Epic.');
             return new Error('Error when dispatch House Epic.');
@@ -50,6 +66,11 @@ const dispatchError = (error, action) => {
         case NAME_ACTIONS.HOUSE_SCREEN.GET_HOUSE_FAILED:
             return {
                 type: NAME_EPICS.EPIC_HOUSE_SCREEN.EPIC_GET_HOUSE_FAILED,
+                data: messageError
+            }
+        case NAME_ACTIONS.HOUSE_SCREEN.GET_LIST_ROOM_FAILED:
+            return {
+                type: NAME_EPICS.EPIC_HOUSE_SCREEN.EPIC_GET_LIST_ROOM_FAILED,
                 data: messageError
             }
         default:

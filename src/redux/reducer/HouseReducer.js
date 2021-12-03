@@ -7,6 +7,11 @@ const houseState = {
         message: '',
         data: []
     },
+    listRoom: {
+        status: dataStatus.NONE,
+        message: '',
+        data: []
+    }
 };
 
 const houseReducer = (state = houseState, action) => {
@@ -17,17 +22,40 @@ const houseReducer = (state = houseState, action) => {
                 listHouse: {
                     status: action.data.status,
                     message: action.data.message,
-                    data: action.data.data
+                    data: [
+                        ...state.listHouse.data,
+                        ...action.data.data
+                    ]
                 },
             }
             break;
         case NAME_EPICS.EPIC_HOUSE_SCREEN.EPIC_GET_HOUSE_FAILED:
             state = {
                 ...state,
-                contract: {
+                listHouse: {
                     status: action.data.status,
                     message: action.data.message,
-                    data: {}
+                    data: []
+                }
+            }
+            break;
+        case NAME_EPICS.EPIC_HOUSE_SCREEN.EPIC_GET_LIST_ROOM:
+            state = {
+                ...state,
+                listRoom: {
+                    status: action.data.status,
+                    message: action.data.message,
+                    data: action.data.data
+                },
+            }
+            break;
+        case NAME_EPICS.EPIC_HOUSE_SCREEN.EPIC_GET_LIST_ROOM_FAILED:
+            state = {
+                ...state,
+                listRoom: {
+                    status: action.data.status,
+                    message: action.data.message,
+                    data: []
                 }
             }
             break;
