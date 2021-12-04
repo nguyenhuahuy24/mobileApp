@@ -48,6 +48,7 @@ const houseReducer = (state = houseState, action) => {
                     data: action.data.data
                 },
             }
+            
             break;
         case NAME_EPICS.EPIC_HOUSE_SCREEN.EPIC_GET_LIST_ROOM_FAILED:
             state = {
