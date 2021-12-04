@@ -243,10 +243,12 @@ const styles = StyleSheet.create({
   houseInfo_item: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 5
+    marginBottom: 5,
   },
   houseInfo_text: {
     fontSize: 15,
-    fontWeight: '500'
+    fontWeight: '500',
+    flexWrap: "wrap",
+    width: "90%"
   }
 });

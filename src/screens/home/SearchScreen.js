@@ -36,7 +36,8 @@ class SearchScreen extends React.Component {
       listProvince: [],
       listDistrict: [],
       searchString: "",
-      isRefreshingFooter: false
+      isRefreshingFooter: false,
+      listHouse: []
     }
     this.shouldLoadMore = false
   }
@@ -105,10 +106,12 @@ class SearchScreen extends React.Component {
     else (this.setState({ District: item.name }))
   }
   onSearch = () => {
-    const { Province, District, page, limit } = this.state
+    const { Province, District } = this.state
+    const Page = 1
+    const Limit = 5
     this.setModalVisible()
-    this.setState({ searchString: `${Province}, ${District}` })
-    this.props.getHouse(Province, District, page, limit, this.props.listHouse.data)
+    this.setState({ searchString: `${Province}, ${District}`, page: Page, limit: Limit })
+    this.props.getHouse(Province, District, Page, Limit, [])
   }
   setModalVisible = () => {
     this.setState({ modalLocation: false })
@@ -160,14 +163,14 @@ class SearchScreen extends React.Component {
               <View style={{ flexDirection: "row", height: 40, marginTop: 5, alignItems: "center", marginVertical: 2 }}>
                 <Text style={{ fontSize: 15, width: "30%" }}>Tỉnh/Thành </Text>
                 <TouchableOpacity style={{ marginLeft: 3, width: "70%", height: "100%" }} onPress={() => this.choseProvince()}>
-                  <TextInput style={{ borderWidth: 0.5, borderRadius: 8, textAlign: "center", color: "black" }} editable={false} value={this.state.Province}></TextInput>
+                  <TextInput style={{ borderWidth: 0.5, borderRadius: 5, textAlign: "center", color: "black" }} editable={false} placeholder={"Bấm vào để chọn"} value={this.state.Province}></TextInput>
                 </TouchableOpacity>
               </View>
 
               <View style={{ flexDirection: "row", height: 40, marginTop: 5, alignItems: "center", marginVertical: 2 }}>
                 <Text style={{ fontSize: 15, width: "30%" }}>Quận/Huyện </Text>
                 <TouchableOpacity style={{ marginLeft: 3, width: "70%", height: "100%" }} onPress={() => this.choseDistrict()}  >
-                  <TextInput style={{ borderWidth: 0.5, borderRadius: 8, textAlign: "center", color: "black" }} editable={false} value={this.state.District}></TextInput>
+                  <TextInput style={{ borderWidth: 0.5, borderRadius: 5, textAlign: "center", color: "black" }} editable={false} placeholder={"Bấm vào để chọn"} value={this.state.District}></TextInput>
                 </TouchableOpacity>
               </View>
               {/* body */}
@@ -178,7 +181,6 @@ class SearchScreen extends React.Component {
                   keyExtractor={(item, index) => `${index}`}
                   style={{ width: "100%", height: "100%" }}
                   showsVerticalScrollIndicator={false}
-                  //refreshing={false}
                   ListEmptyComponent={<View style={{ alignItems: "center" }}><Text style={{ marginTop: 20, color: '#e5e5e5e5', fontSize: 20 }}>Chưa chọn tỉnh/ thành phố</Text></View>}
                 />
               </View>
@@ -210,12 +212,9 @@ class SearchScreen extends React.Component {
             onTouchStart={() => this.setModalVisible()}
           />
         </Modal>
-        <View style={{ backgroundColor: "#fca311" }}>
-          <Text
-            style={{ fontSize: 18, fontWeight: 'bold', margin: '2%' }}
-          >Lựa chọn khu vực cần tìm kiếm:</Text>
+        <View style={{ alignItems: "center" }} >
           {/* Location*/}
-          <View style={{ marginLeft: "3%", flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 7 }}>
             <View style={styles.inputField_drop}>
               <TextInput
                 style={styles.Text_name}
@@ -255,7 +254,7 @@ class SearchScreen extends React.Component {
 const styles = StyleSheet.create({
   list: {
     marginTop: 1,
-    height: "77.5%"
+    height: "82%"
   },
   inputField: {
     margin: "1%",
@@ -269,9 +268,9 @@ const styles = StyleSheet.create({
   inputField_drop: {
     borderColor: '#e5e5e5',
     borderRadius: 5,
-    borderWidth: 1,
-    elevation: 0.1,
-    height: 40,
+    //borderWidth: 1,
+    elevation: 4,
+    height: 43,
     flexDirection: 'row',
     backgroundColor: '#ffffff',
     width: "98%",
