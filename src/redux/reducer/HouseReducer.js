@@ -22,10 +22,7 @@ const houseReducer = (state = houseState, action) => {
                 listHouse: {
                     status: action.data.status,
                     message: action.data.message,
-                    data: [
-                        ...state.listHouse.data,
-                        ...action.data.data
-                    ]
+                    data: action.data.data
                 },
             }
             break;

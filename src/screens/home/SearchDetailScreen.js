@@ -20,7 +20,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { getListRoom } from '../../redux/action/house/HouseAction'
-import {getImage}  from "../../utility/common";
+import { getImage } from "../../utility/common";
 const windowHeight = Dimensions.get('window').height
 
 class SearchDetailScreen extends React.Component {
@@ -29,7 +29,7 @@ class SearchDetailScreen extends React.Component {
     this.state = {
       modalVisible: false,
       list_image: [],
-      detail:"",
+      detail: "",
     }
   }
   componentDidMount() {
@@ -42,7 +42,7 @@ class SearchDetailScreen extends React.Component {
     })
   }
   ToDetail = (item) => {
-    this.setState({detail:item.Details, list_image: item.Image, modalVisible: true })
+    this.setState({ detail: item.Details, list_image: item.Image, modalVisible: true })
   }
   statusBodyTemplate = (rowData) => {
     if (rowData === "1") {
@@ -56,14 +56,15 @@ class SearchDetailScreen extends React.Component {
         activeOpacity={0.7}
         onPress={() => this.ToDetail(item)}>
         <View style={{ width: "100%", height: windowHeight / 6 }}>
-          <Image 
+          <Image
             style={{
               flex: 1,
               width: null,
               height: null,
               resizeMode: "stretch",
-              borderRadius: 7}} 
-            source={{uri: `http://192.168.0.109:8080/uploads/images/${item.Image[0]}`}}></Image>
+              borderRadius: 7
+            }}
+            source={{ uri: `http://192.168.0.109:8080/uploads/images/${item.Image[0]}` }}></Image>
         </View>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Text style={styles.label_item}>Phòng số: {item.RoomNumber}</Text>
@@ -75,7 +76,7 @@ class SearchDetailScreen extends React.Component {
   );
   renderImage = ({ item }) => (
     <View style={{ height: 280, width: 280, marginLeft: 15 }}>
-      <Image  source={{uri: `http://192.168.0.109:8080/uploads/images/${item}`}} style={{ flex: 1, width: null, height: null, resizeMode: 'cover' }} />
+      <Image source={{ uri: `http://192.168.0.109:8080/uploads/images/${item}` }} style={{ flex: 1, width: null, height: null, resizeMode: 'cover' }} />
     </View>
   );
   emptyComponent = () => {
@@ -107,7 +108,7 @@ class SearchDetailScreen extends React.Component {
               {/* body */}
               <View>
                 <FlatList
-                  horizontal ={true}
+                  horizontal={true}
                   showsHorizontalScrollIndicator={false}
                   data={this.state.list_image}
                   renderItem={this.renderImage}
@@ -115,8 +116,8 @@ class SearchDetailScreen extends React.Component {
                 />
               </View>
               <View style={styles.modal_detail}>
-                  <Text style={{fontWeight:'bold',fontSize:20}}>Tình trạng: </Text>
-                  <Text style={{fontSize:17,flex:1}}>{this.state.detail}</Text>
+                <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Tình trạng: </Text>
+                <Text style={{ fontSize: 17, flex: 1 }}>{this.state.detail}</Text>
               </View>
             </View>
           </View>
@@ -242,7 +243,7 @@ const styles = StyleSheet.create({
     marginBottom: "38%",
     backgroundColor: 'white',
     borderRadius: 20,
-    
+
     elevation: 5,
     zIndex: 100,
     flex: 1,
@@ -250,18 +251,20 @@ const styles = StyleSheet.create({
   houseInfo_item: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 5
+    marginBottom: 5,
   },
   houseInfo_text: {
     fontSize: 15,
-    fontWeight: '500'
+    fontWeight: '500',
+    flexWrap: "wrap",
+    width: "90%"
   },
-  modal_detail:{
-    marginLeft:"5%",
-    marginTop:"2%",
-    marginRight:"3%",
-    marginBottom:"3%",
-    flexDirection:'row',
-    flex:1
+  modal_detail: {
+    marginLeft: "5%",
+    marginTop: "2%",
+    marginRight: "3%",
+    marginBottom: "3%",
+    flexDirection: 'row',
+    flex: 1
   }
 });
