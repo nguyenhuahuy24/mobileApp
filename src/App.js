@@ -6,7 +6,6 @@ import Store from './redux/Store';
 import { Provider } from 'react-redux';
 import GlobalContextProvider from './GlobalContextProvider';
 enableScreens();
-
 export default class App extends React.Component {
   render() {
     return (

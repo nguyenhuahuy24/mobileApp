@@ -99,6 +99,20 @@ class DrawContent extends React.Component {
               <Text style={{ fontSize: 20, marginLeft: 15, marginTop: "1%" }}>Trò chuyện</Text>
             </TouchableOpacity>
           </View>
+          <View style={styles.bodyText}>
+            <TouchableOpacity
+              style={styles.touch}
+              onPress={() => this.props.navigation.navigate('Assessment')}>
+              <Icon
+                name="star"
+                backgroundColor=""
+                color="#99b3ff"
+                size={30}
+                style={{ marginLeft: "4%",marginRight: 15}}
+              />
+              <Text style={{ fontSize: 20, marginLeft: 15, marginTop: "1%" }}>Đánh giá</Text>
+            </TouchableOpacity>
+          </View>
         </View>
 
         {/* footer */}
@@ -140,7 +154,8 @@ class DrawContent extends React.Component {
 const styles = StyleSheet.create({
 
   header: {
-    flex: 1
+    flex: 1,
+    marginBottom:"3%"
   },
   body: {
     flex: 7,
