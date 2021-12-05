@@ -69,4 +69,39 @@ export default class Authentication {
             })
         )
     }
+    getRating = async (success, failed) => {
+        const response = await axios.get(`${URL}/rating`, { headers: { Authorization: 'Bearer ' + await AsyncStorage.getItem('accessToken') } })
+        if (!("error" in response.data)) {
+            success({
+                status: dataStatus.SUCCESS,
+                message: 'Get data success',
+                data: response.data
+            })
+        }
+        else (
+            failed({
+                status: dataStatus.FAILED,
+                message: response.data["error"],
+                data: {}
+            })
+        )
+    }
+    rating = async (data, success, failed) => {
+        const { point } = data
+        const response = await axios.post(`${URL}/rating`, { rating: point }, { headers: { Authorization: 'Bearer ' + await AsyncStorage.getItem('accessToken') } })
+        if (!("error" in response.data)) {
+            success({
+                status: dataStatus.SUCCESS,
+                message: 'Get data success',
+                data: response.data
+            })
+        }
+        else (
+            failed({
+                status: dataStatus.FAILED,
+                message: response.data["error"],
+                data: {}
+            })
+        )
+    }
 }
