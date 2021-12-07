@@ -20,7 +20,8 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { getListRoom } from '../../redux/action/house/HouseAction'
-import { getImage } from "../../utility/common";
+import { url_image } from "../../utility/config";
+
 const windowHeight = Dimensions.get('window').height
 
 class SearchDetailScreen extends React.Component {
@@ -64,7 +65,7 @@ class SearchDetailScreen extends React.Component {
               resizeMode: "stretch",
               borderRadius: 7
             }}
-            source={{ uri: `http://192.168.0.109:8080/uploads/images/${item.Image[0]}` }}></Image>
+            source={{ uri: `${url_image}/uploads/images/${item.Image[0]}` }}></Image>
         </View>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Text style={styles.label_item}>Phòng số: {item.RoomNumber}</Text>
@@ -76,7 +77,7 @@ class SearchDetailScreen extends React.Component {
   );
   renderImage = ({ item }) => (
     <View style={{ height: 280, width: 280, marginLeft: 15 }}>
-      <Image source={{ uri: `http://192.168.0.109:8080/uploads/images/${item}` }} style={{ flex: 1, width: null, height: null, resizeMode: 'cover' }} />
+      <Image source={{ uri: `${url_image}/uploads/images/${item}` }} style={{ flex: 1, width: null, height: null, resizeMode: 'cover' }} />
     </View>
   );
   emptyComponent = () => {
