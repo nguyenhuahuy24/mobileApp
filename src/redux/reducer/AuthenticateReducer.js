@@ -15,6 +15,11 @@ const loginState = {
         status: dataStatus.NONE,
         message: ''
     },
+    rating: {
+        status: dataStatus.NONE,
+        message: '',
+        data: {}
+    }
 };
 
 const authenticateReducer = (state = loginState, action) => {
@@ -28,7 +33,7 @@ const authenticateReducer = (state = loginState, action) => {
                     data: action.data.data
                 },
             }
-            console.log("user Reducer:",state)
+            console.log("user Reducer:", state)
             break;
         case NAME_EPICS.EPIC_LOGIN_SCREEN.EPIC_LOGIN_FAILED:
             state = {
@@ -72,6 +77,46 @@ const authenticateReducer = (state = loginState, action) => {
             state = {
                 ...state,
                 changePasswordStatus: {
+                    status: action.data.status,
+                    message: action.data.message,
+                    data: {}
+                }
+            }
+            break;
+        case NAME_EPICS.EPIC_LOGIN_SCREEN.EPIC_GET_RATING:
+            state = {
+                ...state,
+                rating: {
+                    status: action.data.status,
+                    message: action.data.message,
+                    data: action.data.data
+                }
+            }
+            break;
+        case NAME_EPICS.EPIC_LOGIN_SCREEN.EPIC_GET_RATING_FAILED:
+            state = {
+                ...state,
+                rating: {
+                    status: action.data.status,
+                    message: action.data.message,
+                    data: {}
+                }
+            }
+            break;
+        case NAME_EPICS.EPIC_LOGIN_SCREEN.EPIC_RATING:
+            state = {
+                ...state,
+                rating: {
+                    status: action.data.status,
+                    message: action.data.message,
+                    data: action.data.data
+                }
+            }
+            break;
+        case NAME_EPICS.EPIC_LOGIN_SCREEN.EPIC_RATING_FAILED:
+            state = {
+                ...state,
+                rating: {
                     status: action.data.status,
                     message: action.data.message,
                     data: {}

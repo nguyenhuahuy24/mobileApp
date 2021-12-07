@@ -37,7 +37,7 @@ const resolver = (action) => {
                 })
                 break;
             case NAME_ACTIONS.LOGIN_SCREEN.CHANGE_PASSWORD:
-                authenticationBusiness.changePassword(action.data,success => {
+                authenticationBusiness.changePassword(action.data, success => {
                     resolve({
                         actionType: NAME_ACTIONS.LOGIN_SCREEN.CHANGE_PASSWORD,
                         data: success
@@ -45,6 +45,28 @@ const resolver = (action) => {
                 }, failed => {
                     messageError = failed;
                     reject(new Error(NAME_ACTIONS.LOGIN_SCREEN.CHANGE_PASSWORD_FAILED));
+                })
+                break;
+            case NAME_ACTIONS.LOGIN_SCREEN.GET_RATING:
+                authenticationBusiness.getRating(success => {
+                    resolve({
+                        actionType: NAME_ACTIONS.LOGIN_SCREEN.GET_RATING,
+                        data: success
+                    });
+                }, failed => {
+                    messageError = failed;
+                    reject(new Error(NAME_ACTIONS.LOGIN_SCREEN.GET_RATING_FAILED));
+                })
+                break;
+            case NAME_ACTIONS.LOGIN_SCREEN.RATING:
+                authenticationBusiness.rating(action.data, success => {
+                    resolve({
+                        actionType: NAME_ACTIONS.LOGIN_SCREEN.RATING,
+                        data: success
+                    });
+                }, failed => {
+                    messageError = failed;
+                    reject(new Error(NAME_ACTIONS.LOGIN_SCREEN.RATING_FAILED));
                 })
                 break;
             default:
@@ -71,6 +93,16 @@ const dispatch = (data) => {
                 type: NAME_EPICS.EPIC_LOGIN_SCREEN.EPIC_CHANGE_PASSWORD,
                 data: data.data
             }
+        case NAME_ACTIONS.LOGIN_SCREEN.GET_RATING:
+            return {
+                type: NAME_EPICS.EPIC_LOGIN_SCREEN.EPIC_GET_RATING,
+                data: data.data
+            }
+        case NAME_ACTIONS.LOGIN_SCREEN.RATING:
+            return {
+                type: NAME_EPICS.EPIC_LOGIN_SCREEN.EPIC_RATING,
+                data: data.data
+            }
         default:
             console.error('Error when dispatch Authentication Epic.');
             return new Error('Error when dispatch Authentication Epic.');
@@ -92,6 +124,16 @@ const dispatchError = (error, action) => {
         case NAME_ACTIONS.LOGIN_SCREEN.CHANGE_PASSWORD_FAILED:
             return {
                 type: NAME_EPICS.EPIC_LOGIN_SCREEN.EPIC_CHANGE_PASSWORD_FAILED,
+                data: messageError
+            }
+        case NAME_ACTIONS.LOGIN_SCREEN.GET_RATING_FAILED:
+            return {
+                type: NAME_EPICS.EPIC_LOGIN_SCREEN.EPIC_GET_RATING_FAILED,
+                data: messageError
+            }
+        case NAME_ACTIONS.LOGIN_SCREEN.RATING_FAILED:
+            return {
+                type: NAME_EPICS.EPIC_LOGIN_SCREEN.EPIC_RATING_FAILED,
                 data: messageError
             }
         default:
