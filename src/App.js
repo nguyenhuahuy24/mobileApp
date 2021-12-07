@@ -6,73 +6,89 @@ import Store from './redux/Store';
 import { Provider } from 'react-redux';
 import GlobalContextProvider from './GlobalContextProvider';
 import NetInfo from "@react-native-community/netinfo";
-import { Text, View ,StyleSheet,TouchableOpacity} from 'react-native'
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/Feather';
 
 enableScreens();
 export default class App extends React.Component {
-  constructor(){
+  constructor() {
     super();
-    this.state={
-      conn_status:false,
+    this.state = {
+      conn_status: true,
     }
-    
+
   }
-  componentDidMount(){
+  componentDidMount() {
     this.NetInfoSubscribtion = NetInfo.addEventListener(
       this._handleConnectivityChange,
-      );
+    );
   }
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.NetInfoSubscribtion && this.NetInfoSubscribtion();
   }
-  _handleConnectivityChange=(state)=>{
+  _handleConnectivityChange = (state) => {
     this.setState({
-      conn_status: state.isConnected, 
+      conn_status: state.isConnected,
     })
     console.log(state.isConnected)
   }
   render() {
-    
-    if(this.state.conn_status===true)
-        {
-            return (
-                  <GlobalContextProvider>
-                    <Provider store={Store}>
-                      <NavigationContainer>
-                        <RootNavigation />
-                      </NavigationContainer>
-                    </Provider>
-                  </GlobalContextProvider>
-                );
-        }
-        else
-        {
-            return (
-                <View style={styles.container}>
-                  <Icon
-                  name="wifi-off"
-                  backgroundColor=""
-                  color="grey"
-                  size={40}
-                  
-                />
-                 <Text style={{marginTop:'3%'}}> Vui lòng kết nối internet !!! </Text>
+    return (
+      (this.state.conn_status) ? <GlobalContextProvider>
+        <Provider store={Store}>
+          <NavigationContainer>
+            <RootNavigation />
+          </NavigationContainer>
+        </Provider>
+      </GlobalContextProvider> :
+        <View style={styles.container}>
+          <Icon
+            name="wifi-off"
+            backgroundColor=""
+            color="grey"
+            size={40}
+          />
+          <Text style={{ marginTop: '3%' }}> Vui lòng kết nối internet !!! </Text>
+        </View>
+    )
+    //   if (this.state.conn_status === true) {
+    //     return (
+    //       <GlobalContextProvider>
+    //         <Provider store={Store}>
+    //           <NavigationContainer>
+    //             <RootNavigation />
+    //           </NavigationContainer>
+    //         </Provider>
+    //       </GlobalContextProvider>
+    //     );
+    //   }
+    //   else {
+    //     return (
+    //       <View style={styles.container}>
+    //         <Icon
+    //           name="wifi-off"
+    //           backgroundColor=""
+    //           color="grey"
+    //           size={40}
 
-                </View>
-            )
-        }
+    //         />
+    //         <Text style={{ marginTop: '3%' }}> Vui lòng kết nối internet !!! </Text>
+
+    //       </View>
+    //     )
+    //   }
+    // }
   }
 }
-const styles=StyleSheet.create({
-    container:{
-        flex:1,
-        justifyContent:"center",
-        alignItems:"center",
-    },
-    button: {
-    height:"10%",
-    width:'60%',
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  button: {
+    height: "10%",
+    width: '60%',
     backgroundColor: "#DB3022",
     borderRadius: 25,
     justifyContent: 'center',
@@ -85,6 +101,6 @@ const styles=StyleSheet.create({
     shadowOpacity: 0.39,
     shadowRadius: 8.30,
     elevation: 13,
-    margin:"8%"
+    margin: "8%"
   },
 })
