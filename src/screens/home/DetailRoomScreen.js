@@ -16,6 +16,9 @@ const images = [
     require('../../image/home/4.png'),
     require('../../image/home/14.jpg')
 ];
+import SwipeSlide from "./Home/SwipeSlide";
+import { url_image } from '../../utility/config'
+
 class DetailRoomScreen extends React.Component {
     constructor(props) {
         super(props);
@@ -25,23 +28,19 @@ class DetailRoomScreen extends React.Component {
     }
     renderImage = ({ item }) => {
         <View style={{ width: "100%", marginLeft: 15 }}>
-            <Image source={item} style={{ flex: 1, resizeMode: 'cover' }} />
+      {/* <Image source={{ uri: `${url_image}/uploads/images/${item}` }}  /> */}
+            <Image source={item}  />
+
         </View>
     }
     render() {
         const { roomInfo } = this.props.route.params
         return (
             <View style={{ flex: 1, backgroundColor: '#e5e5e5', alignItems: 'center', justifyContent: 'center' }}>
-                <View style={{ flex: 1.3, width: "100%" }} >
-                    <FlatList
-                        horizontal
-                        data={images}
-                        renderItem={this.renderImage}
-                        keyExtractor={(item, index) => index.toString()}
-                        showsHorizontalScrollIndicator={false}
-                    />
+                <View style={{ flex: 1 }} >
+                    <SwipeSlide image={roomInfo.Image} />
                 </View>
-                <View style={{ flex: 3, width: "100%" }} >
+                <View style={{ flex: 2, width: "100%" }} >
                     <View style={{ flexDirection: "row" }}>
                         <Icon name="map-marker" size={19} style={{ marginTop: 2, color: "#005f73" }} />
                         <Text style={{ fontSize: 16, width: "90%", marginLeft: 3 }} numberOfLines={2} ellipsizeMode={"tail"} >Địa chỉ: {`${roomInfo.HouseId.Address}, ${roomInfo.HouseId.Ward}, ${roomInfo.HouseId.District}, ${roomInfo.HouseId.Province}`}</Text>

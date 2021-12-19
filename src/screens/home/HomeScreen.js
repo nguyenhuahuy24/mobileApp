@@ -8,7 +8,10 @@ import {
   StyleSheet,
   Image
 } from 'react-native';
+import Icon2 from 'react-native-vector-icons/AntDesign';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
+
 import { formatNumber } from 'react-native-currency-input';
 
 import { url_image } from '../../utility/config'
@@ -42,14 +45,18 @@ class HomeScreen extends React.Component {
   }
   renderItem = ({ item }) => {
     return (
-      <View style={{ width: width / 2.7, marginLeft: 10 }} >
-        <TouchableOpacity activeOpacity={0.7} style={{ width: "100%", height: "90%", justifyContent: "center" }} onPress={() => this.pressHouse(item)} >
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Icon name="home" size={50} style={{ color: "#005f73" }} />
-            <Text style={{ marginLeft: 10, color: "#fca311" }}>{Number(item.score).toFixed(1)}/5</Text>
+      <View style={{ width: width / 2.7, marginLeft: 3}} >
+        <TouchableOpacity activeOpacity={0.7} style={{ width: "100%", height: "100%", justifyContent: "center" }} onPress={() => this.pressHouse(item)} >
+          <View style={{  alignItems: "center" }}>
+            <Icon2 name="home" size={50} style={{ color: "#005f73" }} />
           </View>
-          <Text style={{ fontSize: 13, fontWeight: "500" }} numberOfLines={3} ellipsizeMode={"tail"} >{`${item.Address}, ${item.Ward}, ${item.District}, ${item.Province}`}</Text>
-        </TouchableOpacity>
+          <View style={{borderRadius:3,borderWidth:1,borderColor:'#cccc',alignItems: "center" }}>
+               <Text style={{ color: "#fca311" }}>({Number(item.score).toFixed(1)}/5 điểm || {item.TotalRating} lượt)</Text>
+
+          <Text style={{ fontSize: 13, fontWeight: "500" }} numberOfLines={3} ellipsizeMode={"tail"} >{<Text style={{fontWeight:"bold"}}>Địa chỉ:</Text>} {`${item.Address}, ${item.Ward}, ${item.District}, ${item.Province}`}</Text>
+       
+          </View>
+          </TouchableOpacity>
       </ View >
     )
   }
@@ -68,7 +75,7 @@ class HomeScreen extends React.Component {
                 resizeMode: "stretch",
                 borderRadius: 5
               }}
-              source={{ uri: 'https://news.mogi.vn/wp-content/uploads/2020/03/tim-phong-tro.jpg' }}></Image>
+              source={{ uri: `${url_image}/uploads/images/${item.Image[0]}` }}></Image>
             <Text style={[styles.label_item], { position: 'absolute', bottom: 0, backgroundColor: "#e5e5e5", borderTopRightRadius: 6 }}>Giá: {this.currentNumber(item.Price)} </Text>
           </View>
           <View style={{ flexDirection: "row" }}>
@@ -88,9 +95,9 @@ class HomeScreen extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: '#e5e5e5', alignItems: 'center', justifyContent: 'center' }}>
-        <SwipeSlide />
-        <View style={{ flex: 1.8, width: "100%" }}>
-          <Text style={{ fontSize: 18, marginLeft: 10, color: "#555555", fontWeight: "500" }}>Nhà đánh giá cao</Text>
+        <SwipeSlide image="" />
+        <View style={{ flex:3, width: "100%" }}>
+          <Text style={{ fontSize: 18, marginLeft: 10, color: "#555555", fontWeight: "700" }}>Top 6 nhà trọ có điểm đánh giá cao</Text>
           <FlatList
             horizontal
             data={this.props.houseTopRate.data}
@@ -99,8 +106,8 @@ class HomeScreen extends React.Component {
             showsHorizontalScrollIndicator={false}
           />
         </View>
-        <View style={{ flex: 5, width: "100%" }}>
-          <Text style={{ fontSize: 18, marginLeft: 10, color: "#555555", fontWeight: "500" }}>Phòng mới đăng</Text>
+        <View style={{ flex: 5, width: "100%" ,}}>
+          <Text style={{ fontSize: 18, marginLeft: 10, color: "#555555", fontWeight: "700" }}>Phòng mới đăng</Text>
           <FlatList
             style={{ height: "90.5%" }}
             numColumns={2}

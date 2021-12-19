@@ -9,6 +9,7 @@ import {
     Dimensions,
     Image,
 } from 'react-native';
+import { url_image } from '../../../utility/config'
 const images = [
     require('../../../image/home/3.png'),
     require('../../../image/home/1.png'),
@@ -35,6 +36,7 @@ export default class SwipeSlide extends React.Component {
         }
     }
     render() {
+       
         return (
             <SafeAreaView style={styles.container}>
                 <View style={styles.wrap}>
@@ -46,7 +48,7 @@ export default class SwipeSlide extends React.Component {
                         style={styles.wrap}
                     >
                         {
-                            images.map((e, index) =>
+                            this.props.image ==="" && images.map((e, index) =>
                                 <Image
                                     key={e}
                                     resizeMode="stretch"
@@ -55,11 +57,22 @@ export default class SwipeSlide extends React.Component {
                                 />
                             )
                         }
+                        {
+                            this.props.image!=="" && this.props.image.map((e, index) =>
+                                <Image
+                                    key={e}
+                                    resizeMode="stretch"
+                                    style={styles.wrap}
+                                    source={{ uri: `${url_image}/uploads/images/${e}` }}
+                                />
+                            ) 
+                        }
+                        
 
                     </ScrollView>
                     <View style={styles.wrapDot}>
                         {
-                            images.map((e, index) =>
+                            this.props.image ===""&& images.map((e, index) =>
                                 <Text
                                     key={e}
                                     style={this.state.imgActive == index ? styles.dotActive : styles.dot}
@@ -67,6 +80,17 @@ export default class SwipeSlide extends React.Component {
                                     ●
                                 </Text>
                             )
+                        }
+                        {
+                            this.props.image !==""&& this.props.image.map((e, index) =>
+                                <Text
+                                    key={e}
+                                    style={this.state.imgActive == index ? styles.dotActive : styles.dot}
+                                >
+                                    ●
+                                </Text>
+                            )
+                            
                         }
                     </View>
                 </View>
