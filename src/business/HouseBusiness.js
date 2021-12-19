@@ -42,6 +42,43 @@ export default class HouseBusiness {
             })
         )
     }
+    getHouseTopRate = async (success, failed) => {
+        const response = await axios.get(`${URL}/top-rating-house`)
 
-
+        let customRes = [...response.data]
+        customRes.map((value) => {
+            value.UserId = value.UserId[0]
+        })
+        if (!("error" in response.data)) {
+            success({
+                status: dataStatus.SUCCESS,
+                message: 'Get data success',
+                data: customRes
+            })
+        }
+        else (
+            failed({
+                status: dataStatus.FAILED,
+                message: response.data["error"],
+                data: customRes
+            })
+        )
+    }
+    getRoomRelatePost = async (success, failed) => {
+        const response = await axios.get(`${URL}/room-relate-post`)
+        if (!("error" in response.data)) {
+            success({
+                status: dataStatus.SUCCESS,
+                message: 'Get data success',
+                data: response.data
+            })
+        }
+        else (
+            failed({
+                status: dataStatus.FAILED,
+                message: response.data["error"],
+                data: response.data
+            })
+        )
+    }
 }

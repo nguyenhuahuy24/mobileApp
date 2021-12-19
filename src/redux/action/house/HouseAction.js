@@ -14,3 +14,15 @@ export function getListRoom(houseId) {
         data: { houseId }
     };
 }
+export function getHouseTop() {
+    return {
+        type: NAME_ACTIONS.HOUSE_SCREEN.HOUSE_SCREEN,
+        typeAction: NAME_ACTIONS.HOUSE_SCREEN.GET_HOUSE_TOP_RATE
+    };
+}
+export function getRoomPost() {
+    return {
+        type: NAME_ACTIONS.HOUSE_SCREEN.HOUSE_SCREEN,
+        typeAction: NAME_ACTIONS.HOUSE_SCREEN.GET_ROOM_RELATE_POST
+    };
+}
