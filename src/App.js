@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import GlobalContextProvider from './GlobalContextProvider';
 import { View, SafeAreaView, ActivityIndicator } from 'react-native';
 import LoadingScreen from './screens/home/LoadingScreen'
+import PushController from '../PushController '
 enableScreens();
 export default class App extends React.Component {
   constructor(props) {
@@ -38,7 +39,9 @@ export default class App extends React.Component {
             <RootNavigation />
           </NavigationContainer>
         </Provider>
+        <PushController />
       </GlobalContextProvider>
+
     );
 
   }
