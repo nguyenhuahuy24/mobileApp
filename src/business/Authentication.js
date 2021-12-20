@@ -2,14 +2,12 @@ import { URL } from "../utility/config";
 import { dataStatus } from "../utility/config";
 import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import _ from "underscore";
 export default class Authentication {
     login = async (data, success, failed) => {
         const { phone, password } = data
         const params = { Phone: phone, Password: password }
         const response = await axios.post(`${URL}/login`, params)
-        //console.log("data: ",response)
-
         const resData = { ...response.data }
         if (!("error" in response.data)) {
             const existPhone = await AsyncStorage.getItem('phone')
@@ -20,6 +18,13 @@ export default class Authentication {
                 await AsyncStorage.setItem('accessToken', response.data.accessToken)
             } catch (e) {
                 console.log(e)
+            }
+            //save token device
+            const deviceToken = await AsyncStorage.getItem('token-device')
+            if (resData.customerInfo.DeviceToken !== deviceToken) {
+                const tokenParams = { DeviceToken: deviceToken }
+                await axios.patch(`${URL}/device-token`, tokenParams, { headers: { Authorization: 'Bearer ' + resData.accessToken } })
+                console.log("change token")
             }
             success({
                 status: dataStatus.SUCCESS,

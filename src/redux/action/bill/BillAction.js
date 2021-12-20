@@ -1,7 +1,6 @@
 import { NAME_ACTIONS } from './ActionName'
 
 export function getListBillCustomer() {
-    console.log("Action")
     return {
         type: NAME_ACTIONS.BILL_SCREEN.BILL_SCREEN,
         typeAction: NAME_ACTIONS.BILL_SCREEN.BILL,

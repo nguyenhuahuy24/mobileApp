@@ -33,7 +33,6 @@ const authenticateReducer = (state = loginState, action) => {
                     data: action.data.data
                 },
             }
-            console.log("user Reducer:", state)
             break;
         case NAME_EPICS.EPIC_LOGIN_SCREEN.EPIC_LOGIN_FAILED:
             state = {

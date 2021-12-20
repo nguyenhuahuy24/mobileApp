@@ -45,18 +45,18 @@ class HomeScreen extends React.Component {
   }
   renderItem = ({ item }) => {
     return (
-      <View style={{ width: width / 2.7, marginLeft: 3}} >
+      <View style={{ width: width / 2.7, marginLeft: 3 }} >
         <TouchableOpacity activeOpacity={0.7} style={{ width: "100%", height: "100%", justifyContent: "center" }} onPress={() => this.pressHouse(item)} >
-          <View style={{  alignItems: "center" }}>
+          <View style={{ alignItems: "center" }}>
             <Icon2 name="home" size={50} style={{ color: "#005f73" }} />
           </View>
-          <View style={{borderRadius:3,borderWidth:1,borderColor:'#cccc',alignItems: "center" }}>
-               <Text style={{ color: "#fca311" }}>({Number(item.score).toFixed(1)}/5 điểm || {item.TotalRating} lượt)</Text>
+          <View style={{ borderRadius: 3, borderWidth: 1, borderColor: '#cccc', alignItems: "center" }}>
+            <Text style={{ color: "#fca311" }}>({Number(item.score).toFixed(1)}/5 điểm || {item.TotalRating} lượt)</Text>
 
-          <Text style={{ fontSize: 13, fontWeight: "500" }} numberOfLines={3} ellipsizeMode={"tail"} >{<Text style={{fontWeight:"bold"}}>Địa chỉ:</Text>} {`${item.Address}, ${item.Ward}, ${item.District}, ${item.Province}`}</Text>
-       
+            <Text style={{ fontSize: 13, fontWeight: "500" }} numberOfLines={3} ellipsizeMode={"tail"} >{<Text style={{ fontWeight: "bold" }}>Địa chỉ:</Text>} {`${item.Address}, ${item.Ward}, ${item.District}, ${item.Province}`}</Text>
+
           </View>
-          </TouchableOpacity>
+        </TouchableOpacity>
       </ View >
     )
   }
@@ -96,7 +96,7 @@ class HomeScreen extends React.Component {
     return (
       <View style={{ flex: 1, backgroundColor: '#e5e5e5', alignItems: 'center', justifyContent: 'center' }}>
         <SwipeSlide image="" />
-        <View style={{ flex:3, width: "100%" }}>
+        <View style={{ flex: 2.5, width: "100%" }}>
           <Text style={{ fontSize: 18, marginLeft: 10, color: "#555555", fontWeight: "700" }}>Top 6 nhà trọ có điểm đánh giá cao</Text>
           <FlatList
             horizontal
@@ -106,7 +106,7 @@ class HomeScreen extends React.Component {
             showsHorizontalScrollIndicator={false}
           />
         </View>
-        <View style={{ flex: 5, width: "100%" ,}}>
+        <View style={{ flex: 5, width: "100%", }}>
           <Text style={{ fontSize: 18, marginLeft: 10, color: "#555555", fontWeight: "700" }}>Phòng mới đăng</Text>
           <FlatList
             style={{ height: "90.5%" }}
