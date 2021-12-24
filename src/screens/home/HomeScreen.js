@@ -51,8 +51,8 @@ class HomeScreen extends React.Component {
           <View style={{ alignItems: "center" }}>
             <Icon2 name="home" size={50} style={{ color: "#005f73" }} />
           </View>
-          <View style={{ borderRadius: 3, borderWidth: 1, borderColor: '#cccc', alignItems: "center" }}>
-            <Text style={{ color: "#fca311" }}>({Number(item.score).toFixed(1)}/5 điểm || {item.NumberOfReview} lượt)</Text>
+          <View style={{ borderRadius: 3, borderColor: '#cccc', alignItems: "center" }}>
+            <Text style={{ color: "#fca311" }}>({Number(item.score).toFixed(1)}/5 điểm | {item.NumberOfReview} lượt)</Text>
 
             <Text style={{ fontSize: 13, fontWeight: "500" }} numberOfLines={3} ellipsizeMode={"tail"} >{<Text style={{ fontWeight: "bold" }}>Địa chỉ:</Text>} {`${item.Address}, ${item.Ward}, ${item.District}, ${item.Province}`}</Text>
 
@@ -67,7 +67,7 @@ class HomeScreen extends React.Component {
         <TouchableOpacity
           activeOpacity={0.7}
           onPress={() => this.pressRoom(item)}
-          style={{borderWidth:0.5,borderColor:"#ccc",borderRadius:5}}>
+          style={{ borderColor: "#ccc", borderRadius: 5 }}>
           <View style={{ width: "100%", height: height / 6, position: "relative" }}>
             <Image
               style={{
@@ -93,29 +93,26 @@ class HomeScreen extends React.Component {
     )
   }
 
-  ListHeader=()=>{
-        return(
-        
-        <View style={{ flex: 2.5, width: "100%" }}>
-          <SwipeSlide image=""/>
-          <Text style={{ fontSize: 18, marginLeft: 10, color: "#555555", fontWeight: "700" }}>Top 6 nhà trọ có điểm đánh giá cao</Text>
-          <FlatList
-            horizontal
-            data={this.props.houseTopRate.data}
-            renderItem={this.renderItem}
-            keyExtractor={(item, index) => index.toString()}
-            showsHorizontalScrollIndicator={false}
-          />
-          <Text style={{ fontSize: 18, marginLeft: 10, color: "#555555", fontWeight: "700" }}>Phòng mới đăng</Text>
-        </View>
-        )
+  ListHeader = () => {
+    return (
+      <View style={{ flex: 2.5, width: "100%" }}>
+        <SwipeSlide image="" />
+        <Text style={{ fontSize: 18, marginLeft: 10, color: "#555555", fontWeight: "700" }}>Top 6 nhà trọ có điểm đánh giá cao</Text>
+        <FlatList
+          horizontal
+          data={this.props.houseTopRate.data}
+          renderItem={this.renderItem}
+          keyExtractor={(item, index) => index.toString()}
+          showsHorizontalScrollIndicator={false}
+        />
+        <Text style={{ fontSize: 18, marginLeft: 10, color: "#555555", fontWeight: "700" }}>Phòng mới đăng</Text>
+      </View>
+    )
   }
   render() {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#e5e5e5', alignItems: 'center', justifyContent: 'center',marginBottom:"18%" }}>
-       
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#f2f2f2', alignItems: 'center', justifyContent: 'center', marginBottom: "18%" }}>
         <View style={{ flex: 5, width: "100%", }}>
-          
           <FlatList
             style={{ height: "90.5%" }}
             numColumns={2}
@@ -127,7 +124,6 @@ class HomeScreen extends React.Component {
             showsVerticalScrollIndicator={false}
           />
         </View>
-        
       </SafeAreaView>
     );
   }

@@ -28,8 +28,8 @@ class DetailRoomScreen extends React.Component {
     }
     renderImage = ({ item }) => {
         <View style={{ width: "100%", marginLeft: 15 }}>
-      {/* <Image source={{ uri: `${url_image}/uploads/images/${item}` }}  /> */}
-            <Image source={item}  />
+            {/* <Image source={{ uri: `${url_image}/uploads/images/${item}` }}  /> */}
+            <Image source={item} />
 
         </View>
     }
@@ -55,7 +55,7 @@ class DetailRoomScreen extends React.Component {
                     </View>
                     <View style={{ flexDirection: "row" }}>
                         <Icon name="image-size-select-small" size={19} style={{ marginTop: 2, color: "#005f73" }} />
-                        <Text style={{ fontSize: 16, width: "90%", marginLeft: 3 }} numberOfLines={2} ellipsizeMode={"tail"} >Chiều dài: {roomInfo.Length} - Chiều rộng: {roomInfo.Width}</Text>
+                        <Text style={{ fontSize: 16, width: "90%", marginLeft: 3 }} numberOfLines={2} ellipsizeMode={"tail"} >Chiều dài: {roomInfo.Length}m - Chiều rộng: {roomInfo.Width}m</Text>
                     </View>
                     <Text style={{ fontSize: 16, width: "90%", marginLeft: 3, fontWeight: "500" }} numberOfLines={2} ellipsizeMode={"tail"} >Mô tả chi tiết: </Text>
                     <View style={{ marginHorizontal: 10 }}>
