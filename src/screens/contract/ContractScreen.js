@@ -78,18 +78,15 @@ class ContractScreen extends React.Component
  }
   statusBodyTemplate=(rowData)=> {
     if (rowData === 3) {
-       return <Text style={styles.product_status_1}>{"Chờ bên thuê nhà xác nhận"}</Text>;
+       return <Text style={styles.product_status_0}>{"Chờ bên thuê nhà xác nhận"}</Text>;
     }
-    if (rowData === 1) {return  <Text style={styles.product_status_0}>{"Đã xác nhận"}</Text>; }
+    if (rowData === 1) {return  <Text style={styles.product_status_1}>{"Đã xác nhận"}</Text>; }
   }
   render(){
    
     return (
       <View style={{ flex: 1}}>
      
-        <View style={styles.header}>
-          <Text style={{fontSize:27, fontWeight:'bold'}}>Tóm lượt hợp động</Text>
-      </View>
       <View style={styles.body}>
         <TouchableOpacity onPress={()=>this.getData()} style={styles.modal}>
             <Text style={{fontSize:20, fontWeight:'bold',margin:'2%'}}>Thông tin hợp động</Text>

@@ -52,7 +52,7 @@ export default class BillScreenStack extends React.Component {
                     component={BillDetailScreen} 
                     options={{
                     // title: this.props.projectDetail.data.name,
-                     title: "Bill Detail",
+                     title: "Thông tin hóa đơn",
                      headerStyle: {
                     backgroundColor: '#DB3022',
                   },

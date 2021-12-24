@@ -53,7 +53,7 @@ export default class ContractScreenStack extends React.Component {
             component={ContractDetailScreen} 
             options={{
                     // title: this.props.projectDetail.data.name,
-            title: "Bill Detail",
+            title: "Thông tin hợp đồng",
             headerStyle: {
             backgroundColor: '#DB3022',},
             headerTintColor: '#fff',

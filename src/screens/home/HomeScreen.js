@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   Dimensions,
   StyleSheet,
-  Image
+  Image,
+  SafeAreaView
 } from 'react-native';
 import Icon2 from 'react-native-vector-icons/AntDesign';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -51,7 +52,7 @@ class HomeScreen extends React.Component {
             <Icon2 name="home" size={50} style={{ color: "#005f73" }} />
           </View>
           <View style={{ borderRadius: 3, borderWidth: 1, borderColor: '#cccc', alignItems: "center" }}>
-            <Text style={{ color: "#fca311" }}>({Number(item.score).toFixed(1)}/5 điểm || {item.TotalRating} lượt)</Text>
+            <Text style={{ color: "#fca311" }}>({Number(item.score).toFixed(1)}/5 điểm || {item.NumberOfReview} lượt)</Text>
 
             <Text style={{ fontSize: 13, fontWeight: "500" }} numberOfLines={3} ellipsizeMode={"tail"} >{<Text style={{ fontWeight: "bold" }}>Địa chỉ:</Text>} {`${item.Address}, ${item.Ward}, ${item.District}, ${item.Province}`}</Text>
 
@@ -65,7 +66,8 @@ class HomeScreen extends React.Component {
       <View style={styles.body_item}>
         <TouchableOpacity
           activeOpacity={0.7}
-          onPress={() => this.pressRoom(item)}>
+          onPress={() => this.pressRoom(item)}
+          style={{borderWidth:0.5,borderColor:"#ccc",borderRadius:5}}>
           <View style={{ width: "100%", height: height / 6, position: "relative" }}>
             <Image
               style={{
@@ -91,12 +93,11 @@ class HomeScreen extends React.Component {
     )
   }
 
-
-  render() {
-    return (
-      <View style={{ flex: 1, backgroundColor: '#e5e5e5', alignItems: 'center', justifyContent: 'center' }}>
-        <SwipeSlide image="" />
+  ListHeader=()=>{
+        return(
+        
         <View style={{ flex: 2.5, width: "100%" }}>
+          <SwipeSlide image=""/>
           <Text style={{ fontSize: 18, marginLeft: 10, color: "#555555", fontWeight: "700" }}>Top 6 nhà trọ có điểm đánh giá cao</Text>
           <FlatList
             horizontal
@@ -105,23 +106,29 @@ class HomeScreen extends React.Component {
             keyExtractor={(item, index) => index.toString()}
             showsHorizontalScrollIndicator={false}
           />
-        </View>
-        <View style={{ flex: 5, width: "100%", }}>
           <Text style={{ fontSize: 18, marginLeft: 10, color: "#555555", fontWeight: "700" }}>Phòng mới đăng</Text>
+        </View>
+        )
+  }
+  render() {
+    return (
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#e5e5e5', alignItems: 'center', justifyContent: 'center',marginBottom:"18%" }}>
+       
+        <View style={{ flex: 5, width: "100%", }}>
+          
           <FlatList
             style={{ height: "90.5%" }}
             numColumns={2}
             data={this.props.roomRelatePost.data}
             columnWrapperStyle={{ justifyContent: "space-between", marginBottom: 10, marginHorizontal: 8 }}
+            ListHeaderComponent={this.ListHeader}
             renderItem={this.renderListRoom}
             keyExtractor={(item, index) => index.toString()}
             showsVerticalScrollIndicator={false}
           />
         </View>
-        <View style={{ flex: 1, width: "100%" }}>
-
-        </View>
-      </View>
+        
+      </SafeAreaView>
     );
   }
 }

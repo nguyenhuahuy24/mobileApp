@@ -40,6 +40,7 @@ class SearchDetailScreen extends React.Component {
   currentNumber = (value) => {
     return formatNumber(value, {
       separator: ',',
+      suffix: ' VND',
     })
   }
   ToDetail = (item) => {
@@ -55,7 +56,8 @@ class SearchDetailScreen extends React.Component {
     <View style={styles.body_item}>
       <TouchableOpacity
         activeOpacity={0.7}
-        onPress={() => this.ToDetail(item)}>
+        onPress={() => this.ToDetail(item)}
+        style={{borderWidth:0.5,borderColor:"#cccc",borderRadius:5}}>
         <View style={{ width: "100%", height: windowHeight / 6 }}>
           <Image
             style={{
@@ -63,7 +65,7 @@ class SearchDetailScreen extends React.Component {
               width: null,
               height: null,
               resizeMode: "stretch",
-              borderRadius: 7
+              borderRadius: 5
             }}
             source={{ uri: `${url_image}/uploads/images/${item.Image[0]}` }}></Image>
         </View>
