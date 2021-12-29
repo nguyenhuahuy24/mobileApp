@@ -12,7 +12,7 @@ import {
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Login } from '../../redux/action/authenticateAction/AuthenticateAction';
-import { dataStatus,UserInfo } from '../../utility/config'
+import { dataStatus, UserInfo } from '../../utility/config'
 import { withGlobalContext } from '../../GlobalContextProvider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 class LoginScreen extends React.Component {
@@ -79,8 +79,7 @@ class LoginScreen extends React.Component {
     this.setState({ showPassword: true, hideX: false, showX: true })
   };
   onLogin = () => {
-    if(this.state.phone ==="" || this.state.password ==="")
-    {
+    if (this.state.phone === "" || this.state.password === "") {
       Alert.alert("Thông báo", "Thông tin đăng nhập thiếu")
     }
     else this.props.Login(this.state.phone, this.state.password)

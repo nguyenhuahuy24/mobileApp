@@ -16,7 +16,7 @@
           android:value="AIzaSyA4Jx5SXYopOhl5N7daUnvQE62DCYQl1ts"/>
           <!-- Change the value to true to enable pop-up for in foreground on receiving remote notifications (for prevent duplicating while showing local notifications set this to false) -->
         <meta-data  android:name="com.dieam.reactnativepushnotification.notification_foreground"
-                    android:value="false"/>
+                    android:value="true"/>
         <!-- Change the resource name to your App's accent color - or any other color you want -->
        <!-- or @android:color/{name} to use a standard color -->
 
@@ -31,7 +31,7 @@
         </receiver>
         <service
             android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationListenerService"
-            android:exported="false" >
+            android:exported="true" >
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
