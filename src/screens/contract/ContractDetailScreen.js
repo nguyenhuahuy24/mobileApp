@@ -89,7 +89,6 @@ class ContractDetailScreen extends React.Component
                   <Text style={{fontSize:18}}>- Số điện thoại: {<Text style={styles.label_name}>{item.Renter_Phone}</Text>}</Text>
                   <Text style={{fontSize:18,fontWeight:'bold'}}>Sau khi bàn bạc trên tinh thần dân chủ, hai bên cùng có lợi, cùng thống nhất như sau:</Text>
                   <Text style={{fontSize:18}}>Bên A đồng ý cho bên B thuê 01 phòng ở tại địa chỉ: {<Text style={styles.label_name}>{item.AddressHouse}</Text>}</Text>
-                  <Text style={{fontSize:18}}>Giá thuê phòng: …………………. đ/tháng (chưa tính tiền điện, nước hằng tháng)</Text>
                   <Text style={{fontSize:18}}>Tiền đặt cọc: {<Text style={styles.label_name}>{this.currentNumber(item.Deposit)}</Text>}</Text>
                   <Text style={{fontSize:18}}>Thời gian hợp đồng: {<Text style={styles.label_name}>{item.RentalPeriod}</Text>}</Text>
                   <Text style={{fontSize:18}}>Hợp đồng có giá trị kể từ ngày: {<Text style={styles.label_name}>{moment(item.ArrivalDate).format('DD-MM-YYYY')}</Text>}</Text>

@@ -8,6 +8,8 @@ import GlobalContextProvider from './GlobalContextProvider';
 import { View, SafeAreaView, ActivityIndicator } from 'react-native';
 import LoadingScreen from './screens/home/LoadingScreen'
 import PushController from '../PushController '
+import {LogBox } from 'react-native';
+
 enableScreens();
 export default class App extends React.Component {
   constructor(props) {
@@ -25,7 +27,9 @@ export default class App extends React.Component {
         .bind(this),
       2000
     );
+    LogBox.ignoreLogs(['Reanimated 2']);
   }
+  
   render() {
     if (this.state.isLoading === true) {
       return (

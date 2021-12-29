@@ -52,7 +52,7 @@ export default class SearchScreenStack extends React.Component {
           component={SearchDetailScreen}
           options={{
             headerTitleAlign: "center",
-            title: 'Danh sách phòng',
+            title: 'Thông tin nhà',
             headerStyle: {
               backgroundColor: '#e32f45',
               height: 45

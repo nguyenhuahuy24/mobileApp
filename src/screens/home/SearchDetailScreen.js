@@ -57,7 +57,7 @@ class SearchDetailScreen extends React.Component {
       <TouchableOpacity
         activeOpacity={0.7}
         onPress={() => this.ToDetail(item)}
-        style={{borderWidth:0.5,borderColor:"#cccc",borderRadius:5}}>
+        >
         <View style={{ width: "100%", height: windowHeight / 6 }}>
           <Image
             style={{
@@ -119,7 +119,7 @@ class SearchDetailScreen extends React.Component {
                 />
               </View>
               <View style={styles.modal_detail}>
-                <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Tình trạng: </Text>
+                <Text style={{ fontWeight: 'bold', fontSize: 17 }}>Mô tả chi tiết: </Text>
                 <Text style={{ fontSize: 17, flex: 1 }}>{this.state.detail}</Text>
               </View>
             </View>
