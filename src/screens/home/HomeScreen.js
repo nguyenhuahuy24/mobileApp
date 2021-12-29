@@ -15,7 +15,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { formatNumber } from 'react-native-currency-input';
 
-import { url_image } from '../../utility/config'
+import { dataStatus, url_image } from '../../utility/config'
 import SwipeSlide from "./Home/SwipeSlide";
 import { connect } from 'react-redux';
 import { getHouseTop, getRoomPost } from '../../redux/action/house/HouseAction'
@@ -25,6 +25,9 @@ class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLoading:false,
+      listTopHome:"",
+      listRoom:""
     }
 
   }
@@ -32,7 +35,32 @@ class HomeScreen extends React.Component {
     this.props.getHouseTop()
     this.props.getRoomPost()
   }
+  componentDidUpdate(prevProps){
+    if(this.props.houseTopRate !== prevProps.houseTopRate){
+      if(this.props.houseTopRate.status === dataStatus.SUCCESS){
+        this.setState({listTopHome:this.props.houseTopRate.data})
+      }
+    }
+    if(this.props.roomRelatePost !== prevProps.roomRelatePost){
+      if(this.props.roomRelatePost.status === dataStatus.SUCCESS){
+        this.setState({listRoom:this.props.roomRelatePost.data})
+      }
+    }
+  }
+  getData = ()=>{
+    // setTimeout(
+    //   function () {
+    //     this.setState({ isLoading: true });
 
+    //   }
+    //     .bind(this),
+    //   2000
+    // );
+    this.setState({isLoading:true})
+    this.props.getHouseTop()
+    this.props.getRoomPost()
+    this.setState({isLoading:false})
+  }
   pressHouse = (item) => {
     this.props.navigation.navigate('DetailHouseScreen', { houseInfo: item })
   }
@@ -100,7 +128,7 @@ class HomeScreen extends React.Component {
         <Text style={{ fontSize: 18, marginLeft: 10, color: "#555555", fontWeight: "700" }}>Top 6 nhà trọ có điểm đánh giá cao</Text>
         <FlatList
           horizontal
-          data={this.props.houseTopRate.data}
+          data={this.state.listTopHome}
           renderItem={this.renderItem}
           keyExtractor={(item, index) => index.toString()}
           showsHorizontalScrollIndicator={false}
@@ -116,10 +144,12 @@ class HomeScreen extends React.Component {
           <FlatList
             style={{ height: "90.5%" }}
             numColumns={2}
-            data={this.props.roomRelatePost.data}
+            data={this.state.listRoom}
             columnWrapperStyle={{ justifyContent: "space-between", marginBottom: 10, marginHorizontal: 8 }}
             ListHeaderComponent={this.ListHeader}
             renderItem={this.renderListRoom}
+            refreshing={this.state.isLoading}
+            onRefresh={this.getData}
             keyExtractor={(item, index) => index.toString()}
             showsVerticalScrollIndicator={false}
           />

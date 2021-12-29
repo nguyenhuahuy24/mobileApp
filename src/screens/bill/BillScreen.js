@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { View, Text, TouchableOpacity, FlatList, StyleSheet, TextInput, SafeAreaView,SectionList } from 'react-native';
+import {Alert,BackHandler, View, Text, TouchableOpacity, FlatList, StyleSheet, TextInput, SafeAreaView,SectionList } from 'react-native';
 import moment from 'moment';
 import {formatNumber } from 'react-native-currency-input';
-
+import {Logout} from '../../redux/action/authenticateAction/AuthenticateAction'
 import { connect } from 'react-redux';
 import { dataStatus } from '../../utility/config'
 import { withGlobalContext } from '../../GlobalContextProvider';
@@ -25,7 +25,16 @@ import { getListBillCustomer, getInfoBill } from '../../redux/action/bill/BillAc
   }
   componentDidMount() {
     this.getData();
+    // this.backHandler = BackHandler.addEventListener(
+    //   "hardwareBackPress",
+    //   this.backAction
+    // );
   }
+  
+
+  // componentWillUnmount() {
+  //   this.backHandler.remove();
+  // }
   getData = ()=>{
     this.setState({isLoading:true})
     this.props.getListBillCustomer()
@@ -51,6 +60,17 @@ import { getListBillCustomer, getInfoBill } from '../../redux/action/bill/BillAc
       }
     }
   }
+  backAction = () => {
+    Alert.alert("Thoát Khỏi Ứng Dụng!", "Bạn có muốn thoát không?", [
+      {
+        text: "NO",
+        onPress: () => null,
+        style: "cancel"
+      },
+      { text: "YES", onPress: () => this.props.Logout()}
+    ]);
+    return true;
+  };
   currentNumber =(value)=>{
       return formatNumber(value, {
       separator: ',',
@@ -199,7 +219,9 @@ const styles = StyleSheet.create({
 function mapStateToProps(state) {
   return {
     bill: state.BillReducer.bill,
-    billDetail: state.BillReducer.billDetail
+    billDetail: state.BillReducer.billDetail,
+    logoutStatus: state.AuthenticateReducer.logoutStatus
+
   };
 }
-export default withGlobalContext(connect(mapStateToProps, { getListBillCustomer,getInfoBill })(BillScreen));
+export default withGlobalContext(connect(mapStateToProps, { getListBillCustomer,getInfoBill,Logout })(BillScreen));
