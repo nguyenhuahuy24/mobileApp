@@ -30,7 +30,7 @@ class MessagesScreen extends React.Component {
     )
   }
   render() {
-    console.log(this.state.roomchat)
+
     return (
       <View style={styles.container}>
         <SafeAreaView >
