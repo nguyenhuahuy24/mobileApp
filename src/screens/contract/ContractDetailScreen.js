@@ -27,7 +27,6 @@ class ContractDetailScreen extends React.Component
     {
       if(this.props.contract.status === dataStatus.SUCCESS)
       {
-        console.log("vao r")
         this.props.navigation.navigate('ContractScreen')
         
       }
