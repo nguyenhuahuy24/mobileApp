@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet} from 'react-native';
+import { View, Text, StyleSheet,TouchableOpacity} from 'react-native';
 import moment from 'moment';
 import {formatNumber } from 'react-native-currency-input';
 
@@ -28,7 +28,13 @@ statusBodyTemplate=(rowData)=> {
       suffix: ' VND',
     })
  }
+ ToPayment = ()=>
+  {
+    
+    this.props.navigation.navigate('payment',this.state.billDetail)
+  }
   render() {
+    console.log("data:",this.state.billDetail)
     return (
       <View style={{ flex: 1, backgroundColor: '#e6e6e6',alignItems:'center', }}>
           <View style={styles.body}>
@@ -74,6 +80,9 @@ statusBodyTemplate=(rowData)=> {
               <Text style={{fontSize:20}}>{this.currentNumber(this.state.billDetail.TotalBill)}</Text>
             </View>
           </View>
+         {this.state.billDetail.Status===0 && <TouchableOpacity style={styles.button} onPress={()=>this.ToPayment()}>
+            <Text style={{ color: "white", fontSize: 17 }}>THANH TOÁN NGAY</Text>
+          </TouchableOpacity>}
       </View>
     );
   }
@@ -84,7 +93,7 @@ const styles = StyleSheet.create({
     height:'85%',
     borderRadius: 7,
     backgroundColor:'#ffffff',
-    marginTop:'5%',
+    marginTop:'3%',
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -114,7 +123,24 @@ const styles = StyleSheet.create({
     marginLeft:'4%',
     marginBottom:'4%'
   },
-  
+  button: {
+    height:"10%",
+    width:'90%',
+    backgroundColor: "#DB3022",
+    borderRadius: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.39,
+    shadowRadius: 8.30,
+    elevation: 13,
+    marginTop:"3%",
+    marginBottom:'5%'
+  },
  
   product_status_0: {
     backgroundColor: '#FFCDD2',

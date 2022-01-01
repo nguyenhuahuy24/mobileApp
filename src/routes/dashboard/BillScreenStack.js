@@ -1,6 +1,7 @@
 import 'react-native-gesture-handler';
 import BillScreen from '../../screens/bill/BillScreen'
 import BillDetailScreen from '../../screens/bill/BillDetailScreen';
+import PaymentScreen from '../../screens/bill/PaymentScreen'
 
 import * as React from 'react';
 import {View, TouchableOpacity, Image} from 'react-native';
@@ -53,6 +54,21 @@ export default class BillScreenStack extends React.Component {
                     options={{
                     // title: this.props.projectDetail.data.name,
                      title: "Thông tin hóa đơn",
+                     headerStyle: {
+                    backgroundColor: '#DB3022',
+                  },
+                  headerTintColor: '#fff',
+                  headerTitleStyle: {
+                    fontWeight: 'bold',
+                  },
+                    
+                    }} />
+                  <Stack.Screen 
+                    name="payment" 
+                    component={PaymentScreen} 
+                    options={{
+                    // title: this.props.projectDetail.data.name,
+                     title: "Thanh toán",
                      headerStyle: {
                     backgroundColor: '#DB3022',
                   },
