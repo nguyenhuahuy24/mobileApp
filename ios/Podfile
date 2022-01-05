@@ -12,6 +12,8 @@ target 'AppPhongtro' do
     :hermes_enabled => false
   )
 
+  pod 'RNMomosdk', :path => '../node_modules/react-native-momosdk'
+
   target 'AppPhongtroTests' do
     inherit! :complete
     # Pods for testing
