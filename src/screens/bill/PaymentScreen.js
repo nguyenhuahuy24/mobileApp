@@ -140,7 +140,7 @@ class PaymentScreen extends React.Component {
               onPress={() => this.setState({ select: 1 })}>
               <Image source={momo} style={styles.image_logo} />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.touchable}>
+            {/* <TouchableOpacity style={styles.touchable}>
               <Image source={zalo} style={styles.image_logo} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.touchable}>
@@ -148,7 +148,7 @@ class PaymentScreen extends React.Component {
             </TouchableOpacity>
             <TouchableOpacity style={styles.touchable}>
               <Image source={viettel} style={styles.image_logo} />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </ScrollView>
         </View>
         <View style={{ flex: 4 }}>
