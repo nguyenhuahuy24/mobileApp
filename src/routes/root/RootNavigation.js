@@ -71,6 +71,7 @@ class RootNavigation extends React.Component {
                 {
                     isSignin ? <Stack.Screen name="DrawerNavigation" component={DrawerNavigation} /> : <Stack.Screen name="Home">{() => (
                         <Tab.Navigator
+
                             screenOptions={{
                                 tabBarStyle: {
                                     position: 'absolute',
@@ -87,6 +88,7 @@ class RootNavigation extends React.Component {
                                 tabBarShowLabel: false,
                                 tabBarActiveTintColor: 'tomato',
                                 tabBarInactiveTintColor: 'gray',
+                                tabBarHideOnKeyboard: "true"
 
                             }}>
                             <Tab.Screen name="HomeScreenStack" component={HomeScreenStack} options={{
