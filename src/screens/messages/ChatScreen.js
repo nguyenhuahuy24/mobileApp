@@ -43,7 +43,9 @@ const ChatScreen = ({ route, navigation, user }) => {
     const getMessageAPI = async () => {
       try {
         const res = await axios.get(URL + "/message/" + roomchat._id)
-        setMessages(res.data);
+        console.log(res.data)
+        const data = res.data.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+        setMessages(data);
       } catch (err) {
         console.log(err);
       }
