@@ -57,7 +57,7 @@ class SearchDetailScreen extends React.Component {
       <TouchableOpacity
         activeOpacity={0.7}
         onPress={() => this.ToDetail(item)}
-        >
+      >
         <View style={{ width: "100%", height: windowHeight / 6 }}>
           <Image
             style={{
@@ -135,11 +135,11 @@ class SearchDetailScreen extends React.Component {
           </View>
           <View style={styles.houseInfo_item}>
             <Icon color="#457b9d" name="phone" size={20} style={{ marginRight: 5 }} />
-            <Text style={styles.houseInfo_text}>  {houseInfo.UserId.Phone + " - " + houseInfo.UserId.Name}</Text>
+            <Text style={styles.houseInfo_text}>  {houseInfo.UserId?.Phone + " - " + houseInfo.UserId?.Name}</Text>
           </View>
           <View style={styles.houseInfo_item}>
             <Icon color="#457b9d" name="envelope" size={20} style={{ marginRight: 5 }} />
-            <Text style={styles.houseInfo_text}> {houseInfo.UserId.Email}</Text>
+            <Text style={styles.houseInfo_text}> {houseInfo.UserId?.Email}</Text>
           </View>
           <View style={styles.houseInfo_item}>
             <Icon color="#457b9d" name="bed" size={20} style={{ marginRight: 5 }} />

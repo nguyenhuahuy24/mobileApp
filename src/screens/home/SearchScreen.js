@@ -83,7 +83,7 @@ class SearchScreen extends React.Component {
           </View>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Icon color="#457b9d" name="phone" size={20} style={styles.icon} />
-            <Text style={styles.label_item}>  {item.UserId.Phone + " - " + item.UserId.Name}</Text>
+            <Text style={styles.label_item}>  {item.UserId?.Phone + " - " + item.UserId?.Name}</Text>
           </View>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Icon color="#457b9d" name="bed" size={20} style={styles.icon} />
