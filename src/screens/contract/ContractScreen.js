@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {  View,Text,StyleSheet, TouchableOpacity} from 'react-native';
+import {  View,Text,StyleSheet, TouchableOpacity,SafeAreaView,ScrollView,RefreshControl} from 'react-native';
 import {formatNumber } from 'react-native-currency-input';
 
 import { connect } from 'react-redux';
@@ -14,21 +14,32 @@ class ContractScreen extends React.Component
     super(props);
     this.state = {
       contract: "",
-      showX: false,
+      show: false,
       global_search: "",
+      refresh:false
     }
   }
   componentDidMount() {
-    this.getData();
+    this.props.getContract();
+
   }
   getData=()=>{
+    this.setState({refresh:true})
     this.props.getContract();
+    setTimeout(
+      function () {
+          this.setState({refresh:false})
+      }
+        .bind(this),
+      2000
+    );
   }
   componentDidUpdate(prevProps) {
     if (this.props.contract !== prevProps.contract) {
       if (this.props.contract.status === dataStatus.SUCCESS) {
-       let Contract = this.props.contract.data[0]
-        let data=[]
+        if(Object.values(this.props.contract.data).length !==0 ){
+          let Contract = this.props.contract.data[0]
+          let data=[]
           data.push({
             _id: Contract._id,
             AddressHouse: Contract.AddressHouse,
@@ -58,17 +69,20 @@ class ContractScreen extends React.Component
             Renter_Cmnd: Contract.Renter.Cmnd,
             Renter_Age: Contract.Renter.Age,
           })
-       
           console.log("data: ",data[0])
-          this.setState({contract:data[0]})
+          this.setState({contract:data[0],show:true})
+        
+        }
+        else{
+          this.setState({show:false})
+        }
       }
-    }
    
+    }
   }
   ToDetail = ()=>
   {
-    
-    this.props.navigation.navigate('ContractDetail',this.state.contract)
+     this.props.navigation.navigate('ContractDetail',this.state.contract)
   }
   currentNumber =(value)=>{
       return formatNumber(value, {
@@ -85,10 +99,24 @@ class ContractScreen extends React.Component
   render(){
    
     return (
-      <View style={{ flex: 1}}>
-     
-      <View style={styles.body}>
-        <TouchableOpacity onPress={()=>this.getData()} style={styles.modal}>
+      
+     <SafeAreaView style={{ flex: 1}} >
+      <ScrollView
+        contentContainerStyle={{flex:1}}
+        refreshControl={
+          <RefreshControl
+            refreshing={this.state.refresh}
+            onRefresh={()=>this.getData()}
+          />
+        }
+      >
+        <View style={{ flex: 1}}>
+      {this.state.show===false && 
+        <View style={{flex:1,justifyContent:'center',alignItems:"center"}}>
+        <Text style={{fontSize:30,fontWeight:'500'}}>CHƯA CÓ HỢP ĐỒNG</Text>
+      </View>}
+      {this.state.show===true && <View style={styles.body}>
+        <TouchableOpacity style={styles.modal}>
             <Text style={{fontSize:20, fontWeight:'bold',margin:'2%'}}>Thông tin hợp động</Text>
             <View style={styles.text_contract}>
               <Text style={{fontSize:17}}>Bên thuê:</Text>
@@ -118,9 +146,11 @@ class ContractScreen extends React.Component
             }</Text>
           </TouchableOpacity>
       
-      </View>
+      </View>}
       
     </View>
+      </ScrollView>
+    </SafeAreaView>
     );
   }
 }

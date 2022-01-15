@@ -23,7 +23,7 @@ class BillScreen extends React.Component {
     }
   }
   componentDidMount() {
-    this.getData();
+     this.props.getListBillCustomer()
   }
 
 
